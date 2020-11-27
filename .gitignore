@@ -83,3 +83,7 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+# Ignores for SpaceInvadersVS
+/Assets/Photon/
+/Assets/Photon.meta
