@@ -1,18 +1,50 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using Photon.Pun;
+using Photon.Realtime;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class Launcher : MonoBehaviour
+namespace SIVS
 {
-    // Start is called before the first frame update
-    void Start()
+    public class Launcher : MonoBehaviourPunCallbacks
     {
-        
-    }
+        /// <summary>
+        /// This client's version number
+        /// </summary>
+        private const string GameVersion = "1";
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        private bool isConnecting;
+
+        private void Awake()
+        {
+            Connect();
+        }
+
+        private void Connect()
+        {
+            if (PhotonNetwork.IsConnected) return;
+
+            isConnecting = PhotonNetwork.ConnectUsingSettings();
+            PhotonNetwork.GameVersion = GameVersion;
+        }
+
+        #region MonoBehaviourPunCallbacks Callbacks
+
+        public override void OnConnectedToMaster()
+        {
+            Debug.Log("OnConnectedToMaster() called");
+
+            if (!isConnecting) return;
+
+            isConnecting = false;
+            SceneManager.LoadScene("MainMenu");
+        }
+
+        public override void OnDisconnected(DisconnectCause cause)
+        {
+            Debug.LogWarningFormat("OnDisconnected() called");
+            isConnecting = false;
+        }
+
+        #endregion
     }
 }
