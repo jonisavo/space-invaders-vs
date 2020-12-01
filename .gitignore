@@ -87,3 +87,6 @@ $RECYCLE.BIN/
 # Ignores for SpaceInvadersVS
 /Assets/Photon/
 /Assets/Photon.meta
+
+/Assets/TextMesh Pro/
+/Assets/TextMesh Pro.meta
