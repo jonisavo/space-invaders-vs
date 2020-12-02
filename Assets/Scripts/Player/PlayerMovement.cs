@@ -1,18 +1,18 @@
 ﻿using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+namespace SIVS
 {
-    public float MoveSpeed = 10;
-    public float RotateSpeed = 250;
-
-    private void Update()
+    public class PlayerMovement : MonoBehaviour
     {
-        transform.Translate(
-            Input.GetAxis("Horizontal") * MoveSpeed * Time.deltaTime,
-            0,
-            Input.GetAxis("Vertical") * MoveSpeed * Time.deltaTime);
+        public float MoveSpeed = 10;
 
-        transform.Rotate(
-            new Vector3(0, Input.GetAxis("Mouse X") * RotateSpeed * Time.deltaTime, 0));
+        private void Update()
+        {
+            transform.Translate(
+                Input.GetAxis("Horizontal") * MoveSpeed * Time.deltaTime,
+                Input.GetAxis("Vertical") * MoveSpeed / 2 * Time.deltaTime,
+                0);
+        }
     }
 }
+
