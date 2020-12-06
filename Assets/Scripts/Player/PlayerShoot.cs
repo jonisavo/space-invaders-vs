@@ -4,13 +4,17 @@ namespace SIVS
 {
     public class PlayerShoot : MonoBehaviour
     {
-        public GameObject bullet;
+        public GameObject Bullet;
 
-        // Update is called once per frame
-        void Update()
+        private void Update()
         {
             if (Input.GetButtonDown("Fire1"))
-                Instantiate(bullet, transform.position + transform.forward * 3, Quaternion.identity);
+                Instantiate(Bullet, GetBulletSpawnPoint(), Quaternion.identity);
+        }
+
+        private Vector2 GetBulletSpawnPoint()
+        {
+            return transform.position + transform.forward * 3;
         }
     }
 }

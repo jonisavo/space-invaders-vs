@@ -10,7 +10,7 @@ namespace SIVS
         {
             transform.Translate(
                 Input.GetAxis("Horizontal") * MoveSpeed * Time.deltaTime,
-                Input.GetAxis("Vertical") * MoveSpeed / 2 * Time.deltaTime,
+                0,
                 0);
         }
     }
