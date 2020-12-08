@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 343851896698152760}
   - component: {fileID: 6989479483175886220}
   - component: {fileID: 1386693501966731541}
+  - component: {fileID: 1696350249}
   m_Layer: 0
   m_Name: PlayerShip
   m_TagString: Player
@@ -46,7 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cad8c7337c98b64ba9dcb5c7118c982, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveSpeed: 5
+  MoveSpeed: 15
 --- !u!114 &6989479483175886220
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -73,7 +74,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.0015085489, y: -0.112139404}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 1}
@@ -84,8 +85,29 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.2961342, y: 0.10218942}
   m_EdgeRadius: 0
+--- !u!50 &1696350249
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 343851896698152761}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 6
 --- !u!1 &3985453474289492474
 GameObject:
   m_ObjectHideFlags: 0
