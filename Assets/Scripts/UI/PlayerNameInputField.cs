@@ -12,32 +12,28 @@ namespace SIVS
     [RequireComponent(typeof(TMP_InputField))]
     public class PlayerNameInputField : MonoBehaviour
     {
-        private const string playerNamePrefKey = "PlayerName";
+        private const string PlayerNamePrefKey = "PlayerName";
 
         private void Start()
         {
-            string defaultName = string.Empty;
-            InputField inputField = this.GetComponent<InputField>();
-            if (inputField != null)
-                if (PlayerPrefs.HasKey(playerNamePrefKey))
-                {
-                    defaultName = PlayerPrefs.GetString(playerNamePrefKey);
-                    inputField.text = defaultName;
-                }
+            var defaultName = string.Empty;
+            var inputField = this.GetComponent<TMP_InputField>();
+
+            if (PlayerPrefs.HasKey(PlayerNamePrefKey))
+            {
+                defaultName = PlayerPrefs.GetString(PlayerNamePrefKey);
+                inputField.text = defaultName;
+            }
 
             PhotonNetwork.NickName = defaultName;
         }
 
         public void SetPlayerValue(string value)
         {
-            if (string.IsNullOrEmpty(value))
-            {
-                Debug.LogError("Player name is null or empty.");
-                return;
-            }
+            if (string.IsNullOrEmpty(value)) return;
 
             PhotonNetwork.NickName = value;
-            PlayerPrefs.SetString(playerNamePrefKey, value);
+            PlayerPrefs.SetString(PlayerNamePrefKey, value);
         }
     }
 }
