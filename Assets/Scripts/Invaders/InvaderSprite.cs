@@ -10,7 +10,7 @@ namespace SIVS
 
         private void Awake()
         {
-            var rand = new Random();
+            var rand = new Random(System.Guid.NewGuid().GetHashCode());
             GetComponent<Animator>().SetInteger("Type", rand.Next(TypeCount));
         }
     }
