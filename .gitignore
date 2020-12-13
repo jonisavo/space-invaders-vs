@@ -85,8 +85,14 @@ $RECYCLE.BIN/
 *.lnk
 
 # Ignores for SpaceInvadersVS
-/Assets/Photon/
+/Assets/Photon/*
 /Assets/Photon.meta
+
+!/Assets/Photon/PhotonUnityNetworking/
+/Assets/Photon/PhotonUnityNetworking/*
+!/Assets/Photon/PhotonUnityNetworking/Resources
+/Assets/Photon/PhotonUnityNetworking/Resources/*
+!/Assets/Photon/PhotonUnityNetworking/Resources/*.prefab*
 
 /Assets/TextMesh Pro/
 /Assets/TextMesh Pro.meta
