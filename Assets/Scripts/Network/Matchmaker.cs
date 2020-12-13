@@ -7,19 +7,24 @@ namespace SIVS
     public class Matchmaker : MonoBehaviourPunCallbacks
     {
         [Tooltip("The UI Panel to let the user enter name, connect and play")]
-        [SerializeField]
-        private GameObject controlPanel;
+        public GameObject ControlPanel;
 
         [Tooltip("The UI Label to inform the user that the connection is in progress")]
-        [SerializeField]
-        private GameObject progressLabel;
+        public GameObject ProgressLabel;
 
         private bool isMatchmaking;
+
+        private void Awake()
+        {
+            isMatchmaking = false;
+        }
 
         public void BeginMatchmaking()
         {
             if (string.IsNullOrEmpty(PhotonNetwork.NickName.Trim())) return;
+            if (isMatchmaking) return;
 
+            isMatchmaking = true;
             PhotonNetwork.JoinRandomRoom();
             ShowProgressLabel();
         }
@@ -28,6 +33,9 @@ namespace SIVS
         public override void OnDisconnected(DisconnectCause cause)
         {
             Debug.LogWarningFormat("Matchmaker: OnDisconnected() called");
+
+            if (!isMatchmaking) return;
+
             HideProgressLabel();
             isMatchmaking = false;
         }
@@ -45,18 +53,25 @@ namespace SIVS
             PhotonNetwork.LoadLevel("InGame");
         }
 
+        public override void OnCreateRoomFailed(short returnCode, string message)
+        {
+            base.OnCreateRoomFailed(returnCode, message);
+            isMatchmaking = false;
+            HideProgressLabel();
+        }
+
         #endregion
 
         private void ShowProgressLabel()
         {
-            controlPanel.SetActive(false);
-            progressLabel.SetActive(true);
+            ControlPanel.SetActive(false);
+            ProgressLabel.SetActive(true);
         }
 
         private void HideProgressLabel()
         {
-            controlPanel.SetActive(true);
-            progressLabel.SetActive(false);
+            ControlPanel.SetActive(true);
+            ProgressLabel.SetActive(false);
         }
     }
 }

@@ -150,8 +150,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90d2e0a7c24bc81478ef5a3fced79e63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controlPanel: {fileID: 557291949}
-  progressLabel: {fileID: 1202018268}
+  ControlPanel: {fileID: 557291949}
+  ProgressLabel: {fileID: 1202018268}
 --- !u!4 &546127511
 Transform:
   m_ObjectHideFlags: 0
