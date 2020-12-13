@@ -2,13 +2,14 @@
 using UnityEngine.UI;
 
 using Photon.Pun;
+using TMPro;
 
 namespace SIVS
 {
     /// <summary>
     /// Player name input field. Let the user input his name, will appear above the player in the game.
     /// </summary>
-    [RequireComponent(typeof(InputField))]
+    [RequireComponent(typeof(TMP_InputField))]
     public class PlayerNameInputField : MonoBehaviour
     {
         private const string playerNamePrefKey = "PlayerName";

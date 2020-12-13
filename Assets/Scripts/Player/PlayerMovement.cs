@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
+using Photon.Pun;
 using Vector2 = UnityEngine.Vector2;
 
 namespace SIVS
 {
-    public class PlayerMovement : MonoBehaviour
+    public class PlayerMovement : MonoBehaviourPunCallbacks
     {
         public float MoveSpeed = 10;
 
@@ -16,11 +17,9 @@ namespace SIVS
 
         private void Update()
         {
+            if (!photonView.IsMine) return;
+
             _rb.MovePosition((Vector2)transform.position + Vector2.right * Input.GetAxis("Horizontal") * MoveSpeed * Time.deltaTime);
-            //transform.Translate(
-            //    Input.GetAxis("Horizontal") * MoveSpeed * Time.deltaTime,
-            //    0,
-            //    0);
         }
     }
 }
