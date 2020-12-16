@@ -85,6 +85,7 @@ $RECYCLE.BIN/
 *.lnk
 
 # Ignores for SpaceInvadersVS
+.idea/
 /Assets/Photon/*
 /Assets/Photon.meta
 
