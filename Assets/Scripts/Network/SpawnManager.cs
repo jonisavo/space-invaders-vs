@@ -7,9 +7,16 @@ namespace SIVS
     {
         private void Start()
         {
-            object[] playerData = { PhotonNetwork.NickName };
+            object[] playerData = {PhotonNetwork.NickName};
+            int playerIndex = 1;
+            foreach (var entry in PhotonNetwork.CurrentRoom.Players)
+            {
+                if (entry.Value.ActorNumber == PhotonNetwork.LocalPlayer.ActorNumber)
+                    playerIndex = entry.Key;
+            }
             PhotonNetwork.Instantiate("PlayerShip",
-                new Vector3(0, -1.0f, 0), Quaternion.identity, 0, playerData);
+                new Vector3(playerIndex == 1 ? -2.5f : 2.75f, -1.0f, 0), 
+                Quaternion.identity, 0, playerData);
         }
     }
 }
