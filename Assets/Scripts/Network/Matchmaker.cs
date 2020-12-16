@@ -49,7 +49,6 @@ namespace SIVS
 
         public override void OnJoinedRoom()
         {
-            PhotonNetwork.AutomaticallySyncScene = true;
             PhotonNetwork.LoadLevel("InGame");
         }
 

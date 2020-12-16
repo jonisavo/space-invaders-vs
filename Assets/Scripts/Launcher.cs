@@ -25,6 +25,7 @@ namespace SIVS
 
             isConnecting = PhotonNetwork.ConnectUsingSettings();
             PhotonNetwork.GameVersion = GameVersion;
+            PhotonNetwork.AutomaticallySyncScene = true;
         }
 
         #region MonoBehaviourPunCallbacks Callbacks
