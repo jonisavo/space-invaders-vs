@@ -34,7 +34,16 @@ namespace SIVS
             TintSprite();
         }
 
-        public void LoseHealth()
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+            Debug.Log("Entered trigger");
+            if (!other.gameObject.CompareTag("PlayerBullet")) return;
+            Destroy(other.gameObject);
+            LoseHealth();
+            Debug.Log("Hit");
+        }
+
+        private void LoseHealth()
         {
             health--;
             if (health <= 0)
@@ -45,7 +54,7 @@ namespace SIVS
 
         private void Die()
         {
-            
+            Destroy(gameObject);
         }
 
         private void TintSprite()
