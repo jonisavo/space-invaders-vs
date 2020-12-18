@@ -50,10 +50,9 @@ namespace SIVS
 
         private void TintSprite()
         {
-            spriteRenderer.color = new Color(
-                255, 
-                Mathf.LerpUnclamped(0, 255, health), 
-                Mathf.LerpUnclamped(0, 255, health));
+            float hue = 255f - (health - 1) * 20;
+            Debug.Log("Tinting sprite to 255, " + hue + ", " + hue);
+            spriteRenderer.color = new Color(255f, hue, hue);
         }
     }   
 }
