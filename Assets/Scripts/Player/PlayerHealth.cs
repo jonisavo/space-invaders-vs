@@ -5,7 +5,7 @@ namespace SIVS
 {
     public class PlayerHealth : MonoBehaviourPunCallbacks
     {
-        private int Lives = 3;
+        public int Lives = 3;
         
         private void OnTriggerEnter2D(Collider2D other)
         {
