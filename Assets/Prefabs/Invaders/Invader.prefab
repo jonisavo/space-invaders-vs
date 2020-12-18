@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4113204282743565063}
   - component: {fileID: 4113204282743565062}
   - component: {fileID: 4113204282743565061}
+  - component: {fileID: 739979522593936112}
   - component: {fileID: 4113204282743565066}
   m_Layer: 0
   m_Name: Invader
@@ -117,6 +118,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TypeCount: 3
+--- !u!114 &739979522593936112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4113204282743565057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd43363c72953854586f6c92ad77e722, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!61 &4113204282743565066
 BoxCollider2D:
   m_ObjectHideFlags: 0
