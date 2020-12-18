@@ -630,11 +630,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Play Area
       objectReference: {fileID: 0}
-    - target: {fileID: 6209602228963359566, guid: 786e46b33ea0a084c9d456a1d463ffc7,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7589481006881172331, guid: 786e46b33ea0a084c9d456a1d463ffc7,
         type: 3}
       propertyPath: m_LocalPosition.x
