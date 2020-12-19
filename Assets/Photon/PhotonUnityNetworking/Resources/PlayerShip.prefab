@@ -51,7 +51,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cad8c7337c98b64ba9dcb5c7118c982, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveSpeed: 3
+  MoveSpeed: 3.5
 --- !u!114 &6989479483175886220
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -114,7 +114,7 @@ Rigidbody2D:
   m_GameObject: {fileID: 343851896698152761}
   m_BodyType: 0
   m_Simulated: 1
-  m_UseFullKinematicContacts: 0
+  m_UseFullKinematicContacts: 1
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
