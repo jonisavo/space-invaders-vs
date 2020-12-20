@@ -22,17 +22,7 @@ namespace SIVS
         {
             _statistics = GameObject.Find("Game Manager").GetComponent<GameStatistics>();
             _randomizer = GameObject.Find("Game Manager").GetComponent<GameRandomizer>();
-            // if (_statistics.TotalInvaderKills() > 100)
-            //     health = randomizer.GetInt(5, 11);
-            // else if (_statistics.TotalInvaderKills() > 50)
-            //     health = randomizer.GetInt(3, 7);
-            // else if (_statistics.TotalInvaderKills() > 15)
-            //     health = randomizer.GetInt(1, 4);
-            // else
-            //     health = 1;
-
-            health = _randomizer.GetInt(1, 11);
-            
+            InitializeHealth();
             TintSprite();
         }
 
@@ -41,6 +31,18 @@ namespace SIVS
             if (!other.gameObject.CompareTag("PlayerBullet")) return;
             Destroy(other.gameObject);
             LoseHealth();
+        }
+
+        private void InitializeHealth()
+        {
+            if (_statistics.TotalInvaderKills() > 100)
+                health = _randomizer.GetInt(5, 11);
+            else if (_statistics.TotalInvaderKills() > 50)
+                health = _randomizer.GetInt(3, 7);
+            else if (_statistics.TotalInvaderKills() > 15)
+                health = _randomizer.GetInt(1, 4);
+            else
+                health = 1;
         }
 
         private void LoseHealth()
