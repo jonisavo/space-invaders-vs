@@ -7,24 +7,24 @@ namespace SIVS
     public class Matchmaker : MonoBehaviourPunCallbacks
     {
         [Tooltip("The UI Panel to let the user enter name, connect and play")]
-        public GameObject ControlPanel;
+        public GameObject controlPanel;
 
         [Tooltip("The UI Label to inform the user that the connection is in progress")]
-        public GameObject ProgressLabel;
+        public GameObject progressLabel;
 
-        private bool isMatchmaking;
+        private bool _isMatchmaking;
 
         private void Awake()
         {
-            isMatchmaking = false;
+            _isMatchmaking = false;
         }
 
         public void BeginMatchmaking()
         {
             if (string.IsNullOrEmpty(PhotonNetwork.NickName.Trim())) return;
-            if (isMatchmaking) return;
+            if (_isMatchmaking) return;
 
-            isMatchmaking = true;
+            _isMatchmaking = true;
             PhotonNetwork.JoinRandomRoom();
             ShowProgressLabel();
         }
@@ -34,10 +34,10 @@ namespace SIVS
         {
             Debug.LogWarningFormat("Matchmaker: OnDisconnected() called");
 
-            if (!isMatchmaking) return;
+            if (!_isMatchmaking) return;
 
             HideProgressLabel();
-            isMatchmaking = false;
+            _isMatchmaking = false;
         }
 
         public override void OnJoinRandomFailed(short returnCode, string message)
@@ -55,7 +55,7 @@ namespace SIVS
         public override void OnCreateRoomFailed(short returnCode, string message)
         {
             base.OnCreateRoomFailed(returnCode, message);
-            isMatchmaking = false;
+            _isMatchmaking = false;
             HideProgressLabel();
         }
 
@@ -63,14 +63,14 @@ namespace SIVS
 
         private void ShowProgressLabel()
         {
-            ControlPanel.SetActive(false);
-            ProgressLabel.SetActive(true);
+            controlPanel.SetActive(false);
+            progressLabel.SetActive(true);
         }
 
         private void HideProgressLabel()
         {
-            ControlPanel.SetActive(true);
-            ProgressLabel.SetActive(false);
+            controlPanel.SetActive(true);
+            progressLabel.SetActive(false);
         }
     }
 }

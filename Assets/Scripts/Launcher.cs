@@ -12,7 +12,7 @@ namespace SIVS
         /// </summary>
         private const string GameVersion = "1";
 
-        private bool isConnecting;
+        private bool _isConnecting;
 
         private void Awake()
         {
@@ -23,7 +23,7 @@ namespace SIVS
         {
             if (PhotonNetwork.IsConnected) return;
 
-            isConnecting = PhotonNetwork.ConnectUsingSettings();
+            _isConnecting = PhotonNetwork.ConnectUsingSettings();
             PhotonNetwork.GameVersion = GameVersion;
             PhotonNetwork.AutomaticallySyncScene = true;
         }
@@ -34,16 +34,16 @@ namespace SIVS
         {
             Debug.Log("OnConnectedToMaster() called");
 
-            if (!isConnecting) return;
+            if (!_isConnecting) return;
 
-            isConnecting = false;
+            _isConnecting = false;
             SceneManager.LoadScene("MainMenu");
         }
 
         public override void OnDisconnected(DisconnectCause cause)
         {
             Debug.LogWarningFormat("OnDisconnected() called");
-            isConnecting = false;
+            _isConnecting = false;
         }
 
         #endregion

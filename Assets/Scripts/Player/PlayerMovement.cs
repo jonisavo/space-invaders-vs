@@ -6,7 +6,7 @@ namespace SIVS
 {
     public class PlayerMovement : MonoBehaviourPunCallbacks
     {
-        public float MoveSpeed = 10;
+        public float moveSpeed = 10;
 
         private Rigidbody2D _rb;
 
@@ -19,7 +19,7 @@ namespace SIVS
         {
             if (!photonView.IsMine) return;
 
-            _rb.MovePosition((Vector2)transform.position + Vector2.right * Input.GetAxis("Horizontal") * MoveSpeed * Time.deltaTime);
+            _rb.MovePosition((Vector2)transform.position + Vector2.right * Input.GetAxis("Horizontal") * moveSpeed * Time.deltaTime);
         }
     }
 }

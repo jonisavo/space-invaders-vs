@@ -5,7 +5,7 @@ namespace SIVS
 {
     public class PlayerShoot : MonoBehaviourPunCallbacks
     {
-        public GameObject Bullet;
+        public GameObject bullet;
 
         private void Update()
         {
@@ -23,7 +23,7 @@ namespace SIVS
         [PunRPC]
         private void FireBullet()
         {
-            Instantiate(Bullet, GetBulletSpawnPoint(), Quaternion.identity);
+            Instantiate(bullet, GetBulletSpawnPoint(), Quaternion.identity);
         }
     }
 }

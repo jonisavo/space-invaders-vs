@@ -7,31 +7,31 @@ namespace SIVS
         [SerializeField]
         private int health;
 
-        private GameStatistics statistics;
+        private GameStatistics _statistics;
 
-        private GameRandomizer randomizer;
+        private GameRandomizer _randomizer;
 
-        private SpriteRenderer spriteRenderer;
+        private SpriteRenderer _spriteRenderer;
 
         private void Awake()
         {
-            spriteRenderer = GetComponent<SpriteRenderer>();
+            _spriteRenderer = GetComponent<SpriteRenderer>();
         }
 
         private void Start()
         {
-            statistics = GameObject.Find("Game Manager").GetComponent<GameStatistics>();
-            randomizer = GameObject.Find("Game Manager").GetComponent<GameRandomizer>();
-            // if (statistics.TotalInvaderKills() > 100)
+            _statistics = GameObject.Find("Game Manager").GetComponent<GameStatistics>();
+            _randomizer = GameObject.Find("Game Manager").GetComponent<GameRandomizer>();
+            // if (_statistics.TotalInvaderKills() > 100)
             //     health = randomizer.GetInt(5, 11);
-            // else if (statistics.TotalInvaderKills() > 50)
+            // else if (_statistics.TotalInvaderKills() > 50)
             //     health = randomizer.GetInt(3, 7);
-            // else if (statistics.TotalInvaderKills() > 15)
+            // else if (_statistics.TotalInvaderKills() > 15)
             //     health = randomizer.GetInt(1, 4);
             // else
             //     health = 1;
 
-            health = randomizer.GetInt(1, 11);
+            health = _randomizer.GetInt(1, 11);
             
             TintSprite();
         }
@@ -59,8 +59,8 @@ namespace SIVS
 
         private void TintSprite()
         {
-            float hue = 1.0f - (health - 1) * 0.1f;
-            spriteRenderer.color = new Color(1.0f, hue, hue);
+            var hue = 1.0f - (health - 1) * 0.1f;
+            _spriteRenderer.color = new Color(1.0f, hue, hue);
         }
     }   
 }
