@@ -35,11 +35,11 @@ namespace SIVS
 
         private void InitializeHealth()
         {
-            if (_statistics.TotalInvaderKills() > 100)
+            if (_statistics.TotalInvaderKills > 100)
                 health = _randomizer.GetInt(5, 11);
-            else if (_statistics.TotalInvaderKills() > 50)
+            else if (_statistics.TotalInvaderKills > 50)
                 health = _randomizer.GetInt(3, 7);
-            else if (_statistics.TotalInvaderKills() > 15)
+            else if (_statistics.TotalInvaderKills > 15)
                 health = _randomizer.GetInt(1, 4);
             else
                 health = 1;

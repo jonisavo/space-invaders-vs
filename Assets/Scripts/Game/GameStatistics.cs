@@ -15,11 +15,22 @@ namespace SIVS
     {
         private Dictionary<int, PlayerStatistics> _statistics;
 
+        public uint TotalInvaderKills
+        {
+            get
+            {
+                uint kills = 0;
+                foreach (var entry in _statistics)
+                    kills += entry.Value.InvaderKills;
+                return kills;
+            }
+        }
+
         private void Awake()
         {
             _statistics = new Dictionary<int, PlayerStatistics>();
             foreach (var entry in PhotonNetwork.CurrentRoom.Players)
-                _statistics[entry.Key] = new PlayerStatistics();
+                _statistics[entry.Value.ActorNumber] = new PlayerStatistics();
         }
 
         public PlayerStatistics GetOwnStatistics()
@@ -31,16 +42,8 @@ namespace SIVS
         {
             foreach (var entry in PhotonNetwork.CurrentRoom.Players)
                 if (entry.Value.ActorNumber != PhotonNetwork.LocalPlayer.ActorNumber)
-                    return _statistics[entry.Key];
+                    return _statistics[entry.Value.ActorNumber];
             return new PlayerStatistics();
-        }
-
-        public uint TotalInvaderKills()
-        {
-            uint kills = 0;
-            foreach (var entry in _statistics)
-                kills += entry.Value.InvaderKills;
-            return kills;
         }
     }
 }
