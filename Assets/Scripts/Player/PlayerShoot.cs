@@ -11,13 +11,18 @@ namespace SIVS
         {
             if (!photonView.IsMine) return;
 
-            if (Input.GetButtonDown("Fire1"))
+            if (Input.GetButtonDown("Fire1") && CanFire())
                 photonView.RPC("FireBullet", RpcTarget.All);
         }
 
         private Vector2 GetBulletSpawnPoint()
         {
             return transform.position + transform.forward * 3;
+        }
+
+        private bool CanFire()
+        {
+            return GameObject.FindWithTag("PlayerBullet") == null;
         }
 
         [PunRPC]
