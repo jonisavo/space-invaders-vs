@@ -1,19 +1,20 @@
 ﻿using System.Collections.Generic;
 using Photon.Pun;
-using UnityEngine;
+using Photon.Realtime;
 
 namespace SIVS
 {
     public class PlayerStatistics
     {
+        public int Lives = 3;
         public uint Points = 0;
         public uint InvaderKills = 0;
         public uint FiredBullets = 0;
     }
     
-    public class GameStatistics : MonoBehaviour
+    public class GameStatistics : MonoBehaviourPunCallbacks
     {
-        private Dictionary<int, PlayerStatistics> _statistics;
+        private Dictionary<string, PlayerStatistics> _statistics;
 
         public uint TotalInvaderKills
         {
@@ -28,22 +29,41 @@ namespace SIVS
 
         private void Awake()
         {
-            _statistics = new Dictionary<int, PlayerStatistics>();
+            _statistics = new Dictionary<string, PlayerStatistics>();
             foreach (var entry in PhotonNetwork.CurrentRoom.Players)
-                _statistics[entry.Value.ActorNumber] = new PlayerStatistics();
+                _statistics[entry.Value.NickName] = new PlayerStatistics();
+        }
+
+        public override void OnPlayerEnteredRoom(Player newPlayer)
+        {
+            base.OnPlayerEnteredRoom(newPlayer);
+            _statistics[newPlayer.NickName] = new PlayerStatistics();
+        }
+
+        public override void OnPlayerLeftRoom(Player otherPlayer)
+        {
+            base.OnPlayerLeftRoom(otherPlayer);
+            _statistics.Remove(otherPlayer.NickName);
         }
 
         public PlayerStatistics GetOwnStatistics()
         {
-            return _statistics[PhotonNetwork.LocalPlayer.ActorNumber];
+            return _statistics[PhotonNetwork.LocalPlayer.NickName];
         }
 
         public PlayerStatistics GetOpponentStatistics()
         {
             foreach (var entry in PhotonNetwork.CurrentRoom.Players)
                 if (entry.Value.ActorNumber != PhotonNetwork.LocalPlayer.ActorNumber)
-                    return _statistics[entry.Value.ActorNumber];
+                    return _statistics[entry.Value.NickName];
             return new PlayerStatistics();
+        }
+
+        public PlayerStatistics GetStatistics(string nickName)
+        {
+            if (!_statistics.ContainsKey(nickName))
+                return new PlayerStatistics();
+            return _statistics[nickName];
         }
     }
 }
