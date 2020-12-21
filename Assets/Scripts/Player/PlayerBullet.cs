@@ -4,7 +4,7 @@ namespace SIVS
 {
     public class PlayerBullet : MonoBehaviour
     {
-        private const int DespawnHeight = 20;
+        private const float DespawnHeight = 2.4f;
 
         public float moveSpeed = 1.0f;
 
