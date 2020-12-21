@@ -2,6 +2,7 @@
 
 namespace SIVS
 {
+    [RequireComponent(typeof(SpriteRenderer))]
     public class InvaderHealth : MonoBehaviour
     {
         [SerializeField]
