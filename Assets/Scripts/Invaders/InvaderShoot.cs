@@ -24,11 +24,6 @@ namespace SIVS
             _shootInterval = GameObject.Find("Game Manager").GetComponent<GameRandomizer>().GetInt(180, 300);
         }
 
-        private void Update()
-        {
-            Debug.DrawRay(GetBulletSpawnPoint(), Vector2.down, Color.red);
-        }
-
         private void FixedUpdate()
         {
             if (Time.frameCount % _shootInterval != 0) return;
