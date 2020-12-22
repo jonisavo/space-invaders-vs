@@ -19,7 +19,7 @@ namespace SIVS
         {
             if (!photonView.IsMine) return;
 
-            _rb.MovePosition((Vector2)transform.position + Vector2.right * Input.GetAxis("Horizontal") * moveSpeed * Time.deltaTime);
+            _rb.MovePosition((Vector2)transform.position + Vector2.right * (Input.GetAxis("Horizontal") * moveSpeed * Time.deltaTime));
         }
     }
 }
