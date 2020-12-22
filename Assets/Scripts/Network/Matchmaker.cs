@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
 
@@ -12,55 +13,107 @@ namespace SIVS
         [Tooltip("The UI Label to inform the user that the connection is in progress")]
         public GameObject progressLabel;
 
+        [Tooltip("The Button to let the user start matchmaking")]
+        public GameObject connectButton;
+
+        [Tooltip("The Button to let the user cancel matchmaking")]
+        public GameObject cancelButton;
+
         private bool _isMatchmaking;
+
+        private bool _allowMatchmaking;
+
+        private bool AllowMatchmaking
+        {
+            get => _allowMatchmaking;
+            set
+            {
+                _allowMatchmaking = value;
+                if (connectButton)
+                    connectButton.GetComponent<Button>().interactable = value;
+            }
+        }
 
         private void Awake()
         {
             _isMatchmaking = false;
+            AllowMatchmaking = PhotonNetwork.IsConnectedAndReady;
         }
 
         public void BeginMatchmaking()
         {
             if (string.IsNullOrEmpty(PhotonNetwork.NickName.Trim())) return;
-            if (_isMatchmaking) return;
+            if (_isMatchmaking || !AllowMatchmaking) return;
 
             _isMatchmaking = true;
             PhotonNetwork.JoinRandomRoom();
             ShowProgressLabel();
         }
+
+        public void CancelMatchmaking()
+        {
+            PhotonNetwork.LeaveRoom();
+            StopMatchmaking();
+            AllowMatchmaking = PhotonNetwork.IsConnectedAndReady;
+        }
+
+        private void StopMatchmaking()
+        {
+            _isMatchmaking = false;
+            HideCancelButton();
+            HideProgressLabel();
+        }
+
         #region MonoBehaviourPunCallbacks Callbacks
+
+        public override void OnConnectedToMaster()
+        {
+            AllowMatchmaking = true;
+        }
 
         public override void OnDisconnected(DisconnectCause cause)
         {
-            Debug.LogWarningFormat("Matchmaker: OnDisconnected() called");
+            AllowMatchmaking = false;
 
             if (!_isMatchmaking) return;
 
-            HideProgressLabel();
-            _isMatchmaking = false;
+            StopMatchmaking();
         }
 
         public override void OnJoinRandomFailed(short returnCode, string message)
         {
-            Debug.Log("Matchmaker: OnJoinRandomFailed() called");
-
             PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = 2 });
         }
 
         public override void OnJoinedRoom()
         {
-            PhotonNetwork.LoadLevel("InGame");
+            if (IsFullRoom())
+                StartGame();
+            else
+                ShowCancelButton();
+        }
+
+        public override void OnPlayerEnteredRoom(Player newPlayer)
+        {
+            if (IsFullRoom()) StartGame();
         }
 
         public override void OnCreateRoomFailed(short returnCode, string message)
         {
-            base.OnCreateRoomFailed(returnCode, message);
-            _isMatchmaking = false;
-            HideProgressLabel();
+            StopMatchmaking();
         }
 
         #endregion
 
+        private bool IsFullRoom() =>
+            PhotonNetwork.CurrentRoom.PlayerCount == PhotonNetwork.CurrentRoom.MaxPlayers;
+
+        private void StartGame() => PhotonNetwork.LoadLevel("InGame");
+
+        private void ShowCancelButton() => cancelButton.SetActive(true);
+
+        private void HideCancelButton() => cancelButton.SetActive(false);
+        
         private void ShowProgressLabel()
         {
             controlPanel.SetActive(false);
