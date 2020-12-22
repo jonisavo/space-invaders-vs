@@ -8,7 +8,7 @@ namespace SIVS
         private void Start()
         {
             object[] playerData = {PhotonNetwork.NickName};
-            int playerIndex = 1;
+            var playerIndex = 1;
             
             foreach (var entry in PhotonNetwork.CurrentRoom.Players)
                 if (entry.Value.ActorNumber == PhotonNetwork.LocalPlayer.ActorNumber)

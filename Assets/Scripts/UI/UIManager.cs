@@ -20,10 +20,10 @@ namespace SIVS
 
         private void DrawLives()
         {
-            for (int i = 0; i < _statistics.GetOwnStatistics().Lives; i++)
+            for (var i = 0; i < _statistics.GetOwnStatistics().Lives; i++)
                 GUI.DrawTexture(new Rect(12 + 40 + 40 * i, 656, 32, 32), lifeTexture);
 
-            for (int i = 0; i < _statistics.GetOpponentStatistics().Lives; i++)
+            for (var i = 0; i < _statistics.GetOpponentStatistics().Lives; i++)
                 GUI.DrawTexture(new Rect(1024 - 36 - 40 - 40 * i, 656, 32, 32), lifeTexture);
         }
     }
