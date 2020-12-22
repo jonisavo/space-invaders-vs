@@ -17,7 +17,8 @@ namespace SIVS
 
         private Vector2 GetBulletSpawnPoint()
         {
-            return transform.position + transform.forward * 3;
+            var playerTransform = transform;
+            return playerTransform.position + playerTransform.forward * 3;
         }
 
         private bool CanFire()
