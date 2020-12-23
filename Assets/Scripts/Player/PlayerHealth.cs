@@ -29,7 +29,7 @@ namespace SIVS
 
         private void GetHit()
         {
-            photonView.RPC("LoseLife", RpcTarget.AllBuffered, PhotonNetwork.LocalPlayer.NickName);
+            photonView.RPC("LoseLife", RpcTarget.All, PhotonNetwork.LocalPlayer.NickName);
             transform.position = new Vector3(
                 PhotonNetwork.LocalPlayer.ActorNumber == 1 ? -2.5f : 2.75f, -1.0f, 0
                 );
