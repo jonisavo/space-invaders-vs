@@ -1,9 +1,10 @@
-﻿using UnityEngine;
+﻿using Photon.Pun;
+using UnityEngine;
 
 namespace SIVS
 {
     [RequireComponent(typeof(BoxCollider2D))]
-    public class InvaderShoot : MonoBehaviour
+    public class InvaderShoot : MonoBehaviourPunCallbacks
     {
         public GameObject bullet;
 
@@ -28,6 +29,8 @@ namespace SIVS
 
         private void FixedUpdate()
         {
+            if (!PhotonNetwork.IsMasterClient) return;
+            
             if (Time.frameCount % _shootInterval != 0) return;
             
             var hit = Physics2D.Raycast(GetBulletSpawnPoint(), Vector2.down,
@@ -35,7 +38,7 @@ namespace SIVS
 
             if (hit.collider) return;
             
-            Shoot();
+            photonView.RPC("Shoot", RpcTarget.All);
         }
         
         #endregion
@@ -45,6 +48,7 @@ namespace SIVS
             return transform.position + _distanceToShootPoint;
         }
 
+        [PunRPC]
         private void Shoot()
         {
             Instantiate(bullet, GetBulletSpawnPoint(), Quaternion.identity);    
