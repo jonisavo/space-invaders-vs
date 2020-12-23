@@ -111,7 +111,11 @@ namespace SIVS
         private bool IsFullRoom() =>
             PhotonNetwork.CurrentRoom.PlayerCount == PhotonNetwork.CurrentRoom.MaxPlayers;
 
-        private void StartGame() => PhotonNetwork.LoadLevel("InGame");
+        private void StartGame()
+        {
+            if (PhotonNetwork.IsMasterClient)
+                PhotonNetwork.LoadLevel("InGame");
+        }
 
         private void ShowCancelButton() => cancelButton.SetActive(true);
 
