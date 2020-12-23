@@ -60,6 +60,9 @@ namespace SIVS
         private void StopMatchmaking()
         {
             _isMatchmaking = false;
+
+            if (!controlPanel) return;
+            
             HideCancelButton();
             HideProgressLabel();
         }
