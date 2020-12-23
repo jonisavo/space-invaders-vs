@@ -27,6 +27,8 @@ namespace SIVS
                 return kills;
             }
         }
+        
+        #region MonoBehaviour Callbacks
 
         private void Awake()
         {
@@ -39,7 +41,11 @@ namespace SIVS
             }
                 
         }
+        
+        #endregion
 
+        #region MonoBehaviourPunCallbacks Callbacks
+        
         public override void OnPlayerEnteredRoom(Player newPlayer)
         {
             base.OnPlayerEnteredRoom(newPlayer);
@@ -51,6 +57,8 @@ namespace SIVS
             base.OnPlayerLeftRoom(otherPlayer);
             _statistics.Remove(otherPlayer.NickName);
         }
+        
+        #endregion
 
         public PlayerStatistics GetOwnStatistics()
         {

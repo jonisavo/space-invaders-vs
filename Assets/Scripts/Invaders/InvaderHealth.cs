@@ -13,6 +13,8 @@ namespace SIVS
         private GameRandomizer _randomizer;
 
         private SpriteRenderer _spriteRenderer;
+        
+        #region MonoBehaviour Callbacks
 
         private void Awake()
         {
@@ -33,6 +35,8 @@ namespace SIVS
             Destroy(other.gameObject);
             LoseHealth();
         }
+        
+        #endregion
 
         private void InitializeHealth()
         {

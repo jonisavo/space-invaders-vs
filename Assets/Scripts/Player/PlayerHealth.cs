@@ -6,6 +6,8 @@ namespace SIVS
     public class PlayerHealth : MonoBehaviourPunCallbacks
     {
         private GameStatistics _statistics;
+        
+        #region MonoBehaviour Callbacks
 
         private void Start()
         {
@@ -22,6 +24,8 @@ namespace SIVS
             
             GetHit();
         }
+        
+        #endregion
 
         private void GetHit()
         {

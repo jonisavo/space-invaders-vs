@@ -11,6 +11,8 @@ namespace SIVS
 
         private int _shootInterval;
 
+        #region MonoBehaviour Callbacks
+        
         private void Awake()
         {
             var bounds = GetComponent<BoxCollider2D>().bounds;
@@ -35,6 +37,8 @@ namespace SIVS
             
             Shoot();
         }
+        
+        #endregion
 
         private Vector2 GetBulletSpawnPoint()
         {

@@ -13,6 +13,8 @@ namespace SIVS
         public TMP_Text victoryText;
 
         private GameStatistics _statistics;
+        
+        #region MonoBehaviour Callbacks
 
         private void Start()
         {
@@ -23,6 +25,8 @@ namespace SIVS
         {
             DrawLives();
         }
+        
+        #endregion
 
         public void ShowVictoryScreen(string nickName)
         {
