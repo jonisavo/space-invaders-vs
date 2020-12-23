@@ -5,8 +5,11 @@ namespace SIVS
     [RequireComponent(typeof(SpriteRenderer))]
     public class InvaderHealth : MonoBehaviour
     {
-        [SerializeField]
-        private int health;
+        public bool randomizeHealth = true;
+
+        public bool tintSprite = true;
+        
+        private int _health;
 
         private GameStatistics _statistics;
 
@@ -40,20 +43,26 @@ namespace SIVS
 
         private void InitializeHealth()
         {
+            if (!randomizeHealth)
+            {
+                _health = 1;
+                return;
+            }
+            
             if (_statistics.TotalInvaderKills > 100)
-                health = _randomizer.GetInt(5, 11);
+                _health = _randomizer.GetInt(5, 11);
             else if (_statistics.TotalInvaderKills > 50)
-                health = _randomizer.GetInt(3, 7);
+                _health = _randomizer.GetInt(3, 7);
             else if (_statistics.TotalInvaderKills > 15)
-                health = _randomizer.GetInt(1, 4);
+                _health = _randomizer.GetInt(1, 4);
             else
-                health = 1;
+                _health = 1;
         }
 
         private void LoseHealth()
         {
-            health--;
-            if (health <= 0)
+            _health--;
+            if (_health <= 0)
                 Die();
             else
                 TintSprite();
@@ -66,7 +75,9 @@ namespace SIVS
 
         private void TintSprite()
         {
-            var hue = 1.0f - (health - 1) * 0.1f;
+            if (!tintSprite) return;
+            
+            var hue = 1.0f - (_health - 1) * 0.1f;
             _spriteRenderer.color = new Color(1.0f, hue, hue);
         }
     }   
