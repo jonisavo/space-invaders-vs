@@ -539,11 +539,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ee18694b11cf8448983c13dcf13ccd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animationSpeed: 8
+  animationSpeed: 40
   animateBottomLeft: 0
+  initialBottomLeftHue: 0
   animateBottomRight: 1
+  initialBottomRightHue: 20
   animateTopLeft: 0
+  initialTopLeftHue: 0
   animateTopRight: 1
+  initialTopRightHue: 0
 --- !u!114 &1103484966
 MonoBehaviour:
   m_ObjectHideFlags: 0
