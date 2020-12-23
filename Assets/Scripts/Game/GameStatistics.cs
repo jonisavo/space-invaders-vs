@@ -9,12 +9,13 @@ namespace SIVS
         public int Lives = 3;
         public uint Points = 0;
         public uint InvaderKills = 0;
-        public uint FiredBullets = 0;
     }
     
     public class GameStatistics : MonoBehaviourPunCallbacks
     {
         private Dictionary<string, PlayerStatistics> _statistics;
+
+        private string _opponentName; // Cache the opponent name
 
         public uint TotalInvaderKills
         {
@@ -31,7 +32,12 @@ namespace SIVS
         {
             _statistics = new Dictionary<string, PlayerStatistics>();
             foreach (var entry in PhotonNetwork.CurrentRoom.Players)
+            {
                 _statistics[entry.Value.NickName] = new PlayerStatistics();
+                if (entry.Value.NickName != PhotonNetwork.LocalPlayer.NickName)
+                    _opponentName = entry.Value.NickName;
+            }
+                
         }
 
         public override void OnPlayerEnteredRoom(Player newPlayer)
@@ -53,10 +59,7 @@ namespace SIVS
 
         public PlayerStatistics GetOpponentStatistics()
         {
-            foreach (var entry in PhotonNetwork.CurrentRoom.Players)
-                if (entry.Value.ActorNumber != PhotonNetwork.LocalPlayer.ActorNumber)
-                    return _statistics[entry.Value.NickName];
-            return new PlayerStatistics();
+            return _statistics[_opponentName];
         }
 
         public PlayerStatistics GetStatistics(string nickName)
