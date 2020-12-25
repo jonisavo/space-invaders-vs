@@ -20,16 +20,16 @@ namespace SIVS
             _distanceToShootPoint = bounds.min - transform.position;
             _distanceToShootPoint.x += bounds.size.x / 2;
             _distanceToShootPoint.y -= 0.05f;
-        }
 
-        private void Start()
-        {
-            _shootInterval = GameObject.Find("Game Manager").GetComponent<GameRandomizer>().GetInt(180, 300);
+            if (photonView.InstantiationData != null)
+                _shootInterval = (int) photonView.InstantiationData[1];
+            else
+                _shootInterval = 200;
         }
 
         private void FixedUpdate()
         {
-            if (!PhotonNetwork.IsMasterClient) return;
+            if (!photonView.IsMine) return;
             
             if (Time.frameCount % _shootInterval != 0) return;
             
