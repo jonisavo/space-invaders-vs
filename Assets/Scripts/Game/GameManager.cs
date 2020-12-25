@@ -1,22 +1,26 @@
-﻿using ExitGames.Client.Photon;
-using Photon.Pun;
+﻿using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 using Random = UnityEngine.Random;
 
 namespace SIVS
 {
+    [RequireComponent(typeof(UIManager))]
     public class GameManager : MonoBehaviourPunCallbacks
     {
         private int _totalInvaderKills = 0;
 
         private bool _bothReady = false;
+
+        private UIManager _uiManager;
         
         #region MonoBehaviour Callbacks
         
         private void Awake()
         {
             PlayerStats.InitializeStats();
+            _uiManager = GetComponent<UIManager>();
         }
         
         #endregion
@@ -35,6 +39,18 @@ namespace SIVS
                 }
             }
 
+            if (changedProps.ContainsKey(PlayerStats.Lives))
+            {
+                if ((int) changedProps[PlayerStats.Lives] <= 0)
+                    EndGame(GetOtherPlayer(targetPlayer));
+            }
+
+            if (changedProps.ContainsKey(PlayerStats.CurrentRound))
+            {
+                if ((int) changedProps[PlayerStats.CurrentRound] >= 6)
+                    EndGame(targetPlayer);
+            }
+
             if (!changedProps.ContainsKey(PlayerStats.InvaderKills)) return;
             
             var invaderKills = 0;
@@ -47,6 +63,25 @@ namespace SIVS
         }
         
         #endregion
+        
+        private Player GetOtherPlayer(Player firstPlayer)
+        {
+            foreach (var player in PhotonNetwork.CurrentRoom.Players.Values)
+                if (player.ActorNumber != firstPlayer.ActorNumber)
+                    return player;
+
+            return null;
+        }
+
+        private void EndGame(Player winner)
+        {
+            if (winner == null)
+                _uiManager.ShowVictoryScreen("No one");
+            else
+                _uiManager.ShowVictoryScreen(winner.NickName);
+            
+            StopAllCoroutines();
+        }
 
         private bool IsEveryoneReady()
         {
