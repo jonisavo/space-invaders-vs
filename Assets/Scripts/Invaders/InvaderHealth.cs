@@ -1,19 +1,16 @@
-﻿using UnityEngine;
+﻿using ExitGames.Client.Photon;
+using Photon.Pun;
+using Photon.Pun.UtilityScripts;
+using UnityEngine;
 
 namespace SIVS
 {
     [RequireComponent(typeof(SpriteRenderer))]
-    public class InvaderHealth : MonoBehaviour
+    public class InvaderHealth : MonoBehaviourPunCallbacks
     {
-        public bool randomizeHealth = true;
-
         public bool tintSprite = true;
         
         private int _health;
-
-        private GameStatistics _statistics;
-
-        private GameRandomizer _randomizer;
 
         private SpriteRenderer _spriteRenderer;
         
@@ -22,43 +19,38 @@ namespace SIVS
         private void Awake()
         {
             _spriteRenderer = GetComponent<SpriteRenderer>();
-        }
 
-        private void Start()
-        {
-            _statistics = GameObject.Find("Game Manager").GetComponent<GameStatistics>();
-            _randomizer = GameObject.Find("Game Manager").GetComponent<GameRandomizer>();
-            InitializeHealth();
+            if (photonView.InstantiationData != null)
+                _health = (int) photonView.InstantiationData[0];
+            else
+                _health = 1;
+            
             TintSprite();
         }
 
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (!other.gameObject.CompareTag("PlayerBullet")) return;
+            
             Destroy(other.gameObject);
-            LoseHealth();
+            
+            if (!photonView.IsMine) return;
+            
+            photonView.RPC("LoseHealth", RpcTarget.All);
+
+            var bulletOwner = other.gameObject.GetComponent<PlayerBullet>().Owner;
+            
+            bulletOwner.AddScore(100);
+
+            bulletOwner.SetCustomProperties(new Hashtable()
+            {
+                {PlayerStats.InvaderKills, (int) bulletOwner.CustomProperties[PlayerStats.InvaderKills] + 1}
+            });
         }
         
         #endregion
 
-        private void InitializeHealth()
-        {
-            if (!randomizeHealth)
-            {
-                _health = 1;
-                return;
-            }
-            
-            if (_statistics.TotalInvaderKills > 100)
-                _health = _randomizer.GetInt(5, 11);
-            else if (_statistics.TotalInvaderKills > 50)
-                _health = _randomizer.GetInt(3, 7);
-            else if (_statistics.TotalInvaderKills > 15)
-                _health = _randomizer.GetInt(1, 4);
-            else
-                _health = 1;
-        }
-
+        [PunRPC]
         private void LoseHealth()
         {
             _health--;
@@ -67,10 +59,13 @@ namespace SIVS
             else
                 TintSprite();
         }
-
+        
         private void Die()
         {
-            Destroy(gameObject);
+            if (photonView.IsMine)
+                PhotonNetwork.Destroy(gameObject);
+            else
+                if (gameObject) gameObject.SetActive(false);
         }
 
         private void TintSprite()
