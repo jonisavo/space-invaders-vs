@@ -1,4 +1,6 @@
-﻿using Photon.Pun;
+﻿using System.Collections;
+using Photon.Pun;
+using Photon.Realtime;
 using UnityEngine;
 
 namespace SIVS
@@ -10,7 +12,7 @@ namespace SIVS
 
         private Vector3 _distanceToShootPoint;
 
-        private int _shootInterval;
+        private float _shootInterval;
 
         #region MonoBehaviour Callbacks
         
@@ -22,26 +24,54 @@ namespace SIVS
             _distanceToShootPoint.y -= 0.05f;
 
             if (photonView.InstantiationData != null)
-                _shootInterval = (int) photonView.InstantiationData[1];
+                _shootInterval = (float) photonView.InstantiationData[2];
             else
-                _shootInterval = 200;
+                _shootInterval = 1.5f;
+
+            if (PhotonNetwork.IsMasterClient)
+                StartCoroutine(ShootCoroutine());
         }
 
-        private void FixedUpdate()
-        {
-            if (!photonView.IsMine) return;
-            
-            if (Time.frameCount % _shootInterval != 0) return;
-            
-            var hit = Physics2D.Raycast(GetBulletSpawnPoint(), Vector2.down,
-                Mathf.Infinity, LayerMask.GetMask("Invaders"));
-
-            if (hit.collider) return;
-            
-            photonView.RPC("Shoot", RpcTarget.All);
-        }
+        // private void FixedUpdate()
+        // {
+        //     if (!photonView.IsMine) return;
+        //     
+        //     if (Time.frameCount % _shootInterval != 0) return;
+        //     
+        //     var hit = Physics2D.Raycast(GetBulletSpawnPoint(), Vector2.down,
+        //         Mathf.Infinity, LayerMask.GetMask("Invaders"));
+        //
+        //     if (hit.collider) return;
+        //     
+        //     photonView.RPC("Shoot", RpcTarget.All);
+        // }
         
         #endregion
+        
+        #region MonoBehaviourPunCallbacks Callbacks
+
+        public override void OnMasterClientSwitched(Player newMasterClient)
+        {
+            if (PhotonNetwork.LocalPlayer.ActorNumber == newMasterClient.ActorNumber)
+                StartCoroutine(ShootCoroutine());
+        }
+
+        #endregion
+
+        private IEnumerator ShootCoroutine()
+        {
+            while (true)
+            {
+                yield return new WaitForSeconds(_shootInterval);
+                
+                var hit = Physics2D.Raycast(GetBulletSpawnPoint(), Vector2.down,
+                    Mathf.Infinity, LayerMask.GetMask("Invaders"));
+
+                if (hit.collider) continue;
+            
+                photonView.RPC("Shoot", RpcTarget.All);
+            }
+        }
 
         private Vector2 GetBulletSpawnPoint()
         {
