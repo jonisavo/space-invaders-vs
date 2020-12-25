@@ -29,7 +29,8 @@ namespace SIVS
         [PunRPC]
         private void FireBullet()
         {
-            Instantiate(bullet, GetBulletSpawnPoint(), Quaternion.identity);
+            var bulletObject = Instantiate(bullet, GetBulletSpawnPoint(), Quaternion.identity);
+            bulletObject.GetComponent<PlayerBullet>().SetOwner(photonView.Owner);
         }
     }
 }

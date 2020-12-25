@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Photon.Realtime;
+using UnityEngine;
 
 namespace SIVS
 {
@@ -7,6 +8,10 @@ namespace SIVS
         private const float DespawnHeight = 2.4f;
 
         public float moveSpeed = 1.0f;
+
+        public Player Owner { get; private set; }
+
+        public void SetOwner(Player newOwner) => Owner = newOwner;
 
         private void Update()
         {
