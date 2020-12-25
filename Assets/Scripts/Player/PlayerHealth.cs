@@ -5,14 +5,7 @@ namespace SIVS
 {
     public class PlayerHealth : MonoBehaviourPunCallbacks
     {
-        private GameStatistics _statistics;
-        
         #region MonoBehaviour Callbacks
-
-        private void Start()
-        {
-            _statistics = GameObject.Find("Game Manager").GetComponent<GameStatistics>();
-        }
 
         private void OnCollisionEnter2D(Collision2D other)
         {
@@ -29,17 +22,10 @@ namespace SIVS
 
         private void GetHit()
         {
-            photonView.RPC("LoseLife", RpcTarget.All, PhotonNetwork.LocalPlayer.NickName);
+            PlayerStats.RemoveLife();
             transform.position = new Vector3(
                 PhotonNetwork.LocalPlayer.ActorNumber == 1 ? -2.5f : 2.75f, -1.0f, 0
                 );
-        }
-
-        [PunRPC]
-        private void LoseLife(string nickName)
-        {
-            Debug.Log("Decreasing one life from " + nickName);
-            _statistics.GetStatistics(nickName).Lives--;
         }
     }
 }
