@@ -22,9 +22,9 @@ namespace SIVS
             PlayerStats.InitializeStats();
             _uiManager = GetComponent<UIManager>();
         }
-        
+
         #endregion
-        
+
         #region MonoBehaviourPunCallbacks Callbacks
 
         public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
@@ -116,7 +116,7 @@ namespace SIVS
 
         private void SpawnOneInvader(int side, int row, int column)
         {
-            object[] instantiationData = {GenerateInvaderHealth(), Random.Range(180, 300)};
+            object[] instantiationData = {side, GenerateInvaderHealth(), Random.Range(2.5f, 4.0f)};
 
             var xPos = (side == 1 ? -4.3f : 0.8f) + row * 0.4f;
 

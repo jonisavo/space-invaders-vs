@@ -21,7 +21,7 @@ namespace SIVS
             _spriteRenderer = GetComponent<SpriteRenderer>();
 
             if (photonView.InstantiationData != null)
-                _health = (int) photonView.InstantiationData[0];
+                _health = (int) photonView.InstantiationData[1];
             else
                 _health = 1;
             
