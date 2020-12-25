@@ -1,10 +1,13 @@
-﻿using Photon.Pun;
+﻿using System.Collections.Generic;
+using ExitGames.Client.Photon;
+using Photon.Pun;
+using Photon.Realtime;
 using TMPro;
 using UnityEngine;
 
 namespace SIVS
 {
-    public class UIManager : MonoBehaviour
+    public class UIManager : MonoBehaviourPunCallbacks
     {
         public Texture lifeTexture;
 
@@ -12,13 +15,13 @@ namespace SIVS
 
         public TMP_Text victoryText;
 
-        private GameStatistics _statistics;
+        private Dictionary<string, int> _cachedLives;
         
         #region MonoBehaviour Callbacks
 
-        private void Start()
+        private void Awake()
         {
-            _statistics = GameObject.Find("Game Manager").GetComponent<GameStatistics>();
+            _cachedLives = new Dictionary<string, int>();
         }
 
         private void OnGUI()
@@ -26,6 +29,16 @@ namespace SIVS
             DrawLives();
         }
         
+        #endregion
+        
+        #region MonoBehaviourPunCallbacks Callbacks
+
+        public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
+        {
+            if (changedProps.ContainsKey(PlayerStats.Lives))
+                _cachedLives[targetPlayer.NickName] = (int) changedProps[PlayerStats.Lives];
+        }
+
         #endregion
 
         public void ShowVictoryScreen(string nickName)
@@ -38,8 +51,11 @@ namespace SIVS
         {
             foreach (var entry in PhotonNetwork.CurrentRoom.Players)
             {
+                if (!_cachedLives.ContainsKey(entry.Value.NickName)) continue;
+                
                 var initialXCoord = entry.Key % 2 == 0 ? 948 : 52;
-                for (var i = 0; i < _statistics.GetStatistics(entry.Value.NickName).Lives; i++)
+
+                for (var i = 0; i < _cachedLives[entry.Value.NickName]; i++)
                     GUI.DrawTexture(new Rect(entry.Key % 2 == 0 ? initialXCoord - 40 * i : initialXCoord + 40 * i, 
                             656, 32, 32), lifeTexture);
             }
