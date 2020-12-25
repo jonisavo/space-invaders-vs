@@ -121,52 +121,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &148128021
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 148128023}
-  - component: {fileID: 148128022}
-  m_Layer: 0
-  m_Name: UI Manager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &148128022
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 148128021}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1841486759ec5c549bc2910725e11e4c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lifeTexture: {fileID: 2800000, guid: 269803f0a79d59d44a920a2a923aee3c, type: 3}
-  resultCanvas: {fileID: 848209708}
-  victoryText: {fileID: 448969159}
---- !u!4 &148128023
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 148128021}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.27387553, y: 1.4421567, z: -7.6868005}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &277102760
 GameObject:
   m_ObjectHideFlags: 0
@@ -177,6 +131,7 @@ GameObject:
   m_Component:
   - component: {fileID: 277102762}
   - component: {fileID: 277102765}
+  - component: {fileID: 277102761}
   - component: {fileID: 277102764}
   m_Layer: 0
   m_Name: Game Manager
@@ -185,6 +140,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &277102761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 277102760}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1841486759ec5c549bc2910725e11e4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lifeTexture: {fileID: 2800000, guid: 269803f0a79d59d44a920a2a923aee3c, type: 3}
+  resultCanvas: {fileID: 848209708}
+  victoryText: {fileID: 448969159}
 --- !u!4 &277102762
 Transform:
   m_ObjectHideFlags: 0
@@ -605,7 +575,7 @@ RectTransform:
   m_Children:
   - {fileID: 1042462974}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -676,7 +646,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1042462973
 GameObject:
