@@ -9,13 +9,11 @@ namespace SIVS
 
         private void OnCollisionEnter2D(Collision2D other)
         {
-            if (!photonView.IsMine) return;
-
             if (!other.gameObject.CompareTag("EnemyBullet")) return;
             
-            Debug.Log("Got hit");
+            if (photonView.IsMine) GetHit();
             
-            GetHit();
+            Destroy(other.gameObject);
         }
         
         #endregion
