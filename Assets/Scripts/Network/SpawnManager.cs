@@ -15,7 +15,7 @@ namespace SIVS
                     playerIndex = entry.Key;
             
             PhotonNetwork.Instantiate("PlayerShip",
-                new Vector3(playerIndex == 1 ? -2.5f : 2.75f, -1.0f, 0), 
+                new Vector3(playerIndex == 1 ? -2.5f : 2.7f, -1.0f, 0), 
                 Quaternion.identity, 0, playerData);
         }
     }
