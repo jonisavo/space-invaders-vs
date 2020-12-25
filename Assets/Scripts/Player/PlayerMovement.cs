@@ -17,7 +17,7 @@ namespace SIVS
             _rb = GetComponent<Rigidbody2D>();
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
             if (!photonView.IsMine) return;
 
