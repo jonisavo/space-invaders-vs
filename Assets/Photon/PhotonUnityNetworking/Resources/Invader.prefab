@@ -14,9 +14,11 @@ GameObject:
   - component: {fileID: 4113204282743565061}
   - component: {fileID: 739979522593936112}
   - component: {fileID: -919248742932177090}
+  - component: {fileID: 5796063333180500504}
   - component: {fileID: 4113204282743565066}
   - component: {fileID: 3499809671171731917}
   - component: {fileID: 1938320461843863620}
+  - component: {fileID: 2432535988959439424}
   m_Layer: 8
   m_Name: Invader
   m_TagString: Invader
@@ -147,6 +149,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bullet: {fileID: 7025237439117397972, guid: f0bda18869a057e4cb79c58a5b96cd73, type: 3}
+--- !u!114 &5796063333180500504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4113204282743565057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 451870ef6a854ce98eceeb5ca5a5d8cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!61 &4113204282743565066
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -188,7 +202,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -212,7 +226,24 @@ MonoBehaviour:
   observableSearch: 2
   Synchronization: 3
   OwnershipTransfer: 0
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: 2432535988959439424}
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &2432535988959439424
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4113204282743565057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
