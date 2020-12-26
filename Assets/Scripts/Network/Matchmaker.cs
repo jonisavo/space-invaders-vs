@@ -118,6 +118,7 @@ namespace SIVS
         public override void OnCreateRoomFailed(short returnCode, string message)
         {
             StopMatchmaking();
+            AllowMatchmaking = PhotonNetwork.IsConnectedAndReady;
         }
 
         #endregion
