@@ -11,12 +11,14 @@ namespace SIVS
     [RequireComponent(typeof(TMP_InputField))]
     public class PlayerNameInputField : MonoBehaviour
     {
+        public GameObject warningLabel;
+        
         private const string PlayerNamePrefKey = "PlayerName";
 
         private void Start()
         {
             var defaultName = string.Empty;
-            var inputField = this.GetComponent<TMP_InputField>();
+            var inputField = GetComponent<TMP_InputField>();
 
             if (PlayerPrefs.HasKey(PlayerNamePrefKey))
             {
@@ -25,14 +27,24 @@ namespace SIVS
             }
 
             PhotonNetwork.NickName = defaultName;
+            SetWarningVisibility(string.IsNullOrEmpty(defaultName.Trim()));
         }
 
         public void SetPlayerValue(string value)
         {
-            if (string.IsNullOrEmpty(value)) return;
-
             PhotonNetwork.NickName = value;
+            
+            if (string.IsNullOrEmpty(value.Trim()))
+            {
+                SetWarningVisibility(true);
+                return;
+            }
+            
             PlayerPrefs.SetString(PlayerNamePrefKey, value);
+            
+            SetWarningVisibility(false);
         }
+
+        private void SetWarningVisibility(bool visible) => warningLabel.SetActive(visible);
     }
 }

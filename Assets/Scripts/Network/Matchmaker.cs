@@ -16,6 +16,9 @@ namespace SIVS
         [Tooltip("The Button to let the user start matchmaking")]
         public GameObject connectButton;
 
+        [Tooltip("The Button to let the user join a room")]
+        public GameObject joinRoomButton;
+
         [Tooltip("The Button to let the user cancel matchmaking")]
         public GameObject cancelButton;
 
@@ -31,6 +34,8 @@ namespace SIVS
                 _allowMatchmaking = value;
                 if (connectButton)
                     connectButton.GetComponent<Button>().interactable = value;
+                if (joinRoomButton)
+                    joinRoomButton.GetComponent<Button>().interactable = value;
             }
         }
 
@@ -47,6 +52,13 @@ namespace SIVS
 
             _isMatchmaking = true;
             PhotonNetwork.JoinRandomRoom();
+            ShowProgressLabel();
+        }
+
+        public void JoinNamedRoom(string roomName)
+        {
+            _isMatchmaking = true;
+            PhotonNetwork.JoinOrCreateRoom(roomName, new RoomOptions {MaxPlayers = 2}, TypedLobby.Default);
             ShowProgressLabel();
         }
 
