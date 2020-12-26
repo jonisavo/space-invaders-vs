@@ -52,20 +52,30 @@ namespace SIVS
             {
                 yield return new WaitForSeconds(2.0f);
 
-                if (!CanMoveHorizontally())
-                    foreach (var invader in GameObject.FindGameObjectsWithTag("Invader"))
-                    {
-                        var movement = invader.GetComponent<InvaderMovement>();
-
-                        if (movement._side != _side) continue;
-                        
-                        movement.ChangeDirection();
-                        //invader.transform.Translate(Vector2.down * 0.25f);
-                    }
+                if (CanMoveInDirection(GetMovementDirection(), 0.4f))
+                {
+                    Move(GetMovementDirection());
+                    continue;
+                }
                 
-                transform.Translate(GetMovementDirection() * 0.25f);
+                var canMoveDown = CanMoveInDirection(Vector2.down, 2.0f);
+                
+                foreach (var invader in GameObject.FindGameObjectsWithTag("Invader"))
+                {
+                    var movement = invader.GetComponent<InvaderMovement>();
+
+                    if (movement._side != _side) continue;
+                        
+                    movement.ChangeDirection();
+                        
+                    if (canMoveDown)
+                        movement.Move(Vector2.down);
+                }
             }
         }
+
+        private void Move(Vector2 direction) =>
+            transform.Translate(direction.normalized * 0.25f);
 
         private void ChangeDirection() => _goingRight = !_goingRight;
 
@@ -75,6 +85,21 @@ namespace SIVS
                 0.4f, LayerMask.GetMask("Walls"));
 
             return hit.collider == null;
+        }
+
+        private bool CanMoveInDirection(Vector2 direction, float rayDistance)
+        {
+            foreach (var invader in GameObject.FindGameObjectsWithTag("Invader"))
+            {
+                if (invader.GetComponent<InvaderMovement>()._side != _side) continue;
+
+                var hit = Physics2D.Raycast(GetRaycastStartPoint(), direction,
+                    rayDistance, LayerMask.GetMask("Walls"));
+
+                if (hit.collider != null) return false;
+            }
+
+            return true;
         }
 
         private Vector2 GetRaycastStartPoint()
