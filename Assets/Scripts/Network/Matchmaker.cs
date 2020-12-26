@@ -58,7 +58,9 @@ namespace SIVS
         public void JoinNamedRoom(string roomName)
         {
             _isMatchmaking = true;
-            PhotonNetwork.JoinOrCreateRoom(roomName, new RoomOptions {MaxPlayers = 2}, TypedLobby.Default);
+            PhotonNetwork.JoinOrCreateRoom(roomName,
+                new RoomOptions {MaxPlayers = 2, IsVisible = false},
+                TypedLobby.Default);
             ShowProgressLabel();
         }
 
