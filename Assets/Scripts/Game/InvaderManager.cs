@@ -9,6 +9,12 @@ namespace SIVS
 {
     public class InvaderManager : MonoBehaviourPunCallbacks
     {
+        public bool debugMode = false;
+
+        public int debugRows = 1;
+
+        public int debugColumns = 1;
+        
         private int _totalInvaderKills = 0;
 
         #region Callbacks
@@ -50,6 +56,7 @@ namespace SIVS
 
                 var movement = invader.GetComponent<InvaderMovement>();
 
+                Debug.Log($"Checking whether invaders on side {side} can move {(movement.GetMovementDirection().x > 0 ? "right" : "left")}");
                 if (movement.CanMove(movement.GetMovementDirection(), 0.5f))
                 {
                     Debug.Log($"Moving invaders of side {side} horizontally");
@@ -80,9 +87,19 @@ namespace SIVS
     
         public void SpawnInvaders(Player player)
         {
-            var rows = 4 + (int) player.CustomProperties[PlayerStats.CurrentRound];
-            var columns = 4 + (int) player.CustomProperties[PlayerStats.CurrentRound] / 2;
-                
+            int rows, columns;
+            
+            if (debugMode)
+            {
+                rows = debugRows;
+                columns = debugColumns;   
+            }
+            else
+            {
+                rows = 4 + (int) player.CustomProperties[PlayerStats.CurrentRound];
+                columns = 4 + (int) player.CustomProperties[PlayerStats.CurrentRound] / 2;
+            }
+            
             for (var row = 0; row < rows; row++)
                 for (var column = 0; column < columns; column++)
                     SpawnOneInvader(player.ActorNumber, row, column);
