@@ -73,6 +73,11 @@ namespace SIVS
             }
         }
 
+        public void StopShooting()
+        {
+            StopAllCoroutines();
+        }
+
         private Vector2 GetBulletSpawnPoint()
         {
             return transform.position + _distanceToShootPoint;

@@ -98,7 +98,24 @@ namespace SIVS
                 _uiManager.ShowVictoryScreen(winner.NickName);
             
             StopAllCoroutines();
+            
+            DestroyBullets();
+
+            if (!PhotonNetwork.IsMasterClient) return;
+            
             _invaderManager.StopAllCoroutines();
+            
+            foreach (var invader in GameObject.FindGameObjectsWithTag("Invader"))
+                invader.GetComponent<InvaderShoot>().StopShooting();
+        }
+
+        private void DestroyBullets()
+        {
+            foreach (var playerBullet in GameObject.FindGameObjectsWithTag("PlayerBullet"))
+                Destroy(playerBullet);
+
+            foreach (var enemyBullet in GameObject.FindGameObjectsWithTag("EnemyBullet"))
+                Destroy(enemyBullet);
         }
     }
 }
