@@ -49,6 +49,8 @@ namespace SIVS
 
         private void DrawLives()
         {
+            if (!PhotonNetwork.InRoom) return;
+            
             foreach (var entry in PhotonNetwork.CurrentRoom.Players)
             {
                 if (!_cachedLives.ContainsKey(entry.Value.NickName)) continue;
