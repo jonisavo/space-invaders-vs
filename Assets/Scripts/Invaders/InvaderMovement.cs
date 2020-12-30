@@ -5,6 +5,8 @@ namespace SIVS
 {
     public class InvaderMovement : MonoBehaviourPunCallbacks
     {
+        public float movementAmount = 0.25f;
+        
         public bool debugMode = false;
         
         private int _side;
@@ -41,11 +43,15 @@ namespace SIVS
         public int GetSide() => _side;
 
         public void Move(Vector2 direction) =>
-            transform.Translate(direction.normalized * 0.25f);
+            transform.Translate(direction.normalized * movementAmount);
 
         public void ChangeDirection() => _goingRight = !_goingRight;
 
-        public bool CanMove(Vector2 direction, float rayDistance)
+        public bool CanMoveHorizontally() => CanMove(GetMovementDirection(), movementAmount * 2);
+
+        public bool CanMoveDown() => CanMove(Vector2.down, 2.5f);
+
+        private bool CanMove(Vector2 direction, float rayDistance)
         {
             foreach (var invader in GameObject.FindGameObjectsWithTag("Invader"))
             {
