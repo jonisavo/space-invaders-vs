@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using Photon.Pun;
-using Photon.Realtime;
+﻿using Photon.Pun;
 using UnityEngine;
 
 namespace SIVS
@@ -24,62 +22,26 @@ namespace SIVS
                 _side = (int) photonView.InstantiationData[0];
             else
                 _side = 1;
-            
-            if (!PhotonNetwork.IsMasterClient) return;
-            
-            StartCoroutine(MoveInvader());
         }
 
-        private void FixedUpdate()
-        {
-            Debug.DrawRay(
-                GetRaycastStartPoint(), 
-                GetMovementDirection().normalized * 0.4f,
-                Color.red);
-        }
+        // private void FixedUpdate()
+        // {
+        //     Debug.DrawRay(
+        //         GetRaycastStartPoint(), 
+        //         GetMovementDirection().normalized * 0.4f,
+        //         Color.red);
+        // }
 
-        public override void OnMasterClientSwitched(Player newMasterClient)
-        {
-            if (PhotonNetwork.LocalPlayer.ActorNumber == newMasterClient.ActorNumber)
-                StartCoroutine(MoveInvader());
-        }
-        
         #endregion
 
-        private IEnumerator MoveInvader()
-        {
-            while (true)
-            {
-                yield return new WaitForSeconds(2.0f);
+        public int GetSide() => _side;
 
-                if (CanMoveInDirection(GetMovementDirection(), 0.4f))
-                {
-                    Move(GetMovementDirection());
-                    continue;
-                }
-                
-                var canMoveDown = CanMoveInDirection(Vector2.down, 2.0f);
-                
-                foreach (var invader in GameObject.FindGameObjectsWithTag("Invader"))
-                {
-                    var movement = invader.GetComponent<InvaderMovement>();
-
-                    if (movement._side != _side) continue;
-                        
-                    movement.ChangeDirection();
-                        
-                    if (canMoveDown)
-                        movement.Move(Vector2.down);
-                }
-            }
-        }
-
-        private void Move(Vector2 direction) =>
+        public void Move(Vector2 direction) =>
             transform.Translate(direction.normalized * 0.25f);
 
-        private void ChangeDirection() => _goingRight = !_goingRight;
+        public void ChangeDirection() => _goingRight = !_goingRight;
 
-        private bool CanMoveHorizontally()
+        public bool CanMoveHorizontally()
         {
             var hit = Physics2D.Raycast(GetRaycastStartPoint(), GetMovementDirection(),
                 0.4f, LayerMask.GetMask("Walls"));
@@ -87,7 +49,7 @@ namespace SIVS
             return hit.collider == null;
         }
 
-        private bool CanMoveInDirection(Vector2 direction, float rayDistance)
+        public bool CanMoveInDirection(Vector2 direction, float rayDistance)
         {
             foreach (var invader in GameObject.FindGameObjectsWithTag("Invader"))
             {
@@ -101,12 +63,9 @@ namespace SIVS
 
             return true;
         }
+        
+        public Vector2 GetMovementDirection() => _goingRight ? Vector2.right : Vector2.left;
 
-        private Vector2 GetRaycastStartPoint()
-        {
-            return transform.position + _distanceToCenter;
-        }
-
-        private Vector2 GetMovementDirection() => _goingRight ? Vector2.right : Vector2.left;
+        private Vector2 GetRaycastStartPoint() => transform.position + _distanceToCenter;
     }
 }
