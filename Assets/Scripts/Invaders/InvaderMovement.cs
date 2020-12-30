@@ -5,6 +5,8 @@ namespace SIVS
 {
     public class InvaderMovement : MonoBehaviourPunCallbacks
     {
+        public bool debugMode = false;
+        
         private int _side;
 
         private bool _goingRight = true;
@@ -24,13 +26,15 @@ namespace SIVS
                 _side = 1;
         }
 
-        // private void FixedUpdate()
-        // {
-        //     Debug.DrawRay(
-        //         GetRaycastStartPoint(), 
-        //         GetMovementDirection().normalized * 0.4f,
-        //         Color.red);
-        // }
+        private void FixedUpdate()
+        {
+            if (!debugMode) return;
+            
+            Debug.DrawRay(
+                GetRaycastStartPoint(), 
+                GetMovementDirection().normalized * 0.5f,
+                Color.red);
+        }
 
         #endregion
 
