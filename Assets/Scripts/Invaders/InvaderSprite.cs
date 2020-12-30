@@ -6,6 +6,7 @@ namespace SIVS
     [RequireComponent(typeof(Animator))]
     public class InvaderSprite : MonoBehaviour
     {
+        [Tooltip("Specifies the number of sprite types to cycle through.")]
         public int typeCount;
 
         private void Awake()

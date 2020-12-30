@@ -5,9 +5,10 @@ namespace SIVS
     public class InvaderBullet : MonoBehaviour
     {
         private const float DespawnHeight = -2.4f;
-
+        
+        [Tooltip("The move speed for this bullet.")]
         public float moveSpeed = 1.0f;
-
+        
         private void Update()
         {
             transform.Translate(

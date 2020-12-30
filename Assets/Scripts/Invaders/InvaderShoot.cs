@@ -8,6 +8,7 @@ namespace SIVS
     [RequireComponent(typeof(BoxCollider2D))]
     public class InvaderShoot : MonoBehaviourPunCallbacks
     {
+        [Tooltip("The bullet to shoot.")]
         public GameObject bullet;
 
         private Vector3 _distanceToShootPoint;

@@ -8,6 +8,7 @@ namespace SIVS
     [RequireComponent(typeof(SpriteRenderer))]
     public class InvaderHealth : MonoBehaviourPunCallbacks
     {
+        [Tooltip("Toggles whether to automatically tint the invader sprite red.")]
         public bool tintSprite = true;
         
         private int _health;

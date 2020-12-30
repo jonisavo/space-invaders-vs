@@ -9,12 +9,16 @@ namespace SIVS
 {
     public class InvaderManager : MonoBehaviourPunCallbacks
     {
+        [Tooltip("Toggles debug options.")]
         public bool debugMode = false;
 
+        [Tooltip("If debug mode is on, forces the row count.")]
         public int debugRows = 1;
 
+        [Tooltip("If debug mode is on, forces the column count.")]
         public int debugColumns = 1;
 
+        [Tooltip("If debug mode is on, forces the move rate. Set to 0 to ignore this setting.")]
         public float debugMoveRate = 1.0f;
         
         private int _totalInvaderKills = 0;
@@ -149,7 +153,7 @@ namespace SIVS
 
         private float GetMoveInterval(Player player)
         {
-            if (debugMode && debugMoveRate > 0) return debugMoveRate;
+            if (debugMode && debugMoveRate == 0) return debugMoveRate;
             
             var round = (int) player.CustomProperties[PlayerStats.CurrentRound];
             return new []{3.0f, 2.5f, 2.0f, 1.75f, 1.5f}[round - 1];

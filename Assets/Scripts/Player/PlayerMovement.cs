@@ -6,6 +6,7 @@ namespace SIVS
 {
     public class PlayerMovement : MonoBehaviourPunCallbacks
     {
+        [Tooltip("The movement speed for the player.")]
         public float moveSpeed = 10;
 
         private Rigidbody2D _rb;

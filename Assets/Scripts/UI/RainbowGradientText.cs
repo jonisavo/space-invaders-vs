@@ -6,49 +6,31 @@ namespace SIVS
     [RequireComponent(typeof(TMP_Text))]
     public class RainbowGradientText : MonoBehaviour
     {
-        /// <summary>
-        /// Determines the speed of the rainbow gradient animation.
-        /// </summary>
+        [Tooltip("Determines the speed of the rainbow gradient animation.")]
         public float animationSpeed = 5.0f;
-
-        /// <summary>
-        /// Toggles whether the bottom left portion is animated.
-        /// </summary>
+        
+        [Tooltip("Toggles whether the bottom left portion is animated.")]
         public bool animateBottomLeft = false;
-
-        /// <summary>
-        /// The initial hue for the bottom left portion.
-        /// </summary>
+        
+        [Tooltip("The initial hue for the bottom left portion.")]
         public float initialBottomLeftHue = 0;
-
-        /// <summary>
-        /// Toggles whether the bottom right portion is animated.
-        /// </summary>
+        
+        [Tooltip("Toggles whether the bottom right portion is animated.")]
         public bool animateBottomRight = false;
-
-        /// <summary>
-        /// The initial hue for the bottom right portion.
-        /// </summary>
+        
+        [Tooltip("The initial hue for the bottom right portion.")]
         public float initialBottomRightHue = 0;
-
-        /// <summary>
-        /// Toggles whether the top left portion is animated.
-        /// </summary>
+        
+        [Tooltip("Toggles whether the top left portion is animated.")]
         public bool animateTopLeft = false;
-
-        /// <summary>
-        /// The initial hue for the top left portion.
-        /// </summary>
+        
+        [Tooltip("The initial hue for the top left portion.")]
         public float initialTopLeftHue = 0;
-
-        /// <summary>
-        /// Toggles whether the top right portion is animated.
-        /// </summary>
+        
+        [Tooltip("Toggles whether the top right portion is animated.")]
         public bool animateTopRight = false;
-
-        /// <summary>
-        /// The initial hue for the top right portion.
-        /// </summary>
+        
+        [Tooltip("The initial hue for the top right portion.")]
         public float initialTopRightHue = 0;
         
         private TMP_Text _text;
@@ -65,7 +47,7 @@ namespace SIVS
         {
             _text = GetComponent<TMP_Text>();
             _currentTopRightHue = initialTopLeftHue;
-            _currentBottomRightHue = initialBottomLeftHue;
+            _currentBottomRightHue = initialBottomRightHue;
             _currentTopLeftHue = initialTopLeftHue;
             _currentBottomLeftHue = initialBottomLeftHue;
         }
@@ -80,7 +62,7 @@ namespace SIVS
                 animateTopRight ? 
                     Color.HSVToRGB(_currentTopRightHue / 360f, 0.67f, 0.88f) : _text.colorGradient.topRight,
                 animateBottomLeft ?
-                    Color.HSVToRGB(_currentBottomRightHue / 360f, 0.67f, 0.7f) : _text.colorGradient.bottomLeft,
+                    Color.HSVToRGB(_currentBottomLeftHue / 360f, 0.67f, 0.7f) : _text.colorGradient.bottomLeft,
                 animateBottomRight ? 
                     Color.HSVToRGB(_currentBottomRightHue / 360f, 0.67f, 0.7f) : _text.colorGradient.bottomRight
             );

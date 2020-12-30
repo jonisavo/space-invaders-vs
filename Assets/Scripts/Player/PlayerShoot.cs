@@ -5,6 +5,7 @@ namespace SIVS
 {
     public class PlayerShoot : MonoBehaviourPunCallbacks
     {
+        [Tooltip("The bullet to shoot.")]
         public GameObject bullet;
 
         private void Update()

@@ -6,8 +6,10 @@ namespace SIVS
 {
     public class JoinRoomButton : MonoBehaviour
     {
+        [Tooltip("The Input Field for the room name.")]
         public TMP_InputField roomNameInputField;
 
+        [Tooltip("The Matchmaker script.")]
         public Matchmaker matchmaker;
 
         public void JoinRoom()

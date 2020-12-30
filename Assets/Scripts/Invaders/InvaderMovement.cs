@@ -5,9 +5,11 @@ namespace SIVS
 {
     public class InvaderMovement : MonoBehaviourPunCallbacks
     {
+        [Tooltip("The distance to move the invader each cycle.")]
         public float movementAmount = 0.25f;
         
-        public bool debugMode = false;
+        [Tooltip("Toggles the drawing of a debug ray.")]
+        public bool drawDebugRay = false;
         
         private int _side;
 
@@ -30,7 +32,7 @@ namespace SIVS
 
         private void FixedUpdate()
         {
-            if (!debugMode) return;
+            if (!drawDebugRay) return;
             
             Debug.DrawRay(
                 GetRaycastStartPoint(), 

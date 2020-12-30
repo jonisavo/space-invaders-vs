@@ -11,6 +11,7 @@ namespace SIVS
     [RequireComponent(typeof(TMP_InputField))]
     public class PlayerNameInputField : MonoBehaviour
     {
+        [Tooltip("The warning label object to show in case of an empty nickname.")]
         public GameObject warningLabel;
         
         private const string PlayerNamePrefKey = "PlayerName";

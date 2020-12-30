@@ -9,10 +9,13 @@ namespace SIVS
 {
     public class UIManager : MonoBehaviourPunCallbacks
     {
+        [Tooltip("The texture to show for lives.")]
         public Texture lifeTexture;
 
+        [Tooltip("The canvas to show when the game is over.")]
         public GameObject resultCanvas;
 
+        [Tooltip("The text to write the result of a game on.")]
         public TMP_Text victoryText;
 
         private Dictionary<string, int> _cachedLives;
