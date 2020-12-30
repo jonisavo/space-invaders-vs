@@ -153,7 +153,9 @@ namespace SIVS
 
         private float GetMoveInterval(Player player)
         {
-            if (debugMode && debugMoveRate == 0) return debugMoveRate;
+            if (debugMode && debugMoveRate != 0) return debugMoveRate;
+            
+            // take lag into account here for the other player (not the master client?)
             
             var round = (int) player.CustomProperties[PlayerStats.CurrentRound];
             return new []{3.0f, 2.5f, 2.0f, 1.75f, 1.5f}[round - 1];
