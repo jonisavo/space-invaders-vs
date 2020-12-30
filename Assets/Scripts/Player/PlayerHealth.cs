@@ -5,10 +5,15 @@ namespace SIVS
 {
     public class PlayerHealth : MonoBehaviourPunCallbacks
     {
+        [Tooltip("A debug option to make players invincible.")]
+        public bool invincibility = false;
+        
         #region MonoBehaviour Callbacks
 
         private void OnCollisionEnter2D(Collision2D other)
         {
+            if (invincibility) return;
+            
             if (!other.gameObject.CompareTag("EnemyBullet")) return;
             
             if (photonView.IsMine) GetHit();
