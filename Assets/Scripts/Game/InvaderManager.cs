@@ -14,6 +14,8 @@ namespace SIVS
         public int debugRows = 1;
 
         public int debugColumns = 1;
+
+        public float debugMoveRate = 1.0f;
         
         private int _totalInvaderKills = 0;
 
@@ -62,10 +64,13 @@ namespace SIVS
                     Debug.Log($"Moving invaders of side {side} horizontally");
                     MoveInvadersInSide(side, movement.GetMovementDirection());
                 }
-                else if (movement.CanMoveDown())
+                else
                 {
-                    Debug.Log($"Moving invaders of side {side} vertically");
-                    MoveInvadersInSide(side, Vector2.down);
+                    if (movement.CanMoveDown())
+                    {
+                        Debug.Log($"Moving invaders of side {side} vertically");
+                        MoveInvadersInSide(side, Vector2.down);
+                    }
                     TurnAroundInvadersInSide(side);
                 }
             }
@@ -144,9 +149,10 @@ namespace SIVS
 
         private float GetMoveInterval(Player player)
         {
-            return 1.0f;
-            //var round = (int) player.CustomProperties[PlayerStats.CurrentRound];
-            //return new []{3.0f, 2.5f, 2.0f, 1.75f, 1.5f}[round - 1];
+            if (debugMode && debugMoveRate > 0) return debugMoveRate;
+            
+            var round = (int) player.CustomProperties[PlayerStats.CurrentRound];
+            return new []{3.0f, 2.5f, 2.0f, 1.75f, 1.5f}[round - 1];
         }
 
         private void MoveInvadersInSide(int side, Vector2 direction)

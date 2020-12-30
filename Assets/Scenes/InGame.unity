@@ -184,7 +184,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debugMode: 1
   debugRows: 1
-  debugColumns: 1
+  debugColumns: 2
+  debugMoveRate: 0.2
 --- !u!114 &277102764
 MonoBehaviour:
   m_ObjectHideFlags: 0
