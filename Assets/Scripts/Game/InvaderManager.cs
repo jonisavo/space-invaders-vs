@@ -57,12 +57,12 @@ namespace SIVS
                 var movement = invader.GetComponent<InvaderMovement>();
 
                 Debug.Log($"Checking whether invaders on side {side} can move {(movement.GetMovementDirection().x > 0 ? "right" : "left")}");
-                if (movement.CanMove(movement.GetMovementDirection(), 0.5f))
+                if (movement.CanMoveHorizontally())
                 {
                     Debug.Log($"Moving invaders of side {side} horizontally");
                     MoveInvadersInSide(side, movement.GetMovementDirection());
                 }
-                else if (movement.CanMove(Vector2.down, 2.5f))
+                else if (movement.CanMoveDown())
                 {
                     Debug.Log($"Moving invaders of side {side} vertically");
                     MoveInvadersInSide(side, Vector2.down);
