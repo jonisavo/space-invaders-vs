@@ -39,7 +39,7 @@ namespace SIVS
         private IEnumerator MoveInvaders(Player player)
         {
             var side = player.ActorNumber;
-            
+
             while (true)
             {
                 yield return new WaitForSeconds(GetMoveInterval(player));
@@ -50,12 +50,14 @@ namespace SIVS
 
                 var movement = invader.GetComponent<InvaderMovement>();
 
-                if (movement.CanMoveInDirection(movement.GetMovementDirection(), 0.5f))
+                if (movement.CanMove(movement.GetMovementDirection(), 0.5f))
                 {
+                    Debug.Log($"Moving invaders of side {side} horizontally");
                     MoveInvadersInSide(side, movement.GetMovementDirection());
                 }
-                else if (movement.CanMoveInDirection(Vector2.down, 2.5f))
+                else if (movement.CanMove(Vector2.down, 2.5f))
                 {
+                    Debug.Log($"Moving invaders of side {side} vertically");
                     MoveInvadersInSide(side, Vector2.down);
                     TurnAroundInvadersInSide(side);
                 }
@@ -90,7 +92,7 @@ namespace SIVS
         {
             object[] instantiationData = {side, GenerateInvaderHealth(), Random.Range(2.5f, 4.0f)};
     
-            var xPos = (side == 1 ? -4.4f : 0.7f) + row * 0.4f;
+            var xPos = (side == 1 ? -4.35f : 0.7f) + row * 0.4f;
     
             var yPos = 2.1f - column * 0.3f;
     
@@ -100,18 +102,16 @@ namespace SIVS
     
         private int GenerateInvaderHealth()
         {
-            int invaderHealth;
-    
             if (_totalInvaderKills < 15)
-                invaderHealth = 1;
-            else if (_totalInvaderKills < 35)
-                invaderHealth = Random.Range(1, 4);
-            else if (_totalInvaderKills < 60)
-                invaderHealth = Random.Range(2, 6);
-            else
-                invaderHealth = Random.Range(2, 10);
-    
-            return invaderHealth;
+                return 1;
+            
+            if (_totalInvaderKills < 35)
+                return Random.Range(1, 4);
+            
+            if (_totalInvaderKills < 60)
+                return Random.Range(2, 6);
+            
+            return Random.Range(2, 10);
         }
 
         private GameObject GetInvaderFromSide(int side)

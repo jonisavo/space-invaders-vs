@@ -41,15 +41,7 @@ namespace SIVS
 
         public void ChangeDirection() => _goingRight = !_goingRight;
 
-        public bool CanMoveHorizontally()
-        {
-            var hit = Physics2D.Raycast(GetRaycastStartPoint(), GetMovementDirection(),
-                0.4f, LayerMask.GetMask("Walls"));
-
-            return hit.collider == null;
-        }
-
-        public bool CanMoveInDirection(Vector2 direction, float rayDistance)
+        public bool CanMove(Vector2 direction, float rayDistance)
         {
             foreach (var invader in GameObject.FindGameObjectsWithTag("Invader"))
             {
@@ -58,7 +50,7 @@ namespace SIVS
                 var hit = Physics2D.Raycast(GetRaycastStartPoint(), direction,
                     rayDistance, LayerMask.GetMask("Walls"));
 
-                if (hit.collider != null) return false;
+                if (hit.collider) return false;
             }
 
             return true;
