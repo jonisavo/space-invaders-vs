@@ -98,6 +98,7 @@ namespace SIVS
                 _uiManager.ShowVictoryScreen(winner.NickName);
             
             StopAllCoroutines();
+            _invaderManager.StopAllCoroutines();
         }
     }
 }
