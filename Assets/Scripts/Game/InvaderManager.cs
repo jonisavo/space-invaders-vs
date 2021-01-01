@@ -7,6 +7,7 @@ using Random = UnityEngine.Random;
 
 namespace SIVS
 {
+    [RequireComponent(typeof(SpawnManager))]
     public class InvaderManager : MonoBehaviourPunCallbacks
     {
         [Tooltip("Toggles debug options.")]
@@ -22,6 +23,13 @@ namespace SIVS
         public float debugMoveRate = 1.0f;
         
         private int _totalInvaderKills = 0;
+
+        private SpawnManager _spawnManager;
+
+        private void Awake()
+        {
+            _spawnManager = GetComponent<SpawnManager>();
+        }
 
         #region Callbacks
 
@@ -117,13 +125,11 @@ namespace SIVS
         private void SpawnOneInvader(int side, int row, int column)
         {
             object[] instantiationData = {side, GenerateInvaderHealth(), Random.Range(2.5f, 4.0f)};
-    
-            var xPos = (side == 1 ? -4.35f : 0.7f) + row * 0.4f;
-    
-            var yPos = 2.1f - column * 0.3f;
-    
-            PhotonNetwork.InstantiateRoomObject("Invader", new Vector3(xPos, yPos, 0),
-                Quaternion.identity, 0, instantiationData);
+
+            var position = _spawnManager.PlayAreaPosition(side, 0.2f + row * 0.4f, 2.1f - column * 0.3f);
+
+            PhotonNetwork.InstantiateRoomObject("Invader",
+                position, Quaternion.identity, 0, instantiationData);
         }
     
         private int GenerateInvaderHealth()
