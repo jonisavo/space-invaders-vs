@@ -10,6 +10,8 @@ namespace SIVS
 
         private int _playerIndex = 1;
         
+        #region MonoBehaviour Callbacks
+        
         private void Awake()
         {
             _playAreas = new Dictionary<int, GameObject>();
@@ -24,32 +26,35 @@ namespace SIVS
                 _playAreas[entry.Key] = GameObject.Find("Play Area " + entry.Key);
             }
         }
-
+        
         private void Start()
         {
             SpawnShip();
             SpawnCover();
         }
+        
+        #endregion
+
+        public Vector3 OwnAreaPosition(float x, float y) => 
+            PlayAreaPosition(_playerIndex, x, y);
+
+        public Vector3 PlayAreaPosition(int key, float x, float y) =>
+            _playAreas[key].transform.position + new Vector3(x, y, 0);
 
         private void SpawnShip()
         {
             object[] playerData = {PhotonNetwork.NickName};
-            
+
             PhotonNetwork.Instantiate("PlayerShip",
-                new Vector3(_playerIndex == 1 ? -2.5f : 2.65f, -1.5f, 0), 
+                OwnAreaPosition(0.0f, -1.5f),
                 Quaternion.identity, 0, playerData);
         }
 
         private void SpawnCover()
         {
-            PhotonNetwork.Instantiate("Cover", PlayAreaPosition(-0.9f, -1.16f), Quaternion.identity);
+            PhotonNetwork.Instantiate("Cover", OwnAreaPosition(-1.7f, -1.12f), Quaternion.identity);
 
-            PhotonNetwork.Instantiate("Cover", PlayAreaPosition(1.1f,-1.16f), Quaternion.identity);
+            PhotonNetwork.Instantiate("Cover", OwnAreaPosition(0.5f,-1.12f), Quaternion.identity);
         }
-
-        private GameObject OwnPlayArea() => _playAreas[_playerIndex];
-
-        private Vector3 PlayAreaPosition(float x, float y) =>
-            OwnPlayArea().transform.position + new Vector3(x, y, 0);
     }
 }
