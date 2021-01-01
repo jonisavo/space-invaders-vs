@@ -9,12 +9,11 @@ The project has two big dependencies: PUN 2 and TextMeshPro.
 
 1. Actual functioning game loop
 2. Proper movement for invaders (it is currently broken)
-3. Cover for players
-4. UFOs
-5. Music & sound
-6. Nicer menus
-7. Powerups?
-8. Other goodies?
+3. UFOs
+4. Music & sound
+5. Nicer menus
+6. Powerups?
+7. Other goodies?
 
 ## Set up
 
