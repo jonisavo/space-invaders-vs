@@ -5,6 +5,9 @@ using Photon.Realtime;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using Random = UnityEngine.Random;
 
+// TODO: Do not instantiate all invaders to the master client, only the ones that belong to the player.
+// Then, have the owning client run their own coroutine for moving the invaders.
+
 namespace SIVS
 {
     [RequireComponent(typeof(SpawnManager))]
@@ -21,6 +24,9 @@ namespace SIVS
 
         [Tooltip("If debug mode is on, forces the move rate. Set to 0 to ignore this setting.")]
         public float debugMoveRate = 1.0f;
+
+        [Tooltip("If debug mode is on, logs all invader movement.")]
+        public bool debugLog = false;
         
         private int _totalInvaderKills = 0;
 
@@ -70,17 +76,21 @@ namespace SIVS
 
                 var movement = invader.GetComponent<InvaderMovement>();
 
-                Debug.Log($"Checking whether invaders on side {side} can move {(movement.GetMovementDirection().x > 0 ? "right" : "left")}");
+                if (debugLog)
+                    Debug.Log($"Checking whether invaders on side {side} can move {(movement.GetMovementDirection().x > 0 ? "right" : "left")}");
+                
                 if (movement.CanMoveHorizontally())
                 {
-                    Debug.Log($"Moving invaders of side {side} horizontally");
+                    if (debugLog)
+                        Debug.Log($"Moving invaders of side {side} horizontally");
                     MoveInvadersInSide(side, movement.GetMovementDirection());
                 }
                 else
                 {
                     if (movement.CanMoveDown())
                     {
-                        Debug.Log($"Moving invaders of side {side} vertically");
+                        if (debugLog)
+                            Debug.Log($"Moving invaders of side {side} vertically");
                         MoveInvadersInSide(side, Vector2.down);
                     }
                     TurnAroundInvadersInSide(side);
@@ -160,9 +170,7 @@ namespace SIVS
         private float GetMoveInterval(Player player)
         {
             if (debugMode && debugMoveRate != 0) return debugMoveRate;
-            
-            // take lag into account here for the other player (not the master client?)
-            
+
             var round = (int) player.CustomProperties[PlayerStats.CurrentRound];
             return new []{3.0f, 2.5f, 2.0f, 1.75f, 1.5f}[round - 1];
         }
