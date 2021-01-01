@@ -46,8 +46,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   coverPiece: {fileID: 1264031408608096527, guid: dfdaacb15ced37746ba566238f3d67e0,
     type: 3}
-  rows: 9
-  columns: 5
+  rows: 16
+  columns: 6
 --- !u!114 &-605282039110683179
 MonoBehaviour:
   m_ObjectHideFlags: 0
