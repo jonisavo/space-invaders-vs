@@ -51,7 +51,7 @@ namespace SIVS
 
         public bool CanMoveHorizontally() => CanMove(GetMovementDirection(), movementAmount * 2);
 
-        public bool CanMoveDown() => CanMove(Vector2.down, 2.5f);
+        public bool CanMoveDown() => CanMove(Vector2.down, 2.2f);
 
         private bool CanMove(Vector2 direction, float rayDistance)
         {
