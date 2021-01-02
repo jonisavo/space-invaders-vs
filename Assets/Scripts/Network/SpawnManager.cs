@@ -32,7 +32,24 @@ namespace SIVS
             SpawnShip();
             SpawnCover();
         }
-        
+
+        private void Update()
+        {
+            var rect = OwnAreaRect();
+            
+            // Top line
+            Debug.DrawLine(new Vector3(rect.x, rect.y), new Vector3(rect.x + rect.width, rect.y), Color.red);
+            
+            // Right line
+            Debug.DrawLine(new Vector3(rect.x + rect.width, rect.y), new Vector3(rect.x + rect.width, rect.y + rect.height), Color.red);
+            
+            // Bottom line
+            Debug.DrawLine(new Vector3(rect.x + rect.width, rect.y + rect.height), new Vector3(rect.x, rect.y + rect.height), Color.red);
+            
+            // Left line
+            Debug.DrawLine(new Vector3(rect.x, rect.y + rect.height), new Vector3(rect.x, rect.y), Color.red);
+        }
+
         #endregion
 
         public Vector3 OwnAreaPosition(float x, float y) => 
@@ -40,6 +57,13 @@ namespace SIVS
 
         public Vector3 PlayAreaPosition(int key, float x, float y) =>
             _playAreas[key].transform.position + new Vector3(x, y, 0);
+
+        public Rect OwnAreaRect()
+        {
+            var leftCorner = OwnAreaPosition(-2.0f, -2.3f);
+
+            return new Rect(leftCorner.x, leftCorner.y, 4, 4.5f);
+        }
 
         private void SpawnShip()
         {
