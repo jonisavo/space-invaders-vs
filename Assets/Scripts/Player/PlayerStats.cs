@@ -34,7 +34,7 @@ namespace SIVS
             return 1;
         }
 
-        public static void NextRound()
+        public static void GoToNextRound()
         {
             PhotonNetwork.LocalPlayer.SetCustomProperties(new Hashtable()
             {
