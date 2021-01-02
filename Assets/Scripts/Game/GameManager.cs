@@ -36,12 +36,8 @@ namespace SIVS
                 if (!_bothReady && IsEveryoneReady())
                 {
                     _bothReady = true;
-
-                    if (PhotonNetwork.IsMasterClient)
-                    {
-                        _invaderManager.SpawnInvadersForAll();
-                        _invaderManager.StartCoroutines();
-                    }
+                    
+                    _invaderManager.InitializeInvaders();
                 }
             }
 
@@ -92,17 +88,12 @@ namespace SIVS
 
         private void EndGame(Player winner)
         {
-            if (winner == null)
-                _uiManager.ShowVictoryScreen("No one");
-            else
-                _uiManager.ShowVictoryScreen(winner.NickName);
-            
+            _uiManager.ShowVictoryScreen(winner == null ? "No one" : winner.NickName);
+
             StopAllCoroutines();
             
             DestroyBullets();
 
-            if (!PhotonNetwork.IsMasterClient) return;
-            
             _invaderManager.StopAllCoroutines();
             
             foreach (var invader in GameObject.FindGameObjectsWithTag("Invader"))

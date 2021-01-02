@@ -5,9 +5,6 @@ using Photon.Realtime;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using Random = UnityEngine.Random;
 
-// TODO: Do not instantiate all invaders to the master client, only the ones that belong to the player.
-// Then, have the owning client run their own coroutine for moving the invaders.
-
 namespace SIVS
 {
     [RequireComponent(typeof(SpawnManager))]
@@ -51,26 +48,20 @@ namespace SIVS
 
             _totalInvaderKills = invaderKills;
         }
-        
-        public override void OnMasterClientSwitched(Player newMasterClient)
-        {
-            if (PhotonNetwork.LocalPlayer.ActorNumber == newMasterClient.ActorNumber)
-                StartCoroutines();
-        }
 
         #endregion
         
         #region Coroutines
     
-        private IEnumerator MoveInvaders(Player player)
+        private IEnumerator MoveInvaders()
         {
-            var side = player.ActorNumber;
+            var side = PhotonNetwork.LocalPlayer.ActorNumber;
 
             while (true)
             {
-                yield return new WaitForSeconds(GetMoveInterval(player));
+                yield return new WaitForSeconds(GetMoveInterval());
 
-                var invader = GetInvaderFromSide(side);
+                var invader = GetOwnInvader();
 
                 if (!invader) continue;
 
@@ -83,7 +74,7 @@ namespace SIVS
                 {
                     if (debugLog)
                         Debug.Log($"Moving invaders of side {side} horizontally");
-                    MoveInvadersInSide(side, movement.GetMovementDirection());
+                    MoveOwnInvaders(movement.GetMovementDirection());
                 }
                 else
                 {
@@ -91,28 +82,22 @@ namespace SIVS
                     {
                         if (debugLog)
                             Debug.Log($"Moving invaders of side {side} vertically");
-                        MoveInvadersInSide(side, Vector2.down);
+                        MoveOwnInvaders(Vector2.down);
                     }
-                    TurnAroundInvadersInSide(side);
+                    TurnAroundOwnInvaders();
                 }
             }
         }
 
         #endregion
         
-        public void StartCoroutines()
+        public void InitializeInvaders()
         {
-            foreach (var player in PhotonNetwork.CurrentRoom.Players.Values)
-                StartCoroutine(MoveInvaders(player));
+            SpawnOwnInvaders();
+            StartCoroutine(MoveInvaders());
         }
-        
-        public void SpawnInvadersForAll()
-        {
-            foreach (var player in PhotonNetwork.CurrentRoom.Players.Values)
-                SpawnInvaders(player);
-        }
-    
-        public void SpawnInvaders(Player player)
+
+        private void SpawnOwnInvaders()
         {
             int rows, columns;
             
@@ -123,22 +108,22 @@ namespace SIVS
             }
             else
             {
-                rows = 4 + (int) player.CustomProperties[PlayerStats.CurrentRound];
-                columns = 4 + (int) player.CustomProperties[PlayerStats.CurrentRound] / 2;
+                rows = 4 + PlayerStats.GetRound();
+                columns = 4 + PlayerStats.GetRound() / 2;
             }
-            
+
             for (var row = 0; row < rows; row++)
                 for (var column = 0; column < columns; column++)
-                    SpawnOneInvader(player.ActorNumber, row, column);
+                    SpawnOneInvader(PhotonNetwork.LocalPlayer.ActorNumber, row, column);
         }
     
         private void SpawnOneInvader(int side, int row, int column)
         {
             object[] instantiationData = {side, GenerateInvaderHealth(), Random.Range(2.5f, 4.0f)};
 
-            var position = _spawnManager.PlayAreaPosition(side, 0.2f + row * 0.4f, 2.1f - column * 0.3f);
+            var position = _spawnManager.OwnAreaPosition(0.2f + row * 0.4f, 2.1f - column * 0.3f);
 
-            PhotonNetwork.InstantiateRoomObject("Invader",
+            PhotonNetwork.Instantiate("Invader",
                 position, Quaternion.identity, 0, instantiationData);
         }
     
@@ -156,46 +141,41 @@ namespace SIVS
             return Random.Range(2, 10);
         }
 
-        private GameObject GetInvaderFromSide(int side)
+        private GameObject GetOwnInvader()
         {
             GameObject invaderFromSide = null;
-            
+
             foreach (var invader in GameObject.FindGameObjectsWithTag("Invader"))
-                if (invader.GetComponent<InvaderMovement>().GetSide() == side)
+                if (invader.GetPhotonView().IsMine)
                     invaderFromSide = invader;
 
             return invaderFromSide;
         }
 
-        private float GetMoveInterval(Player player)
+        private float GetMoveInterval()
         {
             if (debugMode && debugMoveRate != 0) return debugMoveRate;
-
-            var round = (int) player.CustomProperties[PlayerStats.CurrentRound];
-            return new []{3.0f, 2.5f, 2.0f, 1.75f, 1.5f}[round - 1];
+            
+            return new []{3.0f, 2.5f, 2.0f, 1.75f, 1.5f}[PlayerStats.GetRound() - 1];
         }
 
-        private void MoveInvadersInSide(int side, Vector2 direction)
+        private void MoveOwnInvaders(Vector2 direction)
         {
             foreach (var invader in GameObject.FindGameObjectsWithTag("Invader"))
             {
-                var movement = invader.GetComponent<InvaderMovement>();
-
-                if (movement.GetSide() != side) continue;
+                if (!invader.GetPhotonView().IsMine) continue;
                 
-                movement.Move(direction);
+                invader.GetComponent<InvaderMovement>().Move(direction);
             }
         }
 
-        private void TurnAroundInvadersInSide(int side)
+        private void TurnAroundOwnInvaders()
         {
             foreach (var invader in GameObject.FindGameObjectsWithTag("Invader"))
             {
-                var movement = invader.GetComponent<InvaderMovement>();
+                if (!invader.GetPhotonView().IsMine) continue;
 
-                if (movement.GetSide() != side) continue;
-                
-                movement.ChangeDirection();
+                invader.GetComponent<InvaderMovement>().ChangeDirection();
             }
         }
     }

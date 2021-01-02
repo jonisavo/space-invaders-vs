@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using Photon.Pun;
-using Photon.Realtime;
 using UnityEngine;
 
 namespace SIVS
@@ -29,31 +28,7 @@ namespace SIVS
             else
                 _shootInterval = 1.5f;
 
-            if (PhotonNetwork.IsMasterClient)
-                StartCoroutine(ShootCoroutine());
-        }
-
-        // private void FixedUpdate()
-        // {
-        //     if (!photonView.IsMine) return;
-        //     
-        //     if (Time.frameCount % _shootInterval != 0) return;
-        //     
-        //     var hit = Physics2D.Raycast(GetBulletSpawnPoint(), Vector2.down,
-        //         Mathf.Infinity, LayerMask.GetMask("Invaders"));
-        //
-        //     if (hit.collider) return;
-        //     
-        //     photonView.RPC("Shoot", RpcTarget.All);
-        // }
-        
-        #endregion
-        
-        #region MonoBehaviourPunCallbacks Callbacks
-
-        public override void OnMasterClientSwitched(Player newMasterClient)
-        {
-            if (PhotonNetwork.LocalPlayer.ActorNumber == newMasterClient.ActorNumber)
+            if (photonView.IsMine)
                 StartCoroutine(ShootCoroutine());
         }
 
@@ -76,6 +51,8 @@ namespace SIVS
 
         public void StopShooting()
         {
+            if (!photonView.IsMine) return;
+            
             StopAllCoroutines();
         }
 
