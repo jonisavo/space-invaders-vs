@@ -4,7 +4,7 @@ using Photon.Pun.UtilityScripts;
 
 namespace SIVS
 {
-    public class PlayerStats
+    public static class PlayerStats
     {
         private const int InitialLives = 3;
         private const int MaxLives = 5;
