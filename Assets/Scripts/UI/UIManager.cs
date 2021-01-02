@@ -42,6 +42,10 @@ namespace SIVS
             
             DrawLives();
             DrawPoints();
+            
+            foreach(var entry in PhotonNetwork.CurrentRoom.Players)
+                GUI.Label(new Rect(entry.Key == 1 ? 52 : 914, 732, 256, 64),
+                    entry.Value.ActorNumber.ToString(), guiStyle);
         }
         
         #endregion
