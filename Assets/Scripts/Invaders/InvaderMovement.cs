@@ -16,6 +16,8 @@ namespace SIVS
         private bool _goingRight = true;
 
         private Vector3 _distanceToCenter;
+
+        private SpawnManager _spawnManager;
         
         #region Callbacks
 
@@ -23,6 +25,8 @@ namespace SIVS
         {
             var bounds = GetComponent<BoxCollider2D>().bounds;
             _distanceToCenter = new Vector3(bounds.size.x / 2, -bounds.size.y / 2, 0);
+
+            _spawnManager = GameObject.Find("Game Manager").GetComponent<SpawnManager>();
 
             if (photonView.InstantiationData != null)
                 _side = (int) photonView.InstantiationData[0];
@@ -42,11 +46,19 @@ namespace SIVS
 
         #endregion
 
-        public int GetSide() => _side;
-
-        public void Move(Vector2 direction) =>
+        public void Move(Vector2 direction)
+        {
+            var areaRect = _spawnManager.OwnAreaRect();
+            
             transform.Translate(direction.normalized * movementAmount);
-
+            
+            if (transform.position.x < areaRect.x)
+                transform.Translate(new Vector3(areaRect.x - transform.position.x, 0));
+            
+            if (transform.position.x > areaRect.x + areaRect.width)
+                transform.Translate(new Vector3(areaRect.x + areaRect.width - transform.position.x, 0));
+        }
+        
         public void ChangeDirection() => _goingRight = !_goingRight;
 
         public bool CanMoveHorizontally() => CanMove(GetMovementDirection(), movementAmount * 2);
