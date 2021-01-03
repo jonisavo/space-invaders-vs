@@ -24,8 +24,6 @@ namespace SIVS
 
         private Dictionary<string, int> _cachedLives;
 
-        private Dictionary<string, int> _cachedPoints;
-
         private GUIStyle _guiStyle;
         
         #region MonoBehaviour Callbacks
@@ -33,13 +31,14 @@ namespace SIVS
         private void Awake()
         {
             _cachedLives = new Dictionary<string, int>();
-            _cachedPoints = new Dictionary<string, int>();
         }
 
         private void OnGUI()
         {
             if (!PhotonNetwork.InRoom) return;
             
+            DrawNames();
+            DrawRounds();
             DrawLives();
             DrawPoints();
             
@@ -64,6 +63,26 @@ namespace SIVS
         {
             resultCanvas.SetActive(true);
             victoryText.text = nickName + " won!";
+        }
+        
+        private void DrawNames()
+        {
+            foreach (var entry in PhotonNetwork.CurrentRoom.Players)
+                GUI.Label(new Rect(entry.Key == 1 ? 40 : 540, 70, 256, 64),
+                    entry.Value.NickName, guiStyle);
+        }
+
+        private void DrawRounds()
+        {
+            foreach (var entry in PhotonNetwork.CurrentRoom.Players)
+            {
+                if (!entry.Value.CustomProperties.ContainsKey(PlayerStats.CurrentRound))
+                    continue;
+                
+                GUI.Label(new Rect(entry.Key == 1 ? 396 : 896, 70, 256, 64),
+                    $"Round {(int) entry.Value.CustomProperties[PlayerStats.CurrentRound]}", guiStyle);
+            }
+
         }
 
         private void DrawLives()
