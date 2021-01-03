@@ -107,7 +107,7 @@ namespace SIVS
     
         private void SpawnOneInvader(int side, int row, int column)
         {
-            object[] instantiationData = {side, GenerateInvaderHealth(), Random.Range(2.5f, 4.0f)};
+            object[] instantiationData = {side, GenerateInvaderHealth(), Random.Range(3.0f, 4.75f)};
 
             var position = _spawnManager.OwnAreaPosition(-1.75f + row * 0.4f, 2.1f - column * 0.3f);
 
