@@ -149,7 +149,7 @@ namespace SIVS
         {
             if (debugMode && debugMoveRate != 0) return debugMoveRate;
             
-            return new []{3.0f, 2.5f, 2.0f, 1.75f, 1.5f}[PlayerStats.GetRound() - 1];
+            return new []{2.0f, 1.5f, 1.15f, 1.0f, 0.8f}[PlayerStats.GetRound() - 1];
         }
 
         private void MoveOwnInvaders(Vector2 direction)
