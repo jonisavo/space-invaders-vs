@@ -250,10 +250,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56cce6cb170ce7c4ea9d20d9e8817fc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debugMode: 1
-  debugRows: 2
-  debugColumns: 2
-  debugMoveRate: 0.2
+  debugMode: 0
+  debugRows: 0
+  debugColumns: 0
+  debugMoveRate: 0
+  debugLog: 0
 --- !u!114 &277102764
 MonoBehaviour:
   m_ObjectHideFlags: 0

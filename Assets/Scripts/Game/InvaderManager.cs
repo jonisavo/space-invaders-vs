@@ -13,10 +13,10 @@ namespace SIVS
         [Tooltip("Toggles debug options.")]
         public bool debugMode = false;
 
-        [Tooltip("If debug mode is on, forces the row count.")]
+        [Tooltip("If debug mode is on, forces the row count. Set to 0 to ignore this setting.")]
         public int debugRows = 1;
 
-        [Tooltip("If debug mode is on, forces the column count.")]
+        [Tooltip("If debug mode is on, forces the column count. Set to 0 to ignore this setting.")]
         public int debugColumns = 1;
 
         [Tooltip("If debug mode is on, forces the move rate. Set to 0 to ignore this setting.")]
@@ -67,9 +67,6 @@ namespace SIVS
 
                 var movement = invader.GetComponent<InvaderMovement>();
 
-                if (debugLog)
-                    Debug.Log($"Checking whether invaders on side {side} can move {(movement.GetMovementDirection().x > 0 ? "right" : "left")}");
-                
                 if (movement.CanMoveHorizontally())
                 {
                     if (debugLog)
@@ -99,18 +96,9 @@ namespace SIVS
 
         private void SpawnOwnInvaders()
         {
-            int rows, columns;
+            var rows = debugMode && debugRows > 0 ? debugRows : 4 + PlayerStats.GetRound();
             
-            if (debugMode)
-            {
-                rows = debugRows;
-                columns = debugColumns;   
-            }
-            else
-            {
-                rows = 4 + PlayerStats.GetRound();
-                columns = 4 + PlayerStats.GetRound() / 2;
-            }
+            var columns = debugMode && debugColumns > 0 ? debugColumns : 4 + PlayerStats.GetRound() / 2;
 
             for (var row = 0; row < rows; row++)
                 for (var column = 0; column < columns; column++)
@@ -121,7 +109,7 @@ namespace SIVS
         {
             object[] instantiationData = {side, GenerateInvaderHealth(), Random.Range(2.5f, 4.0f)};
 
-            var position = _spawnManager.OwnAreaPosition(0.2f + row * 0.4f, 2.1f - column * 0.3f);
+            var position = _spawnManager.OwnAreaPosition(-1.75f + row * 0.4f, 2.1f - column * 0.3f);
 
             PhotonNetwork.Instantiate("Invader",
                 position, Quaternion.identity, 0, instantiationData);
@@ -146,9 +134,14 @@ namespace SIVS
             GameObject invaderFromSide = null;
 
             foreach (var invader in GameObject.FindGameObjectsWithTag("Invader"))
+            {
                 if (invader.GetPhotonView().IsMine)
+                {
                     invaderFromSide = invader;
-
+                    break;
+                }
+            }
+            
             return invaderFromSide;
         }
 
