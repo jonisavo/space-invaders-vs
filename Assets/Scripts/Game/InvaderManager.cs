@@ -96,9 +96,9 @@ namespace SIVS
 
         private void SpawnOwnInvaders()
         {
-            var rows = debugMode && debugRows > 0 ? debugRows : 4 + PlayerStats.GetRound();
+            var rows = debugMode && debugRows > 0 ? debugRows : 3 + PlayerStats.GetRound();
             
-            var columns = debugMode && debugColumns > 0 ? debugColumns : 4 + PlayerStats.GetRound() / 2;
+            var columns = debugMode && debugColumns > 0 ? debugColumns : 3 + PlayerStats.GetRound() / 2;
 
             for (var row = 0; row < rows; row++)
                 for (var column = 0; column < columns; column++)
