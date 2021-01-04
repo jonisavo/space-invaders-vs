@@ -38,6 +38,8 @@ namespace SIVS
 
         public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
         {
+            if (!Match.IsActive) return;
+            
             if (!changedProps.ContainsKey(PlayerStats.InvaderKills)) return;
             
             var invaderKills = 0;
@@ -47,6 +49,11 @@ namespace SIVS
                     invaderKills += (int) player.CustomProperties[PlayerStats.InvaderKills];
 
             _totalInvaderKills = invaderKills;
+
+            if (OwnInvaderCount() > 0 || PlayerStats.GetRound() > 5) return;
+            
+            PlayerStats.GoToNextRound();
+            SpawnOwnInvaders();
         }
 
         #endregion
@@ -170,6 +177,16 @@ namespace SIVS
 
                 invader.GetComponent<InvaderMovement>().ChangeDirection();
             }
+        }
+
+        private int OwnInvaderCount()
+        {
+            var count = 0;
+            
+            foreach (var invader in GameObject.FindGameObjectsWithTag("Invader"))
+                if (invader.GetPhotonView().IsMine) count++;
+            
+            return count;
         }
     }
 }
