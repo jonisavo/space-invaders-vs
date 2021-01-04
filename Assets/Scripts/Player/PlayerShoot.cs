@@ -23,13 +23,22 @@ namespace SIVS
         }
 
         private bool CanFire() =>
-            Match.IsActive && GameObject.FindWithTag("PlayerBullet") == null;
+            Match.IsActive && !OwnBulletExists();
 
         [PunRPC]
         private void FireBullet()
         {
             var bulletObject = Instantiate(bullet, GetBulletSpawnPoint(), Quaternion.identity);
             bulletObject.GetComponent<PlayerBullet>().SetOwner(photonView.Owner);
+        }
+
+        private bool OwnBulletExists()
+        {
+            foreach (var bullet in GameObject.FindGameObjectsWithTag("PlayerBullet"))
+                if (bullet.GetComponent<PlayerBullet>().Owner.ActorNumber == PhotonNetwork.LocalPlayer.ActorNumber)
+                    return true;
+
+            return false;
         }
     }
 }
