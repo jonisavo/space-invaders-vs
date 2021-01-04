@@ -13,6 +13,8 @@ namespace SIVS
         
         private int _health;
 
+        private int _initialHealth;
+
         private SpriteRenderer _spriteRenderer;
         
         #region MonoBehaviour Callbacks
@@ -25,6 +27,8 @@ namespace SIVS
                 _health = (int) photonView.InstantiationData[1];
             else
                 _health = 1;
+
+            _initialHealth = _health;
             
             TintSprite();
         }
@@ -39,9 +43,11 @@ namespace SIVS
             
             photonView.RPC("LoseHealth", RpcTarget.All);
 
+            if (!IsDead()) return;
+
             var bulletOwner = other.gameObject.GetComponent<PlayerBullet>().Owner;
             
-            bulletOwner.AddScore(100);
+            bulletOwner.AddScore(50 * _initialHealth);
 
             bulletOwner.SetCustomProperties(new Hashtable()
             {
@@ -55,7 +61,7 @@ namespace SIVS
         private void LoseHealth()
         {
             _health--;
-            if (_health <= 0)
+            if (IsDead())
                 Die();
             else
                 TintSprite();
@@ -76,5 +82,7 @@ namespace SIVS
             var hue = 1.0f - (_health - 1) * 0.1f;
             _spriteRenderer.color = new Color(1.0f, hue, hue);
         }
+
+        private bool IsDead() => _health <= 0;
     }   
 }
