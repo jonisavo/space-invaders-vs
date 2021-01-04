@@ -7,12 +7,11 @@ The project has two big dependencies: PUN 2 and TextMeshPro.
 
 ## To do
 
-1. Actual functioning game loop
-2. UFOs
-3. Music & sound
-4. Nicer menus
-5. Powerups?
-6. Other goodies?
+1. UFOs
+2. Music & sound
+3. Better UI
+4. Powerups?
+5. Other goodies?
 
 ## Set up
 
