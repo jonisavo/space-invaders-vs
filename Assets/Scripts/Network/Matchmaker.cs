@@ -128,8 +128,10 @@ namespace SIVS
 
         private void StartGame()
         {
-            if (PhotonNetwork.IsMasterClient)
-                PhotonNetwork.LoadLevel("InGame");
+            if (!PhotonNetwork.IsMasterClient) return;
+
+            PhotonNetwork.CurrentRoom.IsOpen = false;
+            PhotonNetwork.LoadLevel("InGame");
         }
 
         private void ShowCancelButton() => cancelButton.SetActive(true);
