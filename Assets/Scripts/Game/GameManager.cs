@@ -12,6 +12,8 @@ namespace SIVS
     {
         private bool _bothReady = false;
 
+        private bool _gameOver = false;
+
         private UIManager _uiManager;
 
         private InvaderManager _invaderManager;
@@ -31,6 +33,8 @@ namespace SIVS
 
         public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
         {
+            if (_gameOver) return;
+            
             if (changedProps.ContainsKey(PlayerStats.Ready))
             {
                 if (!_bothReady && IsEveryoneReady())
@@ -56,6 +60,13 @@ namespace SIVS
         public override void OnLeftRoom()
         {
             SceneManager.LoadScene("MainMenu");
+        }
+
+        public override void OnPlayerLeftRoom(Player otherPlayer)
+        {
+            if (_gameOver) return;
+            
+            EndGame(PhotonNetwork.LocalPlayer);
         }
 
         #endregion
@@ -88,6 +99,8 @@ namespace SIVS
 
         private void EndGame(Player winner)
         {
+            _gameOver = true;
+            
             _uiManager.ShowVictoryScreen(winner == null ? "No one" : winner.NickName);
 
             StopAllCoroutines();
