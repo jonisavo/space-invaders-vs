@@ -312,6 +312,7 @@ GameObject:
   - component: {fileID: 448969158}
   - component: {fileID: 448969160}
   - component: {fileID: 448969159}
+  - component: {fileID: 448969161}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -368,7 +369,7 @@ MonoBehaviour:
     serializedVersion: 2
     rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
-  m_enableVertexGradient: 0
+  m_enableVertexGradient: 1
   m_colorMode: 3
   m_fontColorGradient:
     topLeft: {r: 1, g: 1, b: 1, a: 1}
@@ -434,6 +435,27 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 448969157}
   m_CullTransparentMesh: 0
+--- !u!114 &448969161
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 448969157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ee18694b11cf8448983c13dcf13ccd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animationSpeed: 15
+  animateBottomLeft: 1
+  initialBottomLeftHue: 0
+  animateBottomRight: 1
+  initialBottomRightHue: 0
+  animateTopLeft: 0
+  initialTopLeftHue: 0
+  animateTopRight: 0
+  initialTopRightHue: 0
 --- !u!1 &496487133
 GameObject:
   m_ObjectHideFlags: 0
