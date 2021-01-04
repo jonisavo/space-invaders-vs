@@ -17,7 +17,7 @@ namespace SIVS
 
         private Vector3 _distanceToCenter;
 
-        #region Callbacks
+        #region MonoBehaviour Callbacks
 
         private void Awake()
         {
@@ -50,6 +50,8 @@ namespace SIVS
         public bool CanMoveHorizontally() => CanMoveAll(GetMovementDirection(), movementAmount * 2);
 
         public bool CanMoveDown() => CanMoveAll(Vector2.down, 2.2f);
+        
+        public Vector2 GetMovementDirection() => _goingRight ? Vector2.right : Vector2.left;
 
         private bool CanMoveAll(Vector2 direction, float rayDistance)
         {
@@ -72,8 +74,6 @@ namespace SIVS
 
             return hit.collider == null;
         }
-
-        public Vector2 GetMovementDirection() => _goingRight ? Vector2.right : Vector2.left;
 
         private Vector2 GetRaycastStartPoint() => transform.position + _distanceToCenter;
     }
