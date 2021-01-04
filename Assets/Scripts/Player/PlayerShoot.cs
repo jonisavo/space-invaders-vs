@@ -22,16 +22,8 @@ namespace SIVS
             return playerTransform.position + playerTransform.forward * 3;
         }
 
-        private bool CanFire()
-        {
-            if (!PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("Active", out var isActive))
-                return false;
-            
-            if ((bool) isActive == false)
-                return false;
-            
-            return GameObject.FindWithTag("PlayerBullet") == null;
-        }
+        private bool CanFire() =>
+            Match.IsActive && GameObject.FindWithTag("PlayerBullet") == null;
 
         [PunRPC]
         private void FireBullet()

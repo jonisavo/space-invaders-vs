@@ -44,7 +44,7 @@ namespace SIVS
                     _invaderManager.InitializeInvaders();
 
                     if (PhotonNetwork.IsMasterClient)
-                        SetRoomActive(true);
+                        Match.IsActive = true;
                 }
             }
 
@@ -105,7 +105,7 @@ namespace SIVS
             _gameOver = true;
 
             if (PhotonNetwork.IsMasterClient)
-                SetRoomActive(false);
+                Match.IsActive = false;
             
             _uiManager.ShowVictoryScreen(winner == null ? "No one" : winner.NickName);
 
@@ -126,14 +126,6 @@ namespace SIVS
 
             foreach (var enemyBullet in GameObject.FindGameObjectsWithTag("EnemyBullet"))
                 Destroy(enemyBullet);
-        }
-
-        private void SetRoomActive(bool active)
-        {
-            PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable()
-            {
-                {"Active", active}
-            });
         }
     }
 }
