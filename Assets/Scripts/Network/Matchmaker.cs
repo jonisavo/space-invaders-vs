@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using ExitGames.Client.Photon;
+using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
@@ -59,7 +60,15 @@ namespace SIVS
         {
             _isMatchmaking = true;
             PhotonNetwork.JoinOrCreateRoom(roomName,
-                new RoomOptions {MaxPlayers = 2, IsVisible = false},
+                new RoomOptions
+                {
+                    MaxPlayers = 2, 
+                    IsVisible = false, 
+                    CustomRoomProperties = new Hashtable()
+                    {
+                        {"Active", false}
+                    }
+                },
                 TypedLobby.Default);
             ShowProgressLabel();
         }
@@ -99,7 +108,14 @@ namespace SIVS
 
         public override void OnJoinRandomFailed(short returnCode, string message)
         {
-            PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = 2 });
+            PhotonNetwork.CreateRoom(null, new RoomOptions
+            {
+                MaxPlayers = 2,
+                CustomRoomProperties = new Hashtable()
+                {
+                    {"Active", false}
+                }
+            });
         }
 
         public override void OnJoinedRoom()

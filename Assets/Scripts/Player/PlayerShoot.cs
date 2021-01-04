@@ -24,6 +24,12 @@ namespace SIVS
 
         private bool CanFire()
         {
+            if (!PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("Active", out var isActive))
+                return false;
+            
+            if ((bool) isActive == false)
+                return false;
+            
             return GameObject.FindWithTag("PlayerBullet") == null;
         }
 

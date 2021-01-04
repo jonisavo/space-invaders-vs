@@ -20,11 +20,19 @@ namespace SIVS
 
         private void FixedUpdate()
         {
-            if (!photonView.IsMine) return;
+            if (!photonView.IsMine || !CanMove()) return;
 
             _rb.MovePosition((Vector2)transform.position + Vector2.right * (Input.GetAxis("Horizontal") * moveSpeed * Time.deltaTime));
         }
         
         #endregion
+
+        private bool CanMove()
+        {
+            if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("Active", out var isActive))
+                return (bool) isActive;
+
+            return false;
+        }
     }
 }
