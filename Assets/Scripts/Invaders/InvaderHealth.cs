@@ -10,6 +10,9 @@ namespace SIVS
     {
         [Tooltip("Toggles whether to automatically tint the invader sprite red.")]
         public bool tintSprite = true;
+
+        [Tooltip("GameObject to instantiate as the invader's explosion.")]
+        public GameObject explosion;
         
         private int _health;
 
@@ -73,6 +76,13 @@ namespace SIVS
                 PhotonNetwork.Destroy(gameObject);
             else
                 if (gameObject) gameObject.SetActive(false);
+
+            var size = _spriteRenderer.size;
+
+            var centerPoint =
+                (Vector2) transform.position + new Vector2(size.x / 2, -size.y / 2);
+
+            Instantiate(explosion, centerPoint, Quaternion.identity);
         }
 
         private void TintSprite()

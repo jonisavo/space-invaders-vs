@@ -77,6 +77,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b38335e97bc43c40a7b5bc866ed6e0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  explosion: {fileID: 4923263774660198280, guid: ae72d48e7684e9a49a3c77015e7c55b9,
+    type: 3}
   invincibility: 1
 --- !u!61 &1386693501966731541
 BoxCollider2D:
@@ -91,7 +93,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.0015085489, y: -0.112139404}
+  m_Offset: {x: 0.0003976524, y: -0.010492593}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 1}
@@ -102,7 +104,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.2961342, y: 0.10218942}
+  m_Size: {x: 0.2939124, y: 0.10107845}
   m_EdgeRadius: 0
 --- !u!50 &1696350249
 Rigidbody2D:
@@ -206,7 +208,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3985453474289492474}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.15, y: 0, z: 0}
+  m_LocalPosition: {x: -0.15, y: 0.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 343851896698152763}

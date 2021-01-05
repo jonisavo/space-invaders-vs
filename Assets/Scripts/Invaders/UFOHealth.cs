@@ -6,6 +6,9 @@ namespace SIVS
 {
     public class UFOHealth : MonoBehaviourPunCallbacks
     {
+        [Tooltip("GameObject to instantiate as the UFO's explosion.")]
+        public GameObject explosion;
+        
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (!other.gameObject.CompareTag("PlayerBullet")) return;
@@ -28,6 +31,8 @@ namespace SIVS
                 PhotonNetwork.Destroy(gameObject);
             else
                 if (gameObject) gameObject.SetActive(false);
+            
+            Instantiate(explosion, transform.position, Quaternion.identity);
         }
     }
 }
