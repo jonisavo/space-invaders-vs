@@ -10,8 +10,15 @@ namespace SIVS
         
         [Tooltip("A debug option to make players invincible.")]
         public bool invincibility = false;
+
+        private SpawnManager _spawnManager;
         
         #region MonoBehaviour Callbacks
+
+        private void Awake()
+        {
+            _spawnManager = GameObject.Find("Game Manager").GetComponent<SpawnManager>();
+        }
 
         private void OnCollisionEnter2D(Collision2D other)
         {
@@ -31,11 +38,8 @@ namespace SIVS
             PlayerStats.RemoveLife();
             
             photonView.RPC("SpawnExplosion", RpcTarget.All);
-            
-            // Reposition player using SpawnManager's functions
-            transform.position = new Vector3(
-                PhotonNetwork.LocalPlayer.ActorNumber == 1 ? -2.5f : 2.75f, -1.0f, 0
-                );
+
+            transform.position = _spawnManager.OwnAreaPosition(0.0f, -1.5f);
         }
         
         [PunRPC]
