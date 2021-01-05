@@ -15,7 +15,10 @@ namespace SIVS
         
         private void Awake()
         {
-            _movementDirection = Vector2.zero;
+            if (photonView.InstantiationData != null)
+                _movementDirection = (bool) photonView.InstantiationData[0] ? Vector2.right : Vector2.left;
+            else
+                _movementDirection = Vector2.zero;
         }
 
         private void Update()
@@ -27,8 +30,6 @@ namespace SIVS
         }
         
         #endregion
-
-        public void SetMovementDirection(Vector2 direction) => _movementDirection = direction;
 
         private bool OutOfBounds() => 
             Math.Abs(transform.position.x) >= 6 || Math.Abs(transform.position.y) >= 6;
