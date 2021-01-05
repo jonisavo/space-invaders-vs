@@ -7,12 +7,11 @@ The project has two big dependencies: PUN 2 and TextMeshPro.
 
 ## To do
 
-1. UFOs
-2. Music & sound
-3. Explosion effects
-4. Better UI
-5. Powerups?
-6. Other goodies?
+1. Music & sound
+2. Explosion effects
+3. Better UI
+4. Powerups?
+5. Other goodies?
 
 ## Set up
 
