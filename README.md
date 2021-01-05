@@ -8,10 +8,9 @@ The project has two big dependencies: PUN 2 and TextMeshPro.
 ## To do
 
 1. Music & sound
-2. Explosion effects
-3. Better UI
-4. Powerups?
-5. Other goodies?
+2. Better UI
+3. Powerups?
+4. Other goodies?
 
 ## Set up
 
