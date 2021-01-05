@@ -93,12 +93,36 @@ namespace SIVS
             }
         }
 
+        private IEnumerator SpawnUFOs()
+        {
+            var ufosSpawned = 0;
+            var side = PhotonNetwork.LocalPlayer.ActorNumber;
+            
+            while (ufosSpawned < 5)
+            {
+                yield return new WaitForSeconds(Random.Range(25.0f, 35.0f));
+
+                if (GameObject.FindGameObjectWithTag("UFO") != null)
+                    continue;
+
+                var position = _spawnManager.OwnAreaPosition(side == 1 ? -3.0f : 3.0f, 2.0f);
+
+                object[] instantiationData = { side == 1 };
+
+                PhotonNetwork.Instantiate("UFO",
+                    position, Quaternion.identity, 0, instantiationData);
+                
+                ufosSpawned++;
+            }
+        }
+
         #endregion
         
         public void InitializeInvaders()
         {
             SpawnOwnInvaders();
             StartCoroutine(MoveInvaders());
+            StartCoroutine(SpawnUFOs());
         }
 
         private void SpawnOwnInvaders()
