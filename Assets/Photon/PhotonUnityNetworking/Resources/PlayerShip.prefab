@@ -164,7 +164,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
+  m_SynchronizeRotation: 0
   m_SynchronizeScale: 0
   m_UseLocal: 1
 --- !u!114 &2417448864215395742
@@ -182,7 +182,7 @@ MonoBehaviour:
   m_SynchronizeVelocity: 1
   m_SynchronizeAngularVelocity: 0
   m_TeleportEnabled: 1
-  m_TeleportIfDistanceGreaterThan: 4
+  m_TeleportIfDistanceGreaterThan: 2
 --- !u!1 &3985453474289492474
 GameObject:
   m_ObjectHideFlags: 0
