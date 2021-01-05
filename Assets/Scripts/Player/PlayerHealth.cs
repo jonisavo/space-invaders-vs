@@ -35,11 +35,11 @@ namespace SIVS
 
         private void GetHit()
         {
-            PlayerStats.RemoveLife();
-            
             photonView.RPC("SpawnExplosion", RpcTarget.All);
 
             transform.position = _spawnManager.OwnAreaPosition(0.0f, -1.5f);
+            
+            PlayerStats.RemoveLife();
         }
         
         [PunRPC]
