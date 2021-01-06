@@ -11,7 +11,8 @@ namespace SIVS
         
         private void OnTriggerEnter2D(Collider2D other)
         {
-            if (!other.gameObject.CompareTag("PlayerBullet")) return;
+            if (!other.gameObject.CompareTag("PlayerBullet"))
+                return;
             
             Destroy(other.gameObject);
             

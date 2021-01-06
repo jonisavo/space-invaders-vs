@@ -85,7 +85,8 @@ namespace SIVS
         {
             foreach (var entry in PhotonNetwork.CurrentRoom.Players)
             {
-                if (!_cachedLives.ContainsKey(entry.Value.NickName)) continue;
+                if (!_cachedLives.ContainsKey(entry.Value.NickName))
+                    continue;
                 
                 var initialXCoord = entry.Key % 2 == 0 ? 948 : 52;
 

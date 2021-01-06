@@ -24,7 +24,8 @@ namespace SIVS
         {
             if (invincibility) return;
             
-            if (!other.gameObject.CompareTag("EnemyBullet")) return;
+            if (!other.gameObject.CompareTag("EnemyBullet"))
+                return;
             
             if (photonView.IsMine) GetHit();
             

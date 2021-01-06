@@ -61,7 +61,8 @@ namespace SIVS
                 
                 if (movement._side != _side) continue;
 
-                if (!movement.CanMove(direction, rayDistance)) return false;
+                if (!movement.CanMove(direction, rayDistance))
+                    return false;
             }
 
             return true;

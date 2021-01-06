@@ -54,7 +54,8 @@ namespace SIVS
                     EndGame(GetOtherPlayer(targetPlayer));
             }
 
-            if (!changedProps.ContainsKey(PlayerStats.CurrentRound)) return;
+            if (!changedProps.ContainsKey(PlayerStats.CurrentRound))
+                return;
             
             if ((int) changedProps[PlayerStats.CurrentRound] >= 6)
                 EndGame(targetPlayer);
@@ -85,7 +86,8 @@ namespace SIVS
                 if (!player.CustomProperties.ContainsKey(PlayerStats.Ready))
                     return false;
 
-                if (!(bool)player.CustomProperties[PlayerStats.Ready]) return false;
+                if (!(bool)player.CustomProperties[PlayerStats.Ready])
+                    return false;
             }
             
             return true;
