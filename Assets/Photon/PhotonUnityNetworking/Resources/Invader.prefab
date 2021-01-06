@@ -182,6 +182,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LifePowerupDropChance: 1
+  CoverPowerupDropChance: 1
   SpawnXOffset: 0.06
   SpawnYOffset: -0.04
 --- !u!61 &4113204282743565066
