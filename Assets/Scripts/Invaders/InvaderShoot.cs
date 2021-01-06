@@ -14,8 +14,6 @@ namespace SIVS
 
         private float _shootInterval;
 
-        #region MonoBehaviour Callbacks
-        
         private void Awake()
         {
             var bounds = GetComponent<BoxCollider2D>().bounds;
@@ -31,8 +29,6 @@ namespace SIVS
             if (photonView.IsMine)
                 StartCoroutine(ShootCoroutine());
         }
-
-        #endregion
 
         private IEnumerator ShootCoroutine()
         {

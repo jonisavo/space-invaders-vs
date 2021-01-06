@@ -28,8 +28,6 @@ namespace SIVS
             PhotonNetwork.AutomaticallySyncScene = true;
         }
 
-        #region MonoBehaviourPunCallbacks Callbacks
-
         public override void OnConnectedToMaster()
         {
             if (!_isConnecting) return;
@@ -42,7 +40,5 @@ namespace SIVS
         {
             _isConnecting = false;
         }
-
-        #endregion
     }
 }

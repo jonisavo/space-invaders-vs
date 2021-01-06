@@ -20,7 +20,7 @@ namespace SIVS
 
         private SpriteRenderer _spriteRenderer;
         
-        #region MonoBehaviour Callbacks
+        #region Unity Callbacks
 
         private void Awake()
         {

@@ -10,8 +10,6 @@ namespace SIVS
         public float moveSpeed = 10;
 
         private Rigidbody2D _rb;
-        
-        #region MonoBehaviour Callbacks
 
         private void Awake()
         {
@@ -25,7 +23,5 @@ namespace SIVS
 
             _rb.MovePosition((Vector2)transform.position + Vector2.right * (Input.GetAxis("Horizontal") * moveSpeed * Time.deltaTime));
         }
-        
-        #endregion
     }
 }

@@ -10,7 +10,7 @@ namespace SIVS
 
         private int _playerIndex = 1;
         
-        #region MonoBehaviour Callbacks
+        #region Unity Callbacks
         
         private void Awake()
         {

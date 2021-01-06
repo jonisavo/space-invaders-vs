@@ -18,7 +18,7 @@ namespace SIVS
 
         private InvaderManager _invaderManager;
         
-        #region MonoBehaviour Callbacks
+        #region Unity Callbacks
         
         private void Awake()
         {
@@ -29,7 +29,7 @@ namespace SIVS
 
         #endregion
 
-        #region MonoBehaviourPunCallbacks Callbacks
+        #region PUN Callbacks
 
         public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
         {

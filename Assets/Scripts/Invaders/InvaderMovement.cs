@@ -17,7 +17,7 @@ namespace SIVS
 
         private Vector3 _distanceToCenter;
 
-        #region MonoBehaviour Callbacks
+        #region Unity Callbacks
 
         private void Awake()
         {

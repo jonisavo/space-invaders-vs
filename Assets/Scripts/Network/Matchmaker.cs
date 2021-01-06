@@ -90,7 +90,7 @@ namespace SIVS
             HideProgressLabel();
         }
 
-        #region MonoBehaviourPunCallbacks Callbacks
+        #region PUN Callbacks
 
         public override void OnConnectedToMaster()
         {

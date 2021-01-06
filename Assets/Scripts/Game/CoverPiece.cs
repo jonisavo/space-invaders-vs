@@ -9,7 +9,7 @@ namespace SIVS
 
         private int _id;
         
-        #region MonoBehaviour Callbacks
+        #region Unity Callbacks
 
         private void OnTriggerEnter2D(Collider2D other)
         {

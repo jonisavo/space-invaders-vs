@@ -16,6 +16,8 @@ namespace SIVS
         public int columns = 4;
         
         private Dictionary<int, GameObject> _pieces;
+        
+        #region Unity Callbacks
 
         private void Awake()
         {
@@ -26,6 +28,8 @@ namespace SIVS
         {
             InstantiatePieces();
         }
+        
+        #endregion
 
         [PunRPC]
         public void DestroyPiece(int id)

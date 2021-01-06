@@ -28,13 +28,13 @@ namespace SIVS
         private int _totalInvaderKills = 0;
 
         private SpawnManager _spawnManager;
+        
+        #region Callbacks
 
         private void Awake()
         {
             _spawnManager = GetComponent<SpawnManager>();
         }
-
-        #region Callbacks
 
         public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
         {
@@ -55,9 +55,9 @@ namespace SIVS
             PlayerStats.GoToNextRound();
             SpawnOwnInvaders();
         }
-
-        #endregion
         
+        #endregion
+
         #region Coroutines
     
         private IEnumerator MoveInvaders()

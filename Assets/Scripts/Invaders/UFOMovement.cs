@@ -11,8 +11,6 @@ namespace SIVS
 
         private Vector2 _movementDirection;
 
-        #region MonoBehaviour Callbacks
-        
         private void Awake()
         {
             if (photonView.InstantiationData != null)
@@ -28,8 +26,6 @@ namespace SIVS
             if (photonView.IsMine && OutOfBounds())
                 PhotonNetwork.Destroy(gameObject);
         }
-        
-        #endregion
 
         private bool OutOfBounds() => 
             Math.Abs(transform.position.x) >= 6 || Math.Abs(transform.position.y) >= 6;
