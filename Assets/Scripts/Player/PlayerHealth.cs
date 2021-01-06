@@ -47,7 +47,7 @@ namespace SIVS
             
             photonView.RPC(nameof(SpawnExplosion), RpcTarget.All);
 
-            transform.position = _spawnManager.OwnAreaPosition(0.0f, -1.5f);
+            transform.position = _spawnManager.OwnSpawnPoint();
             
             PlayerStats.RemoveLife(PhotonNetwork.LocalPlayer);
         }

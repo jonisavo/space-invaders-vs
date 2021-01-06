@@ -65,13 +65,14 @@ namespace SIVS
             return new Rect(leftCorner.x, leftCorner.y, 4, 4.5f);
         }
 
+        public Vector3 OwnSpawnPoint() => OwnAreaPosition(0.0f, -1.6f);
+
         private void SpawnShip()
         {
             object[] playerData = {PhotonNetwork.NickName};
 
             PhotonNetwork.Instantiate("PlayerShip",
-                OwnAreaPosition(0.0f, -1.5f),
-                Quaternion.identity, 0, playerData);
+                OwnSpawnPoint(), Quaternion.identity, 0, playerData);
         }
 
         private void SpawnCover()
