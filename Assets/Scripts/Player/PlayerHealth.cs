@@ -49,7 +49,7 @@ namespace SIVS
 
             transform.position = _spawnManager.OwnAreaPosition(0.0f, -1.5f);
             
-            PlayerStats.RemoveLife();
+            PlayerStats.RemoveLife(PhotonNetwork.LocalPlayer);
         }
         
         [PunRPC]

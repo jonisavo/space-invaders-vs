@@ -1,6 +1,7 @@
 ﻿using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Pun.UtilityScripts;
+using Photon.Realtime;
 
 namespace SIVS
 {
@@ -14,73 +15,66 @@ namespace SIVS
         public const string Lives = "PlayerLives";
         public const string InvaderKills = "PlayerInvaderKills";
 
-        public static void InitializeStats()
+        public static void InitializeStats(Player player)
         {
-            PhotonNetwork.LocalPlayer.SetCustomProperties(new Hashtable()
+            player.SetCustomProperties(new Hashtable()
             {
                 {Ready, true},
                 {CurrentRound, 1},
                 {Lives, InitialLives},
                 {InvaderKills, 0}
             });
-            PhotonNetwork.LocalPlayer.SetScore(0);
+            player.SetScore(0);
         }
 
-        public static int GetRound()
+        public static int GetRound(Player player)
         {
-            if (PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue(CurrentRound, out var round))
+            if (player.CustomProperties.TryGetValue(CurrentRound, out var round))
                 return (int) round;
             
             return 1;
         }
 
-        public static void GoToNextRound()
+        public static int GetOwnRound() => GetRound(PhotonNetwork.LocalPlayer);
+
+        public static void GoToNextRound(Player player)
         {
-            PhotonNetwork.LocalPlayer.SetCustomProperties(new Hashtable()
+            player.SetCustomProperties(new Hashtable()
             {
-                {CurrentRound, GetRound() + 1}
+                {CurrentRound, GetRound(player) + 1}
             });
         }
 
-        public static void RemoveLife()
+        public static void RemoveLife(Player player)
         {
-            if (PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue(Lives, out var lives))
+            if (player.CustomProperties.TryGetValue(Lives, out var lives))
                 lives = (int) lives - 1;
             else
                 lives = InitialLives - 1;
 
-            PhotonNetwork.LocalPlayer.SetCustomProperties(new Hashtable()
+            player.SetCustomProperties(new Hashtable()
             {
                 {Lives, lives}
             });
         }
 
-        public static void AddLife()
+        public static void AddLife(Player player)
         {
-            var lives = (int)PhotonNetwork.LocalPlayer.CustomProperties[Lives];
+            var lives = (int) player.CustomProperties[Lives];
             if (lives >= MaxLives) return;
 
-            PhotonNetwork.LocalPlayer.SetCustomProperties(new Hashtable()
+            player.SetCustomProperties(new Hashtable()
             {
                 {Lives, lives + 1}
             });
         }
 
-        public static void AddScore(int amount) => PhotonNetwork.LocalPlayer.AddScore(amount);
-
-        public static int GetScore() => PhotonNetwork.LocalPlayer.GetScore();
-
-        public static void AddKill()
+        public static bool HasMaximumLives(Player player)
         {
-            if (PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue(InvaderKills, out var kills))
-                kills = (int) kills + 1;
-            else
-                kills = 1;
+            if (!player.CustomProperties.ContainsKey(Lives))
+                return false;
 
-            PhotonNetwork.LocalPlayer.SetCustomProperties(new Hashtable()
-            {
-                {InvaderKills, kills}
-            });
+            return (int) player.CustomProperties[Lives] >= MaxLives;
         }
     }
 }

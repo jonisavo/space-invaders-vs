@@ -50,9 +50,9 @@ namespace SIVS
 
             _totalInvaderKills = invaderKills;
 
-            if (OwnInvaderCount() > 0 || PlayerStats.GetRound() > 5) return;
+            if (OwnInvaderCount() > 0 || PlayerStats.GetOwnRound() > 5) return;
             
-            PlayerStats.GoToNextRound();
+            PlayerStats.GoToNextRound(PhotonNetwork.LocalPlayer);
             SpawnOwnInvaders();
         }
         
@@ -127,9 +127,9 @@ namespace SIVS
 
         private void SpawnOwnInvaders()
         {
-            var rows = debugMode && debugRows > 0 ? debugRows : 3 + PlayerStats.GetRound();
+            var rows = debugMode && debugRows > 0 ? debugRows : 3 + PlayerStats.GetOwnRound();
             
-            var columns = debugMode && debugColumns > 0 ? debugColumns : 3 + PlayerStats.GetRound() / 2;
+            var columns = debugMode && debugColumns > 0 ? debugColumns : 3 + PlayerStats.GetOwnRound() / 2;
 
             for (var row = 0; row < rows; row++)
                 for (var column = 0; column < columns; column++)
@@ -180,7 +180,7 @@ namespace SIVS
         {
             if (debugMode && debugMoveRate != 0) return debugMoveRate;
             
-            return new []{2.0f, 1.5f, 1.15f, 1.0f, 0.8f}[PlayerStats.GetRound() - 1];
+            return new []{2.0f, 1.5f, 1.15f, 1.0f, 0.8f}[PlayerStats.GetOwnRound() - 1];
         }
 
         private void MoveOwnInvaders(Vector2 direction)

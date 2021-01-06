@@ -22,7 +22,7 @@ namespace SIVS
         
         private void Awake()
         {
-            PlayerStats.InitializeStats();
+            PlayerStats.InitializeStats(PhotonNetwork.LocalPlayer);
             _uiManager = GetComponent<UIManager>();
             _invaderManager = GetComponent<InvaderManager>();
         }
