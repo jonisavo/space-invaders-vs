@@ -26,7 +26,7 @@ namespace SIVS
 
         private void Start()
         {
-            InstantiatePieces();
+            InstantiateAllPieces();
         }
         
         #endregion
@@ -40,8 +40,22 @@ namespace SIVS
 
             _pieces.Remove(id);
         }
-        
-        public void InstantiatePieces()
+
+        public void AddPieces(int count)
+        {
+            var maximumAllowedSize = rows * columns;
+
+            if (_pieces.Count + count > maximumAllowedSize)
+                count = maximumAllowedSize - _pieces.Count;
+
+            if (count <= 0) return;
+
+            InstantiatePieces(count);
+        }
+
+        private void InstantiateAllPieces() => InstantiatePieces(rows * columns);
+
+        private void InstantiatePieces(int count)
         {
             var id = 0;
 
@@ -49,16 +63,29 @@ namespace SIVS
             {
                 for (var column = 0; column < columns; column++)
                 {
-                    var piece = Instantiate(coverPiece, new Vector3(row * 0.08f, column * 0.08f, 0),
-                        Quaternion.identity);
-                    
-                    piece.transform.SetParent(gameObject.transform, false);
+                    if (!_pieces.ContainsKey(id))
+                    {
+                        InstantiatePiece(id, row, column);
+                        count--;
+                    }
 
-                    piece.GetComponent<CoverPiece>().InitializeCoverPiece(id, this);
+                    id++;
 
-                    _pieces[id++] = piece;
+                    if (count <= 0) return;
                 }
             }
+        }
+
+        private void InstantiatePiece(int id, int row, int column)
+        {
+            var piece = Instantiate(coverPiece, new Vector3(row * 0.08f, column * 0.08f, 0),
+                Quaternion.identity);
+                    
+            piece.transform.SetParent(gameObject.transform, false);
+
+            piece.GetComponent<CoverPiece>().InitializeCoverPiece(id, this);
+
+            _pieces[id] = piece;
         }
     }
 }
