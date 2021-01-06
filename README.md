@@ -8,9 +8,9 @@ The project has two big dependencies: PUN 2 and TextMeshPro.
 ## To do
 
 1. Music
-2. Better UI?
-3. Powerups?
-4. Other goodies?
+2. More powerups (new weapons?)
+3. Better UI?
+4. Change rules: whoever has the most points if both die wins
 
 ## Set up
 
