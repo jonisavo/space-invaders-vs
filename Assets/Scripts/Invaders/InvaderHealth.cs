@@ -13,13 +13,16 @@ namespace SIVS
 
         [Tooltip("GameObject to instantiate as the invader's explosion.")]
         public GameObject explosion;
+
+        [Tooltip("Audio clip to play upon death.")]
+        public AudioClip deathSound;
         
         private int _health;
 
         private int _initialHealth;
 
         private SpriteRenderer _spriteRenderer;
-        
+
         #region Unity Callbacks
 
         private void Awake()
@@ -74,10 +77,18 @@ namespace SIVS
         private void Die()
         {
             if (photonView.IsMine)
+            {
+                GameObject.Find("Sound Player")
+                    .GetComponent<AudioSource>()
+                    .PlayOneShot(deathSound);
+                
                 PhotonNetwork.Destroy(gameObject);
+            }
             else
+            {
                 if (gameObject) gameObject.SetActive(false);
-
+            }
+            
             var size = _spriteRenderer.size;
 
             var centerPoint =

@@ -5,14 +5,20 @@ using UnityEngine;
 namespace SIVS
 {
     [RequireComponent(typeof(BoxCollider2D))]
+    [RequireComponent(typeof(AudioSource))]
     public class InvaderShoot : MonoBehaviourPunCallbacks
     {
         [Tooltip("The bullet to shoot.")]
         public GameObject bullet;
 
+        [Tooltip("Audio clip to play when shooting.")]
+        public AudioClip shootSound;
+
         private Vector3 _distanceToShootPoint;
 
         private float _shootInterval;
+
+        private AudioSource _audioSource;
 
         private void Awake()
         {
@@ -20,6 +26,8 @@ namespace SIVS
             _distanceToShootPoint = bounds.min - transform.position;
             _distanceToShootPoint.x += bounds.size.x / 2;
             _distanceToShootPoint.y -= 0.05f;
+
+            _audioSource = GetComponent<AudioSource>();
 
             if (photonView.InstantiationData != null)
                 _shootInterval = (float) photonView.InstantiationData[2];
@@ -60,6 +68,9 @@ namespace SIVS
         [PunRPC]
         private void Shoot()
         {
+            if (photonView.IsMine)
+                _audioSource.PlayOneShot(shootSound, 0.6f);
+            
             Instantiate(bullet, GetBulletSpawnPoint(), Quaternion.identity);    
         }
     }
