@@ -1,12 +1,24 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using Photon.Pun;
 
 namespace SIVS
 {
+    [RequireComponent(typeof(AudioSource))]
     public class PlayerShoot : MonoBehaviourPunCallbacks
     {
         [Tooltip("The bullet to shoot.")]
         public GameObject bullet;
+
+        [Tooltip("The audio clip to play when firing.")]
+        public AudioClip fireSound;
+
+        private AudioSource _audioSource;
+
+        private void Awake()
+        {
+            _audioSource = GetComponent<AudioSource>();
+        }
 
         private void Update()
         {
@@ -28,6 +40,9 @@ namespace SIVS
         [PunRPC]
         private void FireBullet()
         {
+            if (photonView.IsMine)
+                _audioSource.PlayOneShot(fireSound);
+            
             var bulletObject = Instantiate(bullet, GetBulletSpawnPoint(), Quaternion.identity);
             bulletObject.GetComponent<PlayerBullet>().SetOwner(photonView.Owner);
         }
