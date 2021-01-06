@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 739979522593936112}
   - component: {fileID: -919248742932177090}
   - component: {fileID: 5796063333180500504}
+  - component: {fileID: -3034183532053049872}
   - component: {fileID: 4113204282743565066}
   - component: {fileID: 3499809671171731917}
   - component: {fileID: -6217668316911308647}
@@ -168,6 +169,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementAmount: 0.25
   drawDebugRay: 1
+--- !u!114 &-3034183532053049872
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4113204282743565057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0afabbb18145479c95d4cb7cad01ab95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LifePowerupDropChance: 1
+  SpawnXOffset: 0.06
+  SpawnYOffset: -0.04
 --- !u!61 &4113204282743565066
 BoxCollider2D:
   m_ObjectHideFlags: 0

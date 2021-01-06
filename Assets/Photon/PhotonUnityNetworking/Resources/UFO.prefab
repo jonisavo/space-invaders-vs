@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: -4393355922921278290}
   - component: {fileID: 8306211043867010946}
   - component: {fileID: 6929043810011655958}
+  - component: {fileID: 3390721812067126759}
   - component: {fileID: 3112517686913664029}
   m_Layer: 0
   m_Name: UFO
@@ -280,6 +281,21 @@ MonoBehaviour:
   explosion: {fileID: 6270844337201857325, guid: 9d0a87861be6f3b4596c2cd9fbd86415,
     type: 3}
   deathSound: {fileID: 8300000, guid: d79ab3b73c30a4c4281c5f1720130aef, type: 3}
+--- !u!114 &3390721812067126759
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3338105151238851736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0afabbb18145479c95d4cb7cad01ab95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LifePowerupDropChance: 75
+  SpawnXOffset: 0
+  SpawnYOffset: 0
 --- !u!114 &3112517686913664029
 MonoBehaviour:
   m_ObjectHideFlags: 0
