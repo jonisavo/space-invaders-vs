@@ -44,7 +44,7 @@ namespace SIVS
             
             if (!photonView.IsMine) return;
             
-            photonView.RPC("LoseHealth", RpcTarget.All);
+            photonView.RPC(nameof(LoseHealth), RpcTarget.All);
 
             if (!IsDead()) return;
 

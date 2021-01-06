@@ -21,7 +21,7 @@ namespace SIVS
             
             bulletOwner.AddScore(1000);
             
-            photonView.RPC("Die", RpcTarget.All);
+            photonView.RPC(nameof(Die), RpcTarget.All);
         }
 
         [PunRPC]

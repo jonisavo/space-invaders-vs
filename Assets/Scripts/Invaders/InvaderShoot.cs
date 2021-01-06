@@ -45,7 +45,7 @@ namespace SIVS
 
                 if (hit.collider) continue;
             
-                photonView.RPC("Shoot", RpcTarget.All);
+                photonView.RPC(nameof(Shoot), RpcTarget.All);
             }
         }
 

@@ -35,7 +35,7 @@ namespace SIVS
 
         private void GetHit()
         {
-            photonView.RPC("SpawnExplosion", RpcTarget.All);
+            photonView.RPC(nameof(SpawnExplosion), RpcTarget.All);
 
             transform.position = _spawnManager.OwnAreaPosition(0.0f, -1.5f);
             
