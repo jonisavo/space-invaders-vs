@@ -32,8 +32,6 @@ namespace SIVS
 
         public override void OnConnectedToMaster()
         {
-            Debug.Log("OnConnectedToMaster() called");
-
             if (!_isConnecting) return;
 
             _isConnecting = false;
@@ -42,7 +40,6 @@ namespace SIVS
 
         public override void OnDisconnected(DisconnectCause cause)
         {
-            Debug.LogWarningFormat("OnDisconnected() called");
             _isConnecting = false;
         }
 
