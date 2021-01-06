@@ -32,19 +32,15 @@ namespace SIVS
         [PunRPC]
         private void Die()
         {
-            if (photonView.IsMine)
-            {
-                GameObject.Find("Sound Player")
-                    .GetComponent<AudioSource>()
-                    .PlayOneShot(deathSound);
-                
-                PhotonNetwork.Destroy(gameObject);
-            }
-            else
-            {
-                if (gameObject) gameObject.SetActive(false);
-            }
+            GameObject.Find("Sound Player")
+                .GetComponent<AudioSource>()
+                .PlayOneShot(deathSound);
             
+            if (photonView.IsMine)
+                PhotonNetwork.Destroy(gameObject);
+            else
+                if (gameObject) gameObject.SetActive(false);
+
             Instantiate(explosion, transform.position, Quaternion.identity);
         }
     }
