@@ -14,6 +14,9 @@ namespace SIVS
         [Tooltip("GameObject to instantiate as the invader's explosion.")]
         public GameObject explosion;
 
+        [Tooltip("Audio clip to play when losing health (without dying).")]
+        public AudioClip hurtSound;
+        
         [Tooltip("Audio clip to play upon death.")]
         public AudioClip deathSound;
         
@@ -68,19 +71,25 @@ namespace SIVS
         private void LoseHealth()
         {
             _health--;
+
             if (IsDead())
+            {
                 Die();
+            }
             else
+            {
+                if (photonView.IsMine)
+                    SoundPlayer.PlaySound(hurtSound);
+                
                 TintSprite();
+            }
         }
         
         private void Die()
         {
             if (photonView.IsMine)
             {
-                GameObject.Find("Sound Player")
-                    .GetComponent<AudioSource>()
-                    .PlayOneShot(deathSound);
+                SoundPlayer.PlaySound(deathSound);
                 
                 PhotonNetwork.Destroy(gameObject);
             }
