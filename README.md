@@ -8,11 +8,12 @@ The project has two big dependencies: PUN 2 and TextMeshPro.
 ## Additional credits
 
 Sound effects generated using [jsfxr](http://sfxr.me/)
+
 Music by [YouFulca](https://wingless-seraph.net/en/)
 
 ## To do
 
-1. Music
+1. Play music on the last round
 2. More powerups (new weapons?)
 3. Better UI?
 
