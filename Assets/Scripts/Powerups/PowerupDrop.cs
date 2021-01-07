@@ -15,7 +15,7 @@ namespace SIVS
 
         private void OnDestroy()
         {
-            if (!photonView.IsMine) return;
+            if (!PhotonNetwork.InRoom || !photonView.IsMine) return;
             
             var powerup = GetDrop();
 
