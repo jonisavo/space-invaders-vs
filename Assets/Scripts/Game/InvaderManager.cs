@@ -50,7 +50,7 @@ namespace SIVS
 
             _totalInvaderKills = invaderKills;
 
-            if (OwnInvaderCount() > 0 || PlayerStats.GetOwnRound() > 5) return;
+            if (OwnInvaderCount() > 0 || PlayerStats.GetOwnRound() >= 5) return;
             
             PlayerStats.GoToNextRound(PhotonNetwork.LocalPlayer);
             SpawnOwnInvaders();
