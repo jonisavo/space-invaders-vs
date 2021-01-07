@@ -22,5 +22,18 @@ namespace SIVS
                 return false;
             }
         }
+        
+        public static int SumOfRounds
+        {
+            get
+            {
+                var sum = 0;
+                
+                foreach (var player in PhotonNetwork.CurrentRoom.Players.Values)
+                    sum += PlayerStats.GetRound(player);
+                
+                return sum;
+            }
+        }
     }
 }
