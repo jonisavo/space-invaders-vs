@@ -73,7 +73,7 @@ namespace SIVS
         {
             if (_gameOver) return;
             
-            EndGame(PhotonNetwork.LocalPlayer);
+            EndGame(GetOtherPlayer(otherPlayer));
         }
 
         #endregion
@@ -114,11 +114,11 @@ namespace SIVS
             
             _uiManager.ShowVictoryScreen(winner == null ? "No one" : winner.NickName);
 
-            GameObject.Find("Audio Player")
+            GameObject.Find("Music Player")
                 .GetComponent<AudioSource>()
                 .Stop();
             
-            if (winner.ActorNumber == PhotonNetwork.LocalPlayer.ActorNumber)
+            if (winner != null && winner.ActorNumber == PhotonNetwork.LocalPlayer.ActorNumber)
                 GameObject.Find("Sound Player")
                     .GetComponent<AudioSource>()
                     .PlayOneShot(victorySound);
