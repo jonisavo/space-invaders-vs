@@ -124,6 +124,8 @@ namespace SIVS
             StopAllCoroutines();
             
             DestroyBullets();
+            
+            DestroyPowerups();
 
             _invaderManager.StopAllCoroutines();
             
@@ -138,6 +140,18 @@ namespace SIVS
 
             foreach (var enemyBullet in GameObject.FindGameObjectsWithTag("EnemyBullet"))
                 Destroy(enemyBullet);
+        }
+
+        private void DestroyPowerups()
+        {
+            foreach (var powerup in GameObject.FindGameObjectsWithTag("Powerup"))
+            {
+                var photonView = powerup.GetPhotonView();
+
+                if (!photonView.IsMine) continue;
+                
+                photonView.RPC("DestroyPowerup", RpcTarget.All);
+            }
         }
     }
 }
