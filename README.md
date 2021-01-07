@@ -19,7 +19,6 @@ Music by [YouFulca](https://wingless-seraph.net/en/)
 
 1. Open "pause" menu in-game (with audio options and possibility to leave)
 2. More powerups (new weapons?)
-3. Better UI?
 
 ## Set up
 
