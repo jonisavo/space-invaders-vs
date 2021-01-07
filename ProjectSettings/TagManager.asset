@@ -9,6 +9,7 @@ TagManager:
   - Invader
   - UFO
   - Cover
+  - Powerup
   layers:
   - Default
   - TransparentFX
