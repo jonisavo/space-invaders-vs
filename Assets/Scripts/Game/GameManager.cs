@@ -10,6 +10,9 @@ namespace SIVS
     [RequireComponent(typeof(InvaderManager))]
     public class GameManager : MonoBehaviourPunCallbacks
     {
+        [Tooltip("Audio clip to play upon a victory.")]
+        public AudioClip victorySound;
+        
         private bool _bothReady = false;
 
         private bool _gameOver = false;
@@ -110,6 +113,15 @@ namespace SIVS
                 Match.IsActive = false;
             
             _uiManager.ShowVictoryScreen(winner == null ? "No one" : winner.NickName);
+
+            GameObject.Find("Audio Player")
+                .GetComponent<AudioSource>()
+                .Stop();
+            
+            if (winner.ActorNumber == PhotonNetwork.LocalPlayer.ActorNumber)
+                GameObject.Find("Sound Player")
+                    .GetComponent<AudioSource>()
+                    .PlayOneShot(victorySound);
 
             StopAllCoroutines();
             
