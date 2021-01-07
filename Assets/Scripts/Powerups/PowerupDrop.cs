@@ -27,10 +27,10 @@ namespace SIVS
         // TODO: Figure out a better system for generating powerup drops
         private string GetDrop()
         {
-            if (Random.Range(0.0f, 100.0f) < LifePowerupDropChance)
+            if (Random.Range(0.0f, 100.0f) < LifePowerupDropChance + 0.5f * Match.SumOfRounds)
                 return "Life Powerup";
 
-            if (Random.Range(0.0f, 100.0f) < CoverPowerupDropChance)
+            if (Random.Range(0.0f, 100.0f) < CoverPowerupDropChance + 0.5f * Match.SumOfRounds)
                 return "Cover Powerup";
 
             return null;
