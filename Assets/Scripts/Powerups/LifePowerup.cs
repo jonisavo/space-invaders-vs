@@ -24,9 +24,7 @@ namespace SIVS
             else
                 PlayerStats.AddLife(player);
             
-            GameObject.Find("Sound Player")
-                .GetComponent<AudioSource>()
-                .PlayOneShot(soundEffect);
+            SoundPlayer.PlaySound(soundEffect);
             
             photonView.RPC(nameof(DestroyPowerup), RpcTarget.All);
         }

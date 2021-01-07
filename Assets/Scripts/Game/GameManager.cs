@@ -119,9 +119,7 @@ namespace SIVS
                 .Stop();
             
             if (winner != null && winner.ActorNumber == PhotonNetwork.LocalPlayer.ActorNumber)
-                GameObject.Find("Sound Player")
-                    .GetComponent<AudioSource>()
-                    .PlayOneShot(victorySound);
+                SoundPlayer.PlaySound(victorySound);
 
             StopAllCoroutines();
             

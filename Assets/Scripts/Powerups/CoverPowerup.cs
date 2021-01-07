@@ -20,9 +20,7 @@ namespace SIVS
             
             photonView.RPC(nameof(AddCover), RpcTarget.AllBuffered, player.ActorNumber);
             
-            GameObject.Find("Sound Player")
-                .GetComponent<AudioSource>()
-                .PlayOneShot(soundEffect);
+            SoundPlayer.PlaySound(soundEffect);
             
             photonView.RPC(nameof(DestroyPowerup), RpcTarget.All);
         }
