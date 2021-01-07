@@ -21,7 +21,6 @@ namespace SIVS
         {
             ChangeVolume(sliderValue);
             PlayerPrefs.SetFloat(parameterName, sliderValue);
-            Debug.Log($"Setting {parameterName} to {Mathf.Log10(sliderValue) * 20}");
         }
 
         private void ChangeVolume(float sliderValue) =>
