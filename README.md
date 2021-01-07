@@ -11,6 +11,10 @@ Sound effects generated using [jsfxr](http://sfxr.me/)
 
 Music by [YouFulca](https://wingless-seraph.net/en/)
 
+[Press Start 2P](https://www.1001fonts.com/press-start-2p-font.html) font by codeman38
+
+[Karmatic Arcade](https://www.1001fonts.com/karmatic-arcade-font.html) font by Vic Fieger
+
 ## To do
 
 1. Open "pause" menu in-game (with audio options and possibility to leave)
