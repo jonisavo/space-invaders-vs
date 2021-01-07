@@ -58,13 +58,13 @@ namespace SIVS
         public void ShowVictoryScreen(string nickName)
         {
             resultCanvas.SetActive(true);
-            victoryText.text = nickName + " won!";
+            victoryText.text = $"{nickName} won!";
         }
         
         private void DrawNames()
         {
             foreach (var entry in PhotonNetwork.CurrentRoom.Players)
-                GUI.Label(new Rect(entry.Key == 1 ? 40 : 540, 70, 256, 64),
+                GUI.Label(new Rect(entry.Key == 1 ? 40 : 540, 70, 500, 200),
                     entry.Value.NickName, guiStyle);
         }
 
@@ -74,9 +74,9 @@ namespace SIVS
             {
                 if (!entry.Value.CustomProperties.ContainsKey(PlayerStats.CurrentRound))
                     continue;
-                
-                GUI.Label(new Rect(entry.Key == 1 ? 396 : 896, 70, 256, 64),
-                    $"Round {(int) entry.Value.CustomProperties[PlayerStats.CurrentRound]}", guiStyle);
+
+                GUI.Label(new Rect(entry.Key == 1 ? 374 : 874, 70, 500, 200),
+                    $"Round {PlayerStats.GetRound(entry.Value)}", guiStyle);
             }
 
         }
@@ -99,7 +99,7 @@ namespace SIVS
         private void DrawPoints()
         {
             foreach (var entry in PhotonNetwork.CurrentRoom.Players)
-                GUI.Label(new Rect(entry.Key == 1 ? 52 : 914, 700, 256, 64),
+                GUI.Label(new Rect(entry.Key == 1 ? 52 : 902, 708, 500, 200),
                     entry.Value.GetScore().ToString("D5"), guiStyle);
         }
     }

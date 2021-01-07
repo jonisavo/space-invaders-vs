@@ -169,7 +169,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 131}
-  m_SizeDelta: {x: 315.1134, y: 304.52185}
+  m_SizeDelta: {x: 400, y: 304.52185}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &448969159
 MonoBehaviour:
@@ -192,8 +192,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: Savolainen won!
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 9a636748e5c01ab469b03bcb63126d63, type: 2}
+  m_sharedMaterial: {fileID: -590891880867327345, guid: 9a636748e5c01ab469b03bcb63126d63,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -217,8 +218,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 32
+  m_fontSizeBase: 32
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1202,8 +1203,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: Leave
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: b5a25624408648240a27e15bb79316af, type: 2}
+  m_sharedMaterial: {fileID: -4427648351519011255, guid: b5a25624408648240a27e15bb79316af,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1227,8 +1229,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 20
-  m_fontSizeBase: 20
+  m_fontSize: 16
+  m_fontSizeBase: 16
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1304,6 +1306,16 @@ PrefabInstance:
       propertyPath: resultCanvas
       value: 
       objectReference: {fileID: 848209708}
+    - target: {fileID: 2407172818296431269, guid: 884633b0d38c8e5468de07914f6b395f,
+        type: 3}
+      propertyPath: guiStyle.m_Alignment
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2407172818296431269, guid: 884633b0d38c8e5468de07914f6b395f,
+        type: 3}
+      propertyPath: guiStyle.m_StretchWidth
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2407172818296431270, guid: 884633b0d38c8e5468de07914f6b395f,
         type: 3}
       propertyPath: m_RootOrder
