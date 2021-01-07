@@ -13,7 +13,7 @@ Music by [YouFulca](https://wingless-seraph.net/en/)
 
 ## To do
 
-1. Play music on the last round
+1. Options
 2. More powerups (new weapons?)
 3. Better UI?
 
