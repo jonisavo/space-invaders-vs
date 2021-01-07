@@ -156,7 +156,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 34.5}
-  m_SizeDelta: {x: 140.85583, y: 37.326263}
+  m_SizeDelta: {x: 180, y: 37.326263}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &342571220
 MonoBehaviour:
@@ -179,8 +179,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: Nickname
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: b5a25624408648240a27e15bb79316af, type: 2}
+  m_sharedMaterial: {fileID: -4427648351519011255, guid: b5a25624408648240a27e15bb79316af,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -204,8 +205,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 20
+  m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -808,7 +809,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 5, y: 83}
+  m_AnchoredPosition: {x: -130, y: 83}
   m_SizeDelta: {x: 521.1176, y: 74.701355}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1103484965
@@ -853,8 +854,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: Space Invaders VS
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 9a636748e5c01ab469b03bcb63126d63, type: 2}
+  m_sharedMaterial: {fileID: -590891880867327345, guid: 9a636748e5c01ab469b03bcb63126d63,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -914,7 +916,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 1
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: -238.85156, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -1791,8 +1793,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: Join Room
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: b5a25624408648240a27e15bb79316af, type: 2}
+  m_sharedMaterial: {fileID: -4427648351519011255, guid: b5a25624408648240a27e15bb79316af,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1816,8 +1819,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 20
-  m_fontSizeBase: 20
+  m_fontSize: 14
+  m_fontSizeBase: 14
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2149,8 +2152,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: Play
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: b5a25624408648240a27e15bb79316af, type: 2}
+  m_sharedMaterial: {fileID: -4427648351519011255, guid: b5a25624408648240a27e15bb79316af,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2174,8 +2178,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 20
+  m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2282,8 +2286,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: Quick Play
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: b5a25624408648240a27e15bb79316af, type: 2}
+  m_sharedMaterial: {fileID: -4427648351519011255, guid: b5a25624408648240a27e15bb79316af,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2307,8 +2312,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 20
-  m_fontSizeBase: 20
+  m_fontSize: 14
+  m_fontSizeBase: 14
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
