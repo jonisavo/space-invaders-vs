@@ -64,7 +64,7 @@ namespace SIVS
         {
             var side = PhotonNetwork.LocalPlayer.ActorNumber;
 
-            while (Match.IsActive)
+            while (true)
             {
                 yield return new WaitForSeconds(GetMoveInterval());
 
@@ -98,7 +98,7 @@ namespace SIVS
             var ufosSpawned = 0;
             var side = PhotonNetwork.LocalPlayer.ActorNumber;
             
-            while (ufosSpawned < 5 && Match.IsActive)
+            while (ufosSpawned < 5)
             {
                 yield return new WaitForSeconds(Random.Range(25.0f, 35.0f));
 
