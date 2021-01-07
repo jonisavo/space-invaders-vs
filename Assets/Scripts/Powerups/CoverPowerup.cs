@@ -18,7 +18,8 @@ namespace SIVS
             if (PhotonNetwork.LocalPlayer.ActorNumber != player.ActorNumber)
                 return;
             
-            photonView.RPC(nameof(AddCover), RpcTarget.AllBuffered, player.ActorNumber);
+            photonView.RPC(nameof(AddCover),
+                RpcTarget.AllBuffered, player.ActorNumber, Match.SumOfRounds);
             
             SoundPlayer.PlaySound(soundEffect);
             
@@ -35,14 +36,14 @@ namespace SIVS
         }
         
         [PunRPC]
-        private void AddCover(int actorNumber)
+        private void AddCover(int actorNumber, int sumOfRounds)
         {
             foreach (var cover in GameObject.FindGameObjectsWithTag("Cover"))
             {
                 if (cover.GetPhotonView().Owner.ActorNumber != actorNumber)
                     continue;
                 
-                cover.GetComponent<Cover>().AddPieces(10);
+                cover.GetComponent<Cover>().AddPieces(10 + sumOfRounds * 2);
             }
         }
     }
