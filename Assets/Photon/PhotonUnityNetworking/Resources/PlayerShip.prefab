@@ -65,7 +65,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d032fccafab104468f5cebc7565f786, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bullet: {fileID: 8924143617996257013, guid: d7033b59104981844a1f9d308664acda, type: 3}
+  bulletTypes:
+  - {fileID: 8924143617996257013, guid: d7033b59104981844a1f9d308664acda, type: 3}
   fireSound: {fileID: 8300000, guid: ea249f0f63ce4254286e6682d6197809, type: 3}
 --- !u!114 &4638261081015342939
 MonoBehaviour:
