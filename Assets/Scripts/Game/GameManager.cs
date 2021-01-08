@@ -1,4 +1,5 @@
-﻿using Photon.Pun;
+﻿using System;
+using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -28,6 +29,11 @@ namespace SIVS
             PlayerStats.InitializeStats(PhotonNetwork.LocalPlayer);
             _uiManager = GetComponent<UIManager>();
             _invaderManager = GetComponent<InvaderManager>();
+        }
+
+        private void Start()
+        {
+            PlayerStats.SetReady(PhotonNetwork.LocalPlayer, true);
         }
 
         #endregion
@@ -111,6 +117,8 @@ namespace SIVS
 
             if (PhotonNetwork.IsMasterClient)
                 Match.IsActive = false;
+            
+            PlayerStats.SetReady(PhotonNetwork.LocalPlayer, false);
             
             _uiManager.ShowVictoryScreen(winner == null ? "No one" : winner.NickName);
 

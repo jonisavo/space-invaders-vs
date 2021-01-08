@@ -19,12 +19,20 @@ namespace SIVS
         {
             player.SetCustomProperties(new Hashtable()
             {
-                {Ready, true},
+                {Ready, false},
                 {CurrentRound, 1},
                 {Lives, InitialLives},
                 {InvaderKills, 0}
             });
             player.SetScore(0);
+        }
+
+        public static void SetReady(Player player, bool value)
+        {
+            player.SetCustomProperties(new Hashtable()
+            {
+                {Ready, value}
+            });
         }
 
         public static int GetRound(Player player)
