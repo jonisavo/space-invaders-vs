@@ -82,6 +82,7 @@ MonoBehaviour:
   explosion: {fileID: 4923263774660198280, guid: ae72d48e7684e9a49a3c77015e7c55b9,
     type: 3}
   explosionSound: {fileID: 8300000, guid: 32833ae9163f108408094716de7a7e6b, type: 3}
+  spriteRenderer: {fileID: 764472393113129935}
   invincibility: 0
 --- !u!82 &-2521804477649394761
 AudioSource:

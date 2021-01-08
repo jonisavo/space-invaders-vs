@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using Photon.Pun;
 
 namespace SIVS
@@ -11,6 +12,9 @@ namespace SIVS
 
         [Tooltip("Audio clip to play upon explosion.")]
         public AudioClip explosionSound;
+
+        [Tooltip("The player's sprite renderer.")]
+        public SpriteRenderer spriteRenderer;
         
         [Tooltip("A debug option to make players invincible.")]
         public bool invincibility = false;
@@ -18,6 +22,8 @@ namespace SIVS
         private SpawnManager _spawnManager;
 
         private AudioSource _audioSource;
+
+        private bool _invincibilityFrames = false;
         
         #region Unity Callbacks
 
@@ -34,18 +40,40 @@ namespace SIVS
             if (!other.gameObject.CompareTag("EnemyBullet"))
                 return;
             
-            if (photonView.IsMine) GetHit();
-            
             Destroy(other.gameObject);
+            
+            if (photonView.IsMine && !_invincibilityFrames)
+                GetHit();
         }
         
         #endregion
+
+        [PunRPC]
+        private void MakeInvincible()
+        {
+            StartCoroutine(InvincibilityFrames());
+        }
+
+        private IEnumerator InvincibilityFrames()
+        {
+            _invincibilityFrames = true;
+
+            spriteRenderer.color = new Color(1.0f, 1.0f, 1.0f, 0.5f);
+
+            yield return new WaitForSeconds(2.0f);
+
+            spriteRenderer.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+
+            _invincibilityFrames = false;
+        }
 
         private void GetHit()
         {
             _audioSource.PlayOneShot(explosionSound);
             
             photonView.RPC(nameof(SpawnExplosion), RpcTarget.All);
+            
+            photonView.RPC(nameof(MakeInvincible), RpcTarget.All);
 
             transform.position = _spawnManager.OwnSpawnPoint();
             
