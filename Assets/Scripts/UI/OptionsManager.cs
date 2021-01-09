@@ -8,7 +8,7 @@ namespace SIVS
 
         private void Update()
         {
-            if (Input.GetButtonDown("Submit"))
+            if (Input.GetButtonDown("Cancel"))
                 ToggleCanvas();
         }
 
