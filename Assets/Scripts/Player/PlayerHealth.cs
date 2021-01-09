@@ -15,7 +15,7 @@ namespace SIVS
 
         [Tooltip("The player's sprite renderer.")]
         public SpriteRenderer spriteRenderer;
-        
+
         [Tooltip("A debug option to make players invincible.")]
         public bool invincibility = false;
 
@@ -24,7 +24,7 @@ namespace SIVS
         private AudioSource _audioSource;
 
         private bool _invincibilityFrames = false;
-        
+
         #region Unity Callbacks
 
         private void Awake()
@@ -36,16 +36,16 @@ namespace SIVS
         private void OnCollisionEnter2D(Collision2D other)
         {
             if (invincibility) return;
-            
+
             if (!other.gameObject.CompareTag("EnemyBullet"))
                 return;
-            
+
             Destroy(other.gameObject);
-            
+
             if (photonView.IsMine && !_invincibilityFrames)
                 GetHit();
         }
-        
+
         #endregion
 
         [PunRPC]
@@ -70,16 +70,18 @@ namespace SIVS
         private void GetHit()
         {
             _audioSource.PlayOneShot(explosionSound);
-            
+
             photonView.RPC(nameof(SpawnExplosion), RpcTarget.All);
-            
+
             photonView.RPC(nameof(MakeInvincible), RpcTarget.All);
 
+            PlayerStats.ChangeBulletType(PhotonNetwork.LocalPlayer, 0);
+
             transform.position = _spawnManager.OwnSpawnPoint();
-            
+
             PlayerStats.RemoveLife(PhotonNetwork.LocalPlayer);
         }
-        
+
         [PunRPC]
         private void SpawnExplosion() =>
             Instantiate(explosion, transform.position, Quaternion.identity);
