@@ -1,4 +1,5 @@
 ﻿using Photon.Pun;
+using Photon.Pun.UtilityScripts;
 using Photon.Realtime;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -129,6 +130,8 @@ namespace SIVS
             if (winner != null && winner.ActorNumber == PhotonNetwork.LocalPlayer.ActorNumber)
                 SoundPlayer.PlaySound(victorySound);
 
+            SetHighScore();
+
             StopGameProcessing();
         }
 
@@ -141,6 +144,16 @@ namespace SIVS
 
             foreach (var invader in GameObject.FindGameObjectsWithTag("Invader"))
                 invader.GetComponent<InvaderShoot>().StopShooting();
+        }
+
+        private void SetHighScore()
+        {
+            var highScore = PlayerPrefs.GetInt("HighScore", 0);
+
+            var score = PhotonNetwork.LocalPlayer.GetScore();
+
+            if (score > highScore)
+                PlayerPrefs.SetInt("HighScore", score);
         }
 
         private void DestroyBullets()
