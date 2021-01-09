@@ -5,33 +5,37 @@ namespace SIVS
 {
     public class PowerupDrop : MonoBehaviourPun
     {
-        public float LifePowerupDropChance = 0.0f;
+        public string[] powerupPrefabNames;
 
-        public float CoverPowerupDropChance = 0.0f;
+        public float[] dropChances;
 
         public float SpawnXOffset = 0.0f;
 
         public float SpawnYOffset = 0.0f;
 
-        private void OnDestroy()
+        public void GeneratePowerupDrop()
         {
-            if (!PhotonNetwork.InRoom || !photonView.IsMine) return;
-            
+            if (!PhotonNetwork.InRoom || !photonView.IsMine)
+                return;
+
+            if (powerupPrefabNames.Length != dropChances.Length)
+            {
+                Debug.LogError("Powerup prefab names and drop chances don't match!");
+                return;
+            }
+
             var powerup = GetDrop();
 
             if (powerup == null) return;
-            
+
             SpawnPowerup(powerup);
         }
 
-        // TODO: Figure out a better system for generating powerup drops
         private string GetDrop()
         {
-            if (Random.Range(0.0f, 100.0f) < LifePowerupDropChance + 0.5f * Match.SumOfRounds)
-                return "Life Powerup";
-
-            if (Random.Range(0.0f, 100.0f) < CoverPowerupDropChance + 0.5f * Match.SumOfRounds)
-                return "Cover Powerup";
+            for (var i = 0; i < powerupPrefabNames.Length; i++)
+                if (Random.Range(0.0f, 100.0f) < dropChances[i] + 0.5f * Match.SumOfRounds)
+                    return powerupPrefabNames[i];
 
             return null;
         }

@@ -182,8 +182,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0afabbb18145479c95d4cb7cad01ab95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LifePowerupDropChance: 1
-  CoverPowerupDropChance: 1
+  powerupPrefabNames:
+  - Life Powerup
+  - Cover Powerup
+  - Double Shot Powerup
+  dropChances:
+  - 1
+  - 1
+  - 1.75
   SpawnXOffset: 0.06
   SpawnYOffset: -0.04
 --- !u!61 &4113204282743565066
