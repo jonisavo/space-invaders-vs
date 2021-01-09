@@ -5,14 +5,16 @@ namespace SIVS
 {
     public class PowerupMovement : MonoBehaviourPun
     {
+        private const float DespawnHeight = -2.2f;
+
         [Tooltip("Determines how fast the powerup falls.")]
         public float FallSpeed = 1.0f;
 
         private void Update()
         {
             transform.Translate(Vector3.down * (FallSpeed * Time.deltaTime));
-            
-            if (transform.position.y < -2.4f)
+
+            if (transform.position.y < DespawnHeight)
                 DestroyPowerup();
         }
 
