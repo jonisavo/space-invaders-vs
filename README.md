@@ -23,7 +23,7 @@ with a screen resolution higher than 1080p may result in strange visuals.
 
 ## To do
 
-1. Open "pause" menu in-game (with audio options and possibility to leave)
+1. Bug fixing
 
 ## Set up
 
