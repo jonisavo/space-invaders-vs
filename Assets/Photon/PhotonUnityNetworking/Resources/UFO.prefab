@@ -297,10 +297,12 @@ MonoBehaviour:
   - Life Powerup
   - Cover Powerup
   - Double Shot Powerup
+  - Scatter Shot Powerup
   dropChances:
-  - 25
-  - 25
   - 20
+  - 20
+  - 15
+  - 15
   SpawnXOffset: 0
   SpawnYOffset: 0
 --- !u!114 &3112517686913664029
