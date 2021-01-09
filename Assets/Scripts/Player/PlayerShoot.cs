@@ -12,8 +12,6 @@ namespace SIVS
         [Tooltip("The audio clip to play when firing.")]
         public AudioClip fireSound;
 
-        private int _currentBulletType = 0;
-
         private AudioSource _audioSource;
 
         private void Awake()
@@ -26,10 +24,9 @@ namespace SIVS
             if (!photonView.IsMine) return;
 
             if (Input.GetButtonDown("Fire1") && CanFire())
-                photonView.RPC(nameof(FireBullet), RpcTarget.All);
+                photonView.RPC(nameof(FireBullet),
+                    RpcTarget.All, PlayerStats.GetBulletType(PhotonNetwork.LocalPlayer));
         }
-
-        public void ChangeBulletType(int id) => _currentBulletType = id;
 
         private Vector2 GetBulletSpawnPoint()
         {
@@ -41,15 +38,23 @@ namespace SIVS
             Match.IsActive && !OwnBulletExists();
 
         [PunRPC]
-        private void FireBullet()
+        private void FireBullet(int bulletType)
         {
             if (photonView.IsMine)
                 _audioSource.PlayOneShot(fireSound);
             
-            var bulletObject = Instantiate(bulletTypes[_currentBulletType], 
+            var bulletObject = Instantiate(bulletTypes[bulletType], 
                 GetBulletSpawnPoint(), Quaternion.identity);
             
-            bulletObject.GetComponent<PlayerBullet>().SetOwner(photonView.Owner);
+            if (bulletObject.TryGetComponent(out PlayerBullet bullet))
+            {
+                bullet.SetOwner(photonView.Owner);
+            }
+            else
+            {
+                foreach (var childBullet in bulletObject.GetComponentsInChildren<PlayerBullet>())
+                    childBullet.SetOwner(photonView.Owner);
+            }
         }
 
         private bool OwnBulletExists()
