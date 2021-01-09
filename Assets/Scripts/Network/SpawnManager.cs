@@ -58,12 +58,14 @@ namespace SIVS
         public Vector3 PlayAreaPosition(int key, float x, float y) =>
             _playAreas[key].transform.position + new Vector3(x, y, 0);
 
-        public Rect OwnAreaRect()
+        public Rect PlayAreaRect(int key)
         {
-            var leftCorner = OwnAreaPosition(-2.0f, -2.3f);
+            var leftCorner = PlayAreaPosition(key, -2.0f, -2.3f);
 
             return new Rect(leftCorner.x, leftCorner.y, 4, 4.6f);
         }
+
+        public Rect OwnAreaRect() => PlayAreaRect(_playerIndex);
 
         public Vector3 OwnSpawnPoint() => OwnAreaPosition(0.0f, -1.6f);
 
