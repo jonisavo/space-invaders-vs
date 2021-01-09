@@ -26,10 +26,13 @@ namespace SIVS
         {
             if (!photonView.IsMine) return;
 
-            if (Input.GetButtonDown("Fire1") && CanFire())
+            if (PressingFireButton() && CanFire())
                 photonView.RPC(nameof(FireBullet),
                     RpcTarget.All, PlayerStats.GetBulletType(PhotonNetwork.LocalPlayer));
         }
+
+        private bool PressingFireButton() =>
+            Input.GetButtonDown("Fire1") || Input.GetButtonDown("Submit");
 
         private Vector2 GetBulletSpawnPoint()
         {
