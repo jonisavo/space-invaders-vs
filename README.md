@@ -15,6 +15,12 @@ Music by [YouFulca](https://wingless-seraph.net/en/)
 
 [Karmatic Arcade](https://www.1001fonts.com/karmatic-arcade-font.html) font by Vic Fieger
 
+## Known issues
+
+The game was not made with multiple resolutions in mind, mostly because I have very little
+knowledge of Unity and did not have the time to design a responsive UI. Playing the game
+with a screen resolution higher than 1080p may result in strange visuals.
+
 ## To do
 
 1. Open "pause" menu in-game (with audio options and possibility to leave)
