@@ -188,10 +188,10 @@ MonoBehaviour:
   - Double Shot Powerup
   - Scatter Shot Powerup
   dropChances:
-  - 1
-  - 1
   - 1.75
-  - 20
+  - 1.75
+  - 2
+  - 2
   SpawnXOffset: 0.06
   SpawnYOffset: -0.04
 --- !u!61 &4113204282743565066
