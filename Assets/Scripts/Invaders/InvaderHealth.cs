@@ -1,7 +1,8 @@
-﻿using ExitGames.Client.Photon;
+﻿using System.Collections;
 using Photon.Pun;
 using Photon.Pun.UtilityScripts;
 using UnityEngine;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 namespace SIVS
 {
@@ -16,10 +17,10 @@ namespace SIVS
 
         [Tooltip("Audio clip to play when losing health (without dying).")]
         public AudioClip hurtSound;
-        
+
         [Tooltip("Audio clip to play upon death.")]
         public AudioClip deathSound;
-        
+
         private int _health;
 
         private int _initialHealth;
@@ -38,7 +39,7 @@ namespace SIVS
                 _health = 1;
 
             _initialHealth = _health;
-            
+
             TintSprite();
         }
 
@@ -46,17 +47,17 @@ namespace SIVS
         {
             if (!other.gameObject.CompareTag("PlayerBullet"))
                 return;
-            
+
             Destroy(other.gameObject);
-            
+
             if (!photonView.IsMine) return;
-            
+
             photonView.RPC(nameof(LoseHealth), RpcTarget.All);
 
             if (!IsDead()) return;
 
             var bulletOwner = other.gameObject.GetComponent<PlayerBullet>().Owner;
-            
+
             bulletOwner.AddScore(50 * _initialHealth);
 
             bulletOwner.SetCustomProperties(new Hashtable()
@@ -64,12 +65,15 @@ namespace SIVS
                 {PlayerStats.InvaderKills, (int) bulletOwner.CustomProperties[PlayerStats.InvaderKills] + 1}
             });
         }
-        
+
         #endregion
 
         [PunRPC]
         private void LoseHealth()
         {
+            if (!gameObject || !gameObject.activeSelf)
+                return;
+
             _health--;
 
             if (IsDead())
@@ -80,24 +84,45 @@ namespace SIVS
             {
                 if (photonView.IsMine)
                     SoundPlayer.PlaySound(hurtSound);
-                
+
                 TintSprite();
             }
         }
-        
+
         private void Die()
         {
+            gameObject.SetActive(false);
+
             if (photonView.IsMine)
             {
                 SoundPlayer.PlaySound(deathSound);
-                
-                PhotonNetwork.Destroy(gameObject);
+
+                StartCoroutine(DestroyDelay());
             }
-            else
-            {
-                if (gameObject) gameObject.SetActive(false);
-            }
-            
+
+            if (gameObject.TryGetComponent(out PowerupDrop drop))
+                drop.GeneratePowerupDrop();
+
+            SpawnExplosion();
+        }
+
+        private IEnumerator DestroyDelay()
+        {
+            yield return new WaitForSeconds(1.5f);
+
+            PhotonNetwork.Destroy(gameObject);
+        }
+
+        private void TintSprite()
+        {
+            if (!tintSprite) return;
+
+            var hue = 1.0f - (_health - 1) * 0.2f;
+            _spriteRenderer.color = new Color(1.0f, hue, hue);
+        }
+
+        private void SpawnExplosion()
+        {
             var size = _spriteRenderer.size;
 
             var centerPoint =
@@ -106,14 +131,6 @@ namespace SIVS
             Instantiate(explosion, centerPoint, Quaternion.identity);
         }
 
-        private void TintSprite()
-        {
-            if (!tintSprite) return;
-            
-            var hue = 1.0f - (_health - 1) * 0.2f;
-            _spriteRenderer.color = new Color(1.0f, hue, hue);
-        }
-
         private bool IsDead() => _health <= 0;
-    }   
+    }
 }

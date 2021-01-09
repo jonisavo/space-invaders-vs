@@ -17,15 +17,15 @@ namespace SIVS
         {
             if (!other.gameObject.CompareTag("PlayerBullet"))
                 return;
-            
+
             Destroy(other.gameObject);
-            
+
             if (!photonView.IsMine) return;
-            
+
             var bulletOwner = other.gameObject.GetComponent<PlayerBullet>().Owner;
-            
+
             bulletOwner.AddScore(1000);
-            
+
             photonView.RPC(nameof(Die), RpcTarget.All);
         }
 
@@ -33,7 +33,10 @@ namespace SIVS
         private void Die()
         {
             SoundPlayer.PlaySound(deathSound);
-            
+
+            if (gameObject.TryGetComponent(out PowerupDrop drop))
+                drop.GeneratePowerupDrop();
+
             if (photonView.IsMine)
                 PhotonNetwork.Destroy(gameObject);
             else
