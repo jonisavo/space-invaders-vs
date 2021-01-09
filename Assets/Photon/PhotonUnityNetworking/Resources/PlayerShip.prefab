@@ -68,6 +68,7 @@ MonoBehaviour:
   bulletTypes:
   - {fileID: 8924143617996257013, guid: d7033b59104981844a1f9d308664acda, type: 3}
   - {fileID: 1696436410985910147, guid: 0bfe495692f925146a76c3e1f38926c5, type: 3}
+  - {fileID: 4322144598739582603, guid: d548d1be830d8d3489b6a09f4bcf1501, type: 3}
   fireSound: {fileID: 8300000, guid: ea249f0f63ce4254286e6682d6197809, type: 3}
 --- !u!114 &4638261081015342939
 MonoBehaviour:
