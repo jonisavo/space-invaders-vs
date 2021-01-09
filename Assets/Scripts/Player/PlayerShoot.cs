@@ -14,9 +14,12 @@ namespace SIVS
 
         private AudioSource _audioSource;
 
+        private OptionsManager _optionsManager;
+
         private void Awake()
         {
             _audioSource = GetComponent<AudioSource>();
+            _optionsManager = GameObject.Find("Game Manager").GetComponent<OptionsManager>();
         }
 
         private void Update()
@@ -35,17 +38,17 @@ namespace SIVS
         }
 
         private bool CanFire() =>
-            Match.IsActive && !OwnBulletExists();
+            Match.IsActive && !OwnBulletExists() && !_optionsManager.IsCanvasActive();
 
         [PunRPC]
         private void FireBullet(int bulletType)
         {
             if (photonView.IsMine)
                 _audioSource.PlayOneShot(fireSound);
-            
-            var bulletObject = Instantiate(bulletTypes[bulletType], 
+
+            var bulletObject = Instantiate(bulletTypes[bulletType],
                 GetBulletSpawnPoint(), Quaternion.identity);
-            
+
             if (bulletObject.TryGetComponent(out PlayerBullet bullet))
             {
                 bullet.SetOwner(photonView.Owner);

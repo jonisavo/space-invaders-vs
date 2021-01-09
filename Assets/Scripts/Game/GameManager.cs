@@ -1,5 +1,4 @@
-﻿using System;
-using Photon.Pun;
+﻿using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -9,25 +8,23 @@ namespace SIVS
 {
     [RequireComponent(typeof(UIManager))]
     [RequireComponent(typeof(InvaderManager))]
+    [RequireComponent(typeof(OptionsManager))]
     public class GameManager : MonoBehaviourPunCallbacks
     {
         [Tooltip("Audio clip to play upon a victory.")]
         public AudioClip victorySound;
-        
+
         private bool _bothReady = false;
 
         private bool _gameOver = false;
 
-        private UIManager _uiManager;
-
         private InvaderManager _invaderManager;
-        
+
         #region Unity Callbacks
-        
+
         private void Awake()
         {
             PlayerStats.InitializeStats(PhotonNetwork.LocalPlayer);
-            _uiManager = GetComponent<UIManager>();
             _invaderManager = GetComponent<InvaderManager>();
         }
 
@@ -43,13 +40,13 @@ namespace SIVS
         public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
         {
             if (_gameOver) return;
-            
+
             if (changedProps.ContainsKey(PlayerStats.Ready))
             {
                 if (!_bothReady && IsEveryoneReady())
                 {
                     _bothReady = true;
-                    
+
                     _invaderManager.InitializeInvaders();
 
                     if (PhotonNetwork.IsMasterClient)
@@ -65,7 +62,7 @@ namespace SIVS
 
             if (!changedProps.ContainsKey(PlayerStats.CurrentRound))
                 return;
-            
+
             if ((int) changedProps[PlayerStats.CurrentRound] >= 6)
                 EndGame(targetPlayer);
         }
@@ -78,7 +75,7 @@ namespace SIVS
         public override void OnPlayerLeftRoom(Player otherPlayer)
         {
             if (_gameOver) return;
-            
+
             EndGame(GetOtherPlayer(otherPlayer));
         }
 
@@ -98,10 +95,10 @@ namespace SIVS
                 if (!(bool)player.CustomProperties[PlayerStats.Ready])
                     return false;
             }
-            
+
             return true;
         }
-        
+
         private Player GetOtherPlayer(Player firstPlayer)
         {
             foreach (var player in PhotonNetwork.CurrentRoom.Players.Values)
@@ -117,26 +114,31 @@ namespace SIVS
 
             if (PhotonNetwork.IsMasterClient)
                 Match.IsActive = false;
-            
+
             PlayerStats.SetReady(PhotonNetwork.LocalPlayer, false);
-            
-            _uiManager.ShowVictoryScreen(winner == null ? "No one" : winner.NickName);
+
+            GetComponent<OptionsManager>().CloseCanvas();
+
+            GetComponent<UIManager>()
+                .ShowVictoryScreen(winner == null ? "No one" : winner.NickName);
 
             GameObject.Find("Music Player")
                 .GetComponent<AudioSource>()
                 .Stop();
-            
+
             if (winner != null && winner.ActorNumber == PhotonNetwork.LocalPlayer.ActorNumber)
                 SoundPlayer.PlaySound(victorySound);
 
-            StopAllCoroutines();
-            
-            DestroyBullets();
-            
-            DestroyPowerups();
+            StopGameProcessing();
+        }
 
+        private void StopGameProcessing()
+        {
+            StopAllCoroutines();
+            DestroyBullets();
+            DestroyPowerups();
             _invaderManager.StopAllCoroutines();
-            
+
             foreach (var invader in GameObject.FindGameObjectsWithTag("Invader"))
                 invader.GetComponent<InvaderShoot>().StopShooting();
         }
@@ -157,7 +159,7 @@ namespace SIVS
                 var photonView = powerup.GetPhotonView();
 
                 if (!photonView.IsMine) continue;
-                
+
                 photonView.RPC("DestroyPowerup", RpcTarget.All);
             }
         }
