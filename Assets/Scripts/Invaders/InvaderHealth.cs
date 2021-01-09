@@ -25,6 +25,10 @@ namespace SIVS
 
         private int _initialHealth;
 
+        private int _killerActorNumber;
+
+        private bool _hidden;
+
         private SpriteRenderer _spriteRenderer;
 
         #region Unity Callbacks
@@ -52,13 +56,14 @@ namespace SIVS
 
             if (!photonView.IsMine) return;
 
+            _killerActorNumber =
+                other.gameObject.GetComponent<PlayerBullet>().Owner.ActorNumber;
+
             photonView.RPC(nameof(LoseHealth), RpcTarget.All);
 
             if (!IsDead()) return;
 
             var bulletOwner = other.gameObject.GetComponent<PlayerBullet>().Owner;
-
-            bulletOwner.AddScore(50 * _initialHealth);
 
             bulletOwner.SetCustomProperties(new Hashtable()
             {
@@ -71,8 +76,7 @@ namespace SIVS
         [PunRPC]
         private void LoseHealth()
         {
-            if (!gameObject || !gameObject.activeSelf)
-                return;
+            if (!gameObject || _hidden) return;
 
             _health--;
 
@@ -91,26 +95,51 @@ namespace SIVS
 
         private void Die()
         {
-            gameObject.SetActive(false);
+            if (gameObject.TryGetComponent(out PowerupDrop drop))
+                drop.GeneratePowerupDrop();
+
+            SpawnExplosion();
 
             if (photonView.IsMine)
             {
                 SoundPlayer.PlaySound(deathSound);
 
+                PhotonNetwork.CurrentRoom.Players[_killerActorNumber]
+                    .AddScore(50 * _initialHealth);
+
                 StartCoroutine(DestroyDelay());
             }
 
-            if (gameObject.TryGetComponent(out PowerupDrop drop))
-                drop.GeneratePowerupDrop();
+            Hide();
+        }
 
-            SpawnExplosion();
+        private void Hide()
+        {
+            _hidden = true;
+
+            _spriteRenderer.enabled = false;
+
+            GetComponent<Collider2D>().enabled = false;
+
+            if (TryGetComponent(out InvaderShoot shootManager))
+                shootManager.StopShooting();
         }
 
         private IEnumerator DestroyDelay()
         {
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(0.5f);
 
             PhotonNetwork.Destroy(gameObject);
+
+            if (!PhotonNetwork.CurrentRoom.Players.ContainsKey(_killerActorNumber))
+                yield break;
+
+            var killer = PhotonNetwork.CurrentRoom.Players[_killerActorNumber];
+
+            killer.SetCustomProperties(new Hashtable()
+            {
+                {PlayerStats.InvaderKills, (int) killer.CustomProperties[PlayerStats.InvaderKills] + 1}
+            });
         }
 
         private void TintSprite()
