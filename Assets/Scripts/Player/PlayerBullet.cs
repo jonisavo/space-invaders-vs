@@ -1,5 +1,4 @@
-﻿using System;
-using Photon.Realtime;
+﻿using Photon.Realtime;
 using UnityEngine;
 
 namespace SIVS
@@ -12,16 +11,11 @@ namespace SIVS
         [Tooltip("The horizontal move speed of this bullet.")]
         public float horizontalMoveSpeed = 1.0f;
 
+        private bool _ownerSet;
+
         private Rect _ownArea;
 
         public Player Owner { get; private set; }
-
-        private void Awake()
-        {
-            _ownArea = GameObject.Find("Game Manager")
-                .GetComponent<SpawnManager>()
-                .OwnAreaRect();
-        }
 
         private void Update()
         {
@@ -30,8 +24,11 @@ namespace SIVS
                 verticalMoveSpeed * Time.deltaTime,
                 0);
 
-            if (OutOfBounds())
+            if (_ownerSet && OutOfBounds())
+            {
+                Debug.Log("Bullet was out of bounds -- destroyed");
                 Destroy(gameObject);
+            }
         }
 
         private bool OutOfBounds()
@@ -46,6 +43,15 @@ namespace SIVS
                    position.x < _ownArea.x;
         }
 
-        public void SetOwner(Player newOwner) => Owner = newOwner;
+        public void SetOwner(Player newOwner)
+        {
+            Owner = newOwner;
+
+            _ownArea = GameObject.Find("Game Manager")
+                .GetComponent<SpawnManager>()
+                .PlayAreaRect(newOwner.ActorNumber);
+
+            _ownerSet = true;
+        }
     }
 }
