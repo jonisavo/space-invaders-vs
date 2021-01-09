@@ -7,9 +7,12 @@ namespace SIVS
     {
         private const float DespawnHeight = 2.4f;
 
-        [Tooltip("The move speed of this bullet.")]
-        public float moveSpeed = 1.0f;
-        
+        [Tooltip("The vertical move speed of this bullet.")]
+        public float verticalMoveSpeed = 1.0f;
+
+        [Tooltip("The horizontal move speed of this bullet.")]
+        public float horizontalMoveSpeed = 1.0f;
+
         public Player Owner { get; private set; }
 
         public void SetOwner(Player newOwner) => Owner = newOwner;
@@ -17,9 +20,10 @@ namespace SIVS
         private void Update()
         {
             transform.Translate(
-                0,
-                moveSpeed * Time.deltaTime,
+                horizontalMoveSpeed * Time.deltaTime,
+                verticalMoveSpeed * Time.deltaTime,
                 0);
+
             if (transform.position.y > DespawnHeight)
                 Destroy(gameObject);
         }
