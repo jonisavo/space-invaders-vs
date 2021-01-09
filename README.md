@@ -18,12 +18,11 @@ Music by [YouFulca](https://wingless-seraph.net/en/)
 ## To do
 
 1. Open "pause" menu in-game (with audio options and possibility to leave)
-2. More powerups (new weapons?)
 
 ## Set up
 
 1. Clone the repository
-2. Open the project in Unity 2019.4.17f1 or newer
+2. Open the project in Unity 2019.4.17+
 3. Import PUN 2 and run the PUN Wizard
 4. Import TextMeshPro and run the "Import TMP Essential Resources" wizard
 5. You should be good to go!
