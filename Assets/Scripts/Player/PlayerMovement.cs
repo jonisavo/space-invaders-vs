@@ -18,7 +18,7 @@ namespace SIVS
 
         private void FixedUpdate()
         {
-            if (!photonView.IsMine || !Match.IsActive) 
+            if (!photonView.IsMine || !Match.IsActive)
                 return;
 
             _rb.MovePosition((Vector2)transform.position + Vector2.right * (Input.GetAxis("Horizontal") * moveSpeed * Time.deltaTime));
