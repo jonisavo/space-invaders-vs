@@ -1,4 +1,5 @@
-﻿using Photon.Pun;
+﻿using System.Collections;
+using Photon.Pun;
 using Photon.Pun.UtilityScripts;
 using UnityEngine;
 
@@ -12,6 +13,8 @@ namespace SIVS
 
         [Tooltip("Audio clip to play upon death.")]
         public AudioClip deathSound;
+
+        private bool _hidden;
 
         private void OnTriggerEnter2D(Collider2D other)
         {
@@ -32,17 +35,35 @@ namespace SIVS
         [PunRPC]
         private void Die()
         {
+            if (_hidden) return;
+
             SoundPlayer.PlaySound(deathSound);
 
             if (gameObject.TryGetComponent(out PowerupDrop drop))
                 drop.GeneratePowerupDrop();
 
             if (photonView.IsMine)
-                PhotonNetwork.Destroy(gameObject);
-            else
-                if (gameObject) gameObject.SetActive(false);
+                StartCoroutine(DestroyDelay());
+
+            Hide();
 
             Instantiate(explosion, transform.position, Quaternion.identity);
+        }
+
+        private IEnumerator DestroyDelay()
+        {
+            yield return new WaitForSeconds(0.5f);
+
+            PhotonNetwork.Destroy(gameObject);
+        }
+
+        private void Hide()
+        {
+            _hidden = true;
+
+            GetComponent<SpriteRenderer>().enabled = false;
+
+            GetComponent<Collider2D>().enabled = false;
         }
     }
 }
