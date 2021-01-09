@@ -25,10 +25,7 @@ namespace SIVS
                 0);
 
             if (_ownerSet && OutOfBounds())
-            {
-                Debug.Log("Bullet was out of bounds -- destroyed");
                 Destroy(gameObject);
-            }
         }
 
         private bool OutOfBounds()
