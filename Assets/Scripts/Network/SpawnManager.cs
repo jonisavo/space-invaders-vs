@@ -9,24 +9,24 @@ namespace SIVS
         private Dictionary<int, GameObject> _playAreas;
 
         private int _playerIndex = 1;
-        
+
         #region Unity Callbacks
-        
+
         private void Awake()
         {
             _playAreas = new Dictionary<int, GameObject>();
-            
+
             foreach (var entry in PhotonNetwork.CurrentRoom.Players)
             {
                 if (entry.Value.ActorNumber == PhotonNetwork.LocalPlayer.ActorNumber)
                 {
                     _playerIndex = entry.Key;
                 }
-                
+
                 _playAreas[entry.Key] = GameObject.Find("Play Area " + entry.Key);
             }
         }
-        
+
         private void Start()
         {
             SpawnShip();
@@ -36,23 +36,23 @@ namespace SIVS
         private void Update()
         {
             var rect = OwnAreaRect();
-            
+
             // Top line
             Debug.DrawLine(new Vector3(rect.x, rect.y), new Vector3(rect.x + rect.width, rect.y), Color.red);
-            
+
             // Right line
             Debug.DrawLine(new Vector3(rect.x + rect.width, rect.y), new Vector3(rect.x + rect.width, rect.y + rect.height), Color.red);
-            
+
             // Bottom line
             Debug.DrawLine(new Vector3(rect.x + rect.width, rect.y + rect.height), new Vector3(rect.x, rect.y + rect.height), Color.red);
-            
+
             // Left line
             Debug.DrawLine(new Vector3(rect.x, rect.y + rect.height), new Vector3(rect.x, rect.y), Color.red);
         }
 
         #endregion
 
-        public Vector3 OwnAreaPosition(float x, float y) => 
+        public Vector3 OwnAreaPosition(float x, float y) =>
             PlayAreaPosition(_playerIndex, x, y);
 
         public Vector3 PlayAreaPosition(int key, float x, float y) =>
@@ -62,7 +62,7 @@ namespace SIVS
         {
             var leftCorner = OwnAreaPosition(-2.0f, -2.3f);
 
-            return new Rect(leftCorner.x, leftCorner.y, 4, 4.5f);
+            return new Rect(leftCorner.x, leftCorner.y, 4, 4.6f);
         }
 
         public Vector3 OwnSpawnPoint() => OwnAreaPosition(0.0f, -1.6f);
