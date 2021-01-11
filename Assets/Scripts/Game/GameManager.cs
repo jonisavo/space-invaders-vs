@@ -58,14 +58,14 @@ namespace SIVS
             if (changedProps.ContainsKey(PlayerStats.Lives))
             {
                 if ((int) changedProps[PlayerStats.Lives] <= 0)
-                    EndGame(GetOtherPlayer(targetPlayer), VictoryReasons.LastStanding);
+                    EndGame(GetOtherPlayer(targetPlayer), VictoryReason.LastStanding);
             }
 
             if (!changedProps.ContainsKey(PlayerStats.CurrentRound))
                 return;
 
             if ((int) changedProps[PlayerStats.CurrentRound] >= 6)
-                EndGame(targetPlayer, VictoryReasons.Round5);
+                EndGame(targetPlayer, VictoryReason.Round5);
         }
 
         public override void OnLeftRoom()
@@ -77,7 +77,7 @@ namespace SIVS
         {
             if (_gameOver) return;
 
-            EndGame(GetOtherPlayer(otherPlayer), VictoryReasons.Leave);
+            EndGame(GetOtherPlayer(otherPlayer), VictoryReason.Leave);
         }
 
         #endregion
@@ -109,7 +109,7 @@ namespace SIVS
             return null;
         }
 
-        private void EndGame(Player winner, VictoryReasons reason)
+        private void EndGame(Player winner, VictoryReason reason)
         {
             _gameOver = true;
 

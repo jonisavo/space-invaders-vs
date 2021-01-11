@@ -58,22 +58,22 @@ namespace SIVS
 
         #endregion
 
-        public void ShowVictoryScreen(string nickName, VictoryReasons reason)
+        public void ShowVictoryScreen(string nickName, VictoryReason reason)
         {
             resultCanvas.SetActive(true);
             victoryHeaderText.text = $"{nickName} won!";
             victoryReasonText.text = GetVictoryReasonText(reason);
         }
 
-        private string GetVictoryReasonText(VictoryReasons reason)
+        private string GetVictoryReasonText(VictoryReason reason)
         {
             switch (reason)
             {
-                case VictoryReasons.Leave:
+                case VictoryReason.Leave:
                     return "The other player left.";
-                case VictoryReasons.Round5:
+                case VictoryReason.Round5:
                     return "The last round was beaten.";
-                case VictoryReasons.LastStanding:
+                case VictoryReason.LastStanding:
                     return "The other player ran out of lives.";
                 default:
                     return "Congratulations to the winner!";

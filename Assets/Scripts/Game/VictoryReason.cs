@@ -1,6 +1,6 @@
 ﻿namespace SIVS
 {
-    public enum VictoryReasons
+    public enum VictoryReason
     {
         Round5,
         LastStanding,
