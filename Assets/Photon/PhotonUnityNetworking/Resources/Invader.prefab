@@ -169,7 +169,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementAmount: 0.25
-  drawDebugRay: 1
+  drawDebugRay: 0
 --- !u!114 &-3034183532053049872
 MonoBehaviour:
   m_ObjectHideFlags: 0
