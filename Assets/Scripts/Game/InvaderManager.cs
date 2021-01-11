@@ -24,11 +24,11 @@ namespace SIVS
 
         [Tooltip("If debug mode is on, logs all invader movement.")]
         public bool debugLog = false;
-        
+
         private int _totalInvaderKills = 0;
 
         private SpawnManager _spawnManager;
-        
+
         #region Callbacks
 
         private void Awake()
@@ -39,27 +39,31 @@ namespace SIVS
         public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
         {
             if (!Match.IsActive) return;
-            
+
             if (!changedProps.ContainsKey(PlayerStats.InvaderKills)) return;
-            
+
             var invaderKills = 0;
-            
+
             foreach (var player in PhotonNetwork.CurrentRoom.Players.Values)
                 if (player.CustomProperties.ContainsKey(PlayerStats.InvaderKills))
                     invaderKills += (int) player.CustomProperties[PlayerStats.InvaderKills];
 
             _totalInvaderKills = invaderKills;
 
-            if (OwnInvaderCount() > 0 || PlayerStats.GetOwnRound() >= 5) return;
-            
+            if (OwnInvaderCount() > 0) return;
+
+            var nextRound = PlayerStats.GetOwnRound() + 1;
+
             PlayerStats.GoToNextRound(PhotonNetwork.LocalPlayer);
-            SpawnOwnInvaders();
+
+            if (nextRound < 6)
+                SpawnOwnInvaders();
         }
-        
+
         #endregion
 
         #region Coroutines
-    
+
         private IEnumerator MoveInvaders()
         {
             var side = PhotonNetwork.LocalPlayer.ActorNumber;
@@ -97,7 +101,7 @@ namespace SIVS
         {
             var ufosSpawned = 0;
             var side = PhotonNetwork.LocalPlayer.ActorNumber;
-            
+
             while (ufosSpawned < 5)
             {
                 yield return new WaitForSeconds(Random.Range(25.0f, 35.0f));
@@ -113,13 +117,13 @@ namespace SIVS
 
                 PhotonNetwork.Instantiate("UFO",
                     position, Quaternion.identity, 0, instantiationData);
-                
+
                 ufosSpawned++;
             }
         }
 
         #endregion
-        
+
         public void InitializeInvaders()
         {
             SpawnOwnInvaders();
@@ -130,14 +134,14 @@ namespace SIVS
         private void SpawnOwnInvaders()
         {
             var rows = debugMode && debugRows > 0 ? debugRows : 3 + PlayerStats.GetOwnRound();
-            
+
             var columns = debugMode && debugColumns > 0 ? debugColumns : 3 + PlayerStats.GetOwnRound() / 2;
 
             for (var row = 0; row < rows; row++)
                 for (var column = 0; column < columns; column++)
                     SpawnOneInvader(PhotonNetwork.LocalPlayer.ActorNumber, row, column);
         }
-    
+
         private void SpawnOneInvader(int side, int row, int column)
         {
             object[] instantiationData = {side, GenerateInvaderHealth(), Random.Range(3.0f, 4.75f)};
@@ -147,18 +151,18 @@ namespace SIVS
             PhotonNetwork.Instantiate("Invader",
                 position, Quaternion.identity, 0, instantiationData);
         }
-    
+
         private int GenerateInvaderHealth()
         {
             if (_totalInvaderKills < 15)
                 return 1;
-            
+
             if (_totalInvaderKills < 35)
                 return Random.Range(1, 3);
-            
+
             if (_totalInvaderKills < 70)
                 return Random.Range(2, 4);
-            
+
             return Random.Range(2, 6);
         }
 
@@ -174,14 +178,14 @@ namespace SIVS
                     break;
                 }
             }
-            
+
             return invaderFromSide;
         }
 
         private float GetMoveInterval()
         {
             if (debugMode && debugMoveRate != 0) return debugMoveRate;
-            
+
             return new []{2.0f, 1.5f, 1.15f, 1.0f, 0.8f}[PlayerStats.GetOwnRound() - 1];
         }
 
@@ -190,7 +194,7 @@ namespace SIVS
             foreach (var invader in GameObject.FindGameObjectsWithTag("Invader"))
             {
                 if (!invader.GetPhotonView().IsMine) continue;
-                
+
                 invader.GetComponent<InvaderMovement>().Move(direction);
             }
         }
@@ -208,10 +212,10 @@ namespace SIVS
         private int OwnInvaderCount()
         {
             var count = 0;
-            
+
             foreach (var invader in GameObject.FindGameObjectsWithTag("Invader"))
                 if (invader.GetPhotonView().IsMine) count++;
-            
+
             return count;
         }
     }
