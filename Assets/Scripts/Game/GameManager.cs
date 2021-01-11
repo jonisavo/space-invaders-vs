@@ -58,14 +58,14 @@ namespace SIVS
             if (changedProps.ContainsKey(PlayerStats.Lives))
             {
                 if ((int) changedProps[PlayerStats.Lives] <= 0)
-                    EndGame(GetOtherPlayer(targetPlayer));
+                    EndGame(GetOtherPlayer(targetPlayer), VictoryReasons.LastStanding);
             }
 
             if (!changedProps.ContainsKey(PlayerStats.CurrentRound))
                 return;
 
             if ((int) changedProps[PlayerStats.CurrentRound] >= 6)
-                EndGame(targetPlayer);
+                EndGame(targetPlayer, VictoryReasons.Round5);
         }
 
         public override void OnLeftRoom()
@@ -77,7 +77,7 @@ namespace SIVS
         {
             if (_gameOver) return;
 
-            EndGame(GetOtherPlayer(otherPlayer));
+            EndGame(GetOtherPlayer(otherPlayer), VictoryReasons.Leave);
         }
 
         #endregion
@@ -109,7 +109,7 @@ namespace SIVS
             return null;
         }
 
-        private void EndGame(Player winner)
+        private void EndGame(Player winner, VictoryReasons reason)
         {
             _gameOver = true;
 
@@ -121,7 +121,7 @@ namespace SIVS
             GetComponent<OptionsManager>().CloseCanvas();
 
             GetComponent<UIManager>()
-                .ShowVictoryScreen(winner == null ? "No one" : winner.NickName);
+                .ShowVictoryScreen(winner == null ? "No one" : winner.NickName, reason);
 
             GameObject.Find("Music Player")
                 .GetComponent<AudioSource>()

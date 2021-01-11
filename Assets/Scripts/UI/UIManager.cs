@@ -16,8 +16,11 @@ namespace SIVS
         [Tooltip("The canvas to show when the game is over.")]
         public GameObject resultCanvas;
 
-        [Tooltip("The text to write the result of a game on.")]
-        public TMP_Text victoryText;
+        [Tooltip("The victory header to write text on.")]
+        public TMP_Text victoryHeaderText;
+
+        [Tooltip("The text component to write the victory reason on.")]
+        public TMP_Text victoryReasonText;
 
         [Tooltip("GUI style to write UI text with.")]
         public GUIStyle guiStyle;
@@ -25,7 +28,7 @@ namespace SIVS
         private Dictionary<string, int> _cachedLives;
 
         private GUIStyle _guiStyle;
-        
+
         #region Unity Callbacks
 
         private void Awake()
@@ -36,15 +39,15 @@ namespace SIVS
         private void OnGUI()
         {
             if (!PhotonNetwork.InRoom) return;
-            
+
             DrawNames();
             DrawRounds();
             DrawLives();
             DrawPoints();
         }
-        
+
         #endregion
-        
+
         #region PUN Callbacks
 
         public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
@@ -55,12 +58,28 @@ namespace SIVS
 
         #endregion
 
-        public void ShowVictoryScreen(string nickName)
+        public void ShowVictoryScreen(string nickName, VictoryReasons reason)
         {
             resultCanvas.SetActive(true);
-            victoryText.text = $"{nickName} won!";
+            victoryHeaderText.text = $"{nickName} won!";
+            victoryReasonText.text = GetVictoryReasonText(reason);
         }
-        
+
+        private string GetVictoryReasonText(VictoryReasons reason)
+        {
+            switch (reason)
+            {
+                case VictoryReasons.Leave:
+                    return "The other player left.";
+                case VictoryReasons.Round5:
+                    return "The last round was beaten.";
+                case VictoryReasons.LastStanding:
+                    return "The other player ran out of lives.";
+                default:
+                    return "Congratulations to the winner!";
+            }
+        }
+
         private void DrawNames()
         {
             foreach (var entry in PhotonNetwork.CurrentRoom.Players)
@@ -87,11 +106,11 @@ namespace SIVS
             {
                 if (!_cachedLives.ContainsKey(entry.Value.NickName))
                     continue;
-                
+
                 var initialXCoord = entry.Key % 2 == 0 ? 948 : 52;
 
                 for (var i = 0; i < _cachedLives[entry.Value.NickName]; i++)
-                    GUI.DrawTexture(new Rect(entry.Key % 2 == 0 ? initialXCoord - 40 * i : initialXCoord + 40 * i, 
+                    GUI.DrawTexture(new Rect(entry.Key % 2 == 0 ? initialXCoord - 40 * i : initialXCoord + 40 * i,
                             656, 32, 32), lifeTexture);
             }
         }
