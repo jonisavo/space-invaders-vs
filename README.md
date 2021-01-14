@@ -1,5 +1,7 @@
 # Space Invaders VS
 
+![screenshot](/screenshot.png)
+
 This is a *work-in-progress* university assignment: a working game made with Unity.
 It is a multiplayer Space Invaders clone, where two players race to beat the last round.
 
