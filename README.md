@@ -2,10 +2,10 @@
 
 ![screenshot](/screenshot.png)
 
-This is a *work-in-progress* university assignment: a working game made with Unity.
+This is a university assignment I created in a month: a working multiplayer game made with Unity.
 It is a multiplayer Space Invaders clone, where two players race to beat the last round.
 
-The project has two big dependencies: PUN 2 and TextMeshPro.
+The project has two big dependencies: Photon Unity Networking 2 and TextMeshPro.
 
 ## Additional credits
 
@@ -16,10 +16,6 @@ Music by [YouFulca](https://wingless-seraph.net/en/)
 [Press Start 2P](https://www.1001fonts.com/press-start-2p-font.html) font by codeman38
 
 [Karmatic Arcade](https://www.1001fonts.com/karmatic-arcade-font.html) font by Vic Fieger
-
-## To do
-
-1. Bug fixing
 
 ## Set up
 
