@@ -192,8 +192,8 @@ MonoBehaviour:
   - 1.75
   - 2
   - 2
-  SpawnXOffset: 0.06
-  SpawnYOffset: -0.04
+  spawnXOffset: 0.06
+  spawnYOffset: -0.04
 --- !u!61 &4113204282743565066
 BoxCollider2D:
   m_ObjectHideFlags: 0

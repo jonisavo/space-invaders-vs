@@ -9,9 +9,9 @@ namespace SIVS
 
         public float[] dropChances;
 
-        public float SpawnXOffset = 0.0f;
+        public float spawnXOffset;
 
-        public float SpawnYOffset = 0.0f;
+        public float spawnYOffset;
 
         public void GeneratePowerupDrop()
         {
@@ -42,7 +42,7 @@ namespace SIVS
 
         private void SpawnPowerup(string powerupName)
         {
-            var position = transform.position + new Vector3(SpawnXOffset, SpawnYOffset);
+            var position = transform.position + new Vector3(spawnXOffset, spawnYOffset);
 
             PhotonNetwork.Instantiate(powerupName, position, Quaternion.identity);
         }

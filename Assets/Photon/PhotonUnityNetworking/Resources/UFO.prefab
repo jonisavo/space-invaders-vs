@@ -303,8 +303,8 @@ MonoBehaviour:
   - 20
   - 15
   - 15
-  SpawnXOffset: 0
-  SpawnYOffset: 0
+  spawnXOffset: 0
+  spawnYOffset: 0
 --- !u!114 &3112517686913664029
 MonoBehaviour:
   m_ObjectHideFlags: 0
