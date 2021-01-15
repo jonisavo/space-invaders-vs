@@ -120,6 +120,12 @@ namespace SIVS
 
         public override void OnJoinedRoom()
         {
+            if (!HasUniqueNickname())
+            {
+                CancelMatchmaking();
+                return;
+            }
+
             if (IsFullRoom())
                 StartGame();
             else
@@ -128,6 +134,12 @@ namespace SIVS
 
         public override void OnPlayerEnteredRoom(Player newPlayer)
         {
+            if (PhotonNetwork.LocalPlayer.NickName == newPlayer.NickName)
+            {
+                CancelMatchmaking();
+                return;
+            }
+
             if (IsFullRoom()) StartGame();
         }
 
@@ -141,6 +153,18 @@ namespace SIVS
 
         private bool IsFullRoom() =>
             PhotonNetwork.CurrentRoom.PlayerCount == PhotonNetwork.CurrentRoom.MaxPlayers;
+
+        private bool HasUniqueNickname()
+        {
+            foreach (var player in PhotonNetwork.CurrentRoom.Players.Values)
+            {
+                if (PhotonNetwork.LocalPlayer.ActorNumber == player.ActorNumber) continue;
+                
+                if (PhotonNetwork.LocalPlayer.NickName == player.NickName) return false;
+            }
+
+            return true;
+        }
 
         private void StartGame()
         {
