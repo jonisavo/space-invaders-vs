@@ -33,23 +33,6 @@ namespace SIVS
             SpawnCover();
         }
 
-        private void Update()
-        {
-            var rect = OwnAreaRect();
-
-            // Top line
-            Debug.DrawLine(new Vector3(rect.x, rect.y), new Vector3(rect.x + rect.width, rect.y), Color.red);
-
-            // Right line
-            Debug.DrawLine(new Vector3(rect.x + rect.width, rect.y), new Vector3(rect.x + rect.width, rect.y + rect.height), Color.red);
-
-            // Bottom line
-            Debug.DrawLine(new Vector3(rect.x + rect.width, rect.y + rect.height), new Vector3(rect.x, rect.y + rect.height), Color.red);
-
-            // Left line
-            Debug.DrawLine(new Vector3(rect.x, rect.y + rect.height), new Vector3(rect.x, rect.y), Color.red);
-        }
-
         #endregion
 
         public Vector3 OwnAreaPosition(float x, float y) =>
