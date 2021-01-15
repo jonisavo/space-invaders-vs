@@ -17,13 +17,13 @@ namespace SIVS
         public SpriteRenderer spriteRenderer;
 
         [Tooltip("A debug option to make players invincible.")]
-        public bool invincibility = false;
+        public bool invincibility;
 
         private SpawnManager _spawnManager;
 
         private AudioSource _audioSource;
 
-        private bool _invincibilityFrames = false;
+        private bool _invincibilityFrames;
 
         #region Unity Callbacks
 

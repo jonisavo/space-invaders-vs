@@ -15,9 +15,9 @@ namespace SIVS
         [Tooltip("Audio clip to play upon a victory.")]
         public AudioClip victorySound;
 
-        private bool _bothReady = false;
+        private bool _bothReady;
 
-        private bool _gameOver = false;
+        private bool _gameOver;
 
         private InvaderManager _invaderManager;
 
@@ -167,13 +167,13 @@ namespace SIVS
 
         private void DestroyPowerups()
         {
-            foreach (var powerup in GameObject.FindGameObjectsWithTag("Powerup"))
+            foreach (var powerUp in GameObject.FindGameObjectsWithTag("Powerup"))
             {
-                var photonView = powerup.GetPhotonView();
+                var powerUpPhotonView = powerUp.GetPhotonView();
 
-                if (!photonView.IsMine) continue;
+                if (!powerUpPhotonView.IsMine) continue;
 
-                photonView.RPC("DestroyPowerup", RpcTarget.All);
+                powerUpPhotonView.RPC("DestroyPowerup", RpcTarget.All);
             }
         }
     }

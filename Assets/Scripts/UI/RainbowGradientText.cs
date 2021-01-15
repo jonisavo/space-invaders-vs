@@ -10,43 +10,43 @@ namespace SIVS
         public float animationSpeed = 5.0f;
         
         [Tooltip("Toggles whether the bottom left portion is animated.")]
-        public bool animateBottomLeft = false;
+        public bool animateBottomLeft;
         
         [Tooltip("The initial hue for the bottom left portion.")]
-        public float initialBottomLeftHue = 0;
+        public float initialBottomLeftHue;
         
         [Tooltip("Toggles whether the bottom right portion is animated.")]
-        public bool animateBottomRight = false;
+        public bool animateBottomRight;
         
         [Tooltip("The initial hue for the bottom right portion.")]
-        public float initialBottomRightHue = 0;
+        public float initialBottomRightHue;
         
         [Tooltip("Toggles whether the top left portion is animated.")]
-        public bool animateTopLeft = false;
+        public bool animateTopLeft;
         
         [Tooltip("The initial hue for the top left portion.")]
-        public float initialTopLeftHue = 0;
+        public float initialTopLeftHue;
         
         [Tooltip("Toggles whether the top right portion is animated.")]
-        public bool animateTopRight = false;
+        public bool animateTopRight;
         
         [Tooltip("The initial hue for the top right portion.")]
-        public float initialTopRightHue = 0;
+        public float initialTopRightHue;
         
         private TMP_Text _text;
         
-        private float _currentTopRightHue = 0;
+        private float _currentTopRightHue;
 
-        private float _currentBottomRightHue = 0;
+        private float _currentBottomRightHue;
 
-        private float _currentTopLeftHue = 0;
+        private float _currentTopLeftHue;
 
-        private float _currentBottomLeftHue = 0;
+        private float _currentBottomLeftHue;
         
         private void Awake()
         {
             _text = GetComponent<TMP_Text>();
-            _currentTopRightHue = initialTopLeftHue;
+            _currentTopRightHue = initialTopRightHue;
             _currentBottomRightHue = initialBottomRightHue;
             _currentTopLeftHue = initialTopLeftHue;
             _currentBottomLeftHue = initialBottomLeftHue;

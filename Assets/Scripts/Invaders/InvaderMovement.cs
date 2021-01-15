@@ -9,7 +9,7 @@ namespace SIVS
         public float movementAmount = 0.25f;
         
         [Tooltip("Toggles the drawing of a debug ray.")]
-        public bool drawDebugRay = false;
+        public bool drawDebugRay;
         
         private int _side;
 

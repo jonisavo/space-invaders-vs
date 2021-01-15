@@ -14,7 +14,7 @@ namespace SIVS
 
         public AudioClip loop;
 
-        private bool _reachedRound = false;
+        private bool _reachedRound;
 
         private MusicLoop _musicLoop;
 

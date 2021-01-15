@@ -12,7 +12,7 @@ namespace SIVS
         public AudioClip[] loops;
 
         [Tooltip("Whether a random intro + loop should be played on awake.")]
-        public bool playOnAwake = false;
+        public bool playOnAwake;
 
         private AudioSource _audioSource;
         

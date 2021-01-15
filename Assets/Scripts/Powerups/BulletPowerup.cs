@@ -7,7 +7,7 @@ namespace SIVS
     public class BulletPowerup : MonoBehaviourPun
     {
         [Tooltip("The id of the bullet given by this powerup.")]
-        public int bulletType = 0;
+        public int bulletType;
 
         [Tooltip("Sound effect played when the powerup is obtained.")]
         public AudioClip soundEffect;
