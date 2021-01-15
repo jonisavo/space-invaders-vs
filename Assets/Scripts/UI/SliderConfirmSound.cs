@@ -24,6 +24,8 @@ namespace SIVS
         {
             if (_slider.value != _oldValue)
                 _audioSource.Play();
+
+            _oldValue = _slider.value;
         }
     }
 }
