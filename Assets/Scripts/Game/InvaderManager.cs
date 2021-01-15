@@ -157,10 +157,10 @@ namespace SIVS
             if (_totalInvaderKills < 15)
                 return 1;
 
-            if (_totalInvaderKills < 35)
+            if (_totalInvaderKills < 40)
                 return Random.Range(1, 3);
 
-            if (_totalInvaderKills < 70)
+            if (_totalInvaderKills < 75)
                 return Random.Range(2, 4);
 
             return Random.Range(2, 5);
