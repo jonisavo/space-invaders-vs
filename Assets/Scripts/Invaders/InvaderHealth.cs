@@ -146,7 +146,7 @@ namespace SIVS
         {
             if (!tintSprite) return;
 
-            var hue = 1.0f - (_health - 1) * 0.2f;
+            var hue = 1.0f - (_health - 1) * 0.25f;
             _spriteRenderer.color = new Color(1.0f, hue, hue);
         }
 

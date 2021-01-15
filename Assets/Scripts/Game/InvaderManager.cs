@@ -163,7 +163,7 @@ namespace SIVS
             if (_totalInvaderKills < 70)
                 return Random.Range(2, 4);
 
-            return Random.Range(2, 6);
+            return Random.Range(2, 5);
         }
 
         private GameObject GetOwnInvader()
