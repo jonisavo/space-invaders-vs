@@ -16,7 +16,6 @@ namespace SIVS
 
         private void Awake()
         {
-            Screen.SetResolution(1024, 768, false);
             Connect();
         }
 
