@@ -20,14 +20,8 @@ Music by [YouFulca](https://wingless-seraph.net/en/)
 ## Set up
 
 1. Clone the repository
-2. Open the project in Unity 2019.4.17+
+2. Open the project in Unity 2019.4.26+
 3. Import PUN 2 and run the PUN Wizard
 4. Import TextMeshPro and run the "Import TMP Essential Resources" wizard
 5. Restart Unity
 6. You should be good to go!
-
-## Known issues
-
-The game was not made with multiple resolutions in mind, mostly because I have very little
-knowledge of Unity and did not have the time to design a responsive UI. Playing the game
-with a screen resolution higher than 1080p may result in strange visuals.
