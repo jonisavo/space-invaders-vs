@@ -29,6 +29,8 @@ namespace SIVS
 
         private SpawnManager _spawnManager;
 
+        private static readonly float[] MovementIntervals = { 2.0f, 1.75f, 1.5f, 1.25f, 1.0f };
+
         #region Callbacks
 
         private void Awake()
@@ -186,7 +188,10 @@ namespace SIVS
         {
             if (debugMode && debugMoveRate != 0) return debugMoveRate;
 
-            return new []{2.0f, 1.75f, 1.5f, 1.25f, 1.0f}[PlayerStats.GetOwnRound() - 1];
+            var round =
+                Mathf.Clamp(PlayerStats.GetOwnRound() - 1, 0, MovementIntervals.Length - 1);
+
+            return MovementIntervals[round];
         }
 
         private void MoveOwnInvaders(Vector2 direction)
