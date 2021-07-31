@@ -7,10 +7,7 @@ namespace SIVS
     {
         [Tooltip("The distance to move the invader each cycle.")]
         public float movementAmount = 0.25f;
-        
-        [Tooltip("Toggles the drawing of a debug ray.")]
-        public bool drawDebugRay;
-        
+
         private int _side;
 
         private bool _goingRight = true;
@@ -30,16 +27,6 @@ namespace SIVS
                 _side = 1;
         }
 
-        private void FixedUpdate()
-        {
-            if (!drawDebugRay) return;
-            
-            Debug.DrawRay(
-                GetRaycastStartPoint(), 
-                GetMovementDirection().normalized * (movementAmount * 2),
-                Color.red);
-        }
-
         #endregion
 
         public void Move(Vector2 direction) =>
@@ -50,7 +37,7 @@ namespace SIVS
         public bool CanMoveHorizontally() => CanMoveAll(GetMovementDirection(), movementAmount * 2);
 
         public bool CanMoveDown() => CanMoveAll(Vector2.down, 2.2f);
-        
+
         public Vector2 GetMovementDirection() => _goingRight ? Vector2.right : Vector2.left;
 
         private bool CanMoveAll(Vector2 direction, float rayDistance)
@@ -58,7 +45,7 @@ namespace SIVS
             foreach (var invader in GameObject.FindGameObjectsWithTag("Invader"))
             {
                 var movement = invader.GetComponent<InvaderMovement>();
-                
+
                 if (movement._side != _side) continue;
 
                 if (!movement.CanMove(direction, rayDistance))
