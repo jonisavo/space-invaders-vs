@@ -1,6 +1,6 @@
 # Space Invaders VS
 
-![screenshot](/screenshot.png)
+![screenshot](./screenshot.png)
 
 This is a university assignment I created in a month: a working multiplayer game made with Unity.
 It is a multiplayer Space Invaders clone, where two players race to beat the last round.
@@ -20,8 +20,9 @@ Music by [YouFulca](https://wingless-seraph.net/en/)
 ## Set up
 
 1. Clone the repository
-2. Open the project in Unity 2019.4.26+
-3. Import PUN 2 and run the PUN Wizard
-4. Import TextMeshPro and run the "Import TMP Essential Resources" wizard
-5. Restart Unity
-6. You should be good to go!
+2. Open the project in Unity 2019.4.29+
+3. Import PUN 2 (version 2.34.1 is recommended)
+4. Run the PUN wizard
+5. Run TextMeshPro's "Import TMP Essential Resources" wizard
+6. Restart Unity
+7. You should be good to go!
