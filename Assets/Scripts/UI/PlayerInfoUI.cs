@@ -42,7 +42,7 @@ namespace SIVS
 
         private void AddLife()
         {
-            var position = new Vector2(_lifeObjects.Count * -0.5f, 0);
+            var position = new Vector2(_lifeObjects.Count * -0.5f, 0.05f);
 
             var lifeObj = Instantiate(lifeObject, position, Quaternion.identity);
             
