@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using Photon.Pun;
-using Vector2 = UnityEngine.Vector2;
 
 namespace SIVS
 {
@@ -11,17 +10,16 @@ namespace SIVS
 
         private Rigidbody2D _rb;
 
-        private void Awake()
-        {
-            _rb = GetComponent<Rigidbody2D>();
-        }
+        private void Awake() => _rb = GetComponent<Rigidbody2D>();
 
         private void FixedUpdate()
         {
             if (!photonView.IsMine || !Match.IsActive)
                 return;
 
-            _rb.MovePosition((Vector2)transform.position + Vector2.right * (Input.GetAxis("Horizontal") * moveSpeed * Time.deltaTime));
+            var movementAmount = Input.GetAxis("Horizontal") * moveSpeed * Time.deltaTime;
+
+            _rb.MovePosition((Vector2)transform.position + Vector2.right * movementAmount);
         }
     }
 }
