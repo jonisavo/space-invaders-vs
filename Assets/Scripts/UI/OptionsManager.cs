@@ -9,7 +9,7 @@ namespace SIVS
     {
         public GameObject optionsCanvas;
 
-        public Button leaveButton;
+        public Button closeButton;
 
         private bool _allowOpeningOptions = true;
 
@@ -33,7 +33,7 @@ namespace SIVS
             optionsCanvas.SetActive(!optionsCanvas.activeInHierarchy);
             
             if (optionsCanvas.activeInHierarchy)
-                leaveButton.Select();
+                closeButton.Select();
         }
 
         public void CloseCanvas() => optionsCanvas.SetActive(false);

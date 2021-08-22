@@ -1945,6 +1945,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2407172818296431269, guid: 884633b0d38c8e5468de07914f6b395f,
         type: 3}
+      propertyPath: leaveButton
+      value: 
+      objectReference: {fileID: 4369918431825242455}
+    - target: {fileID: 2407172818296431269, guid: 884633b0d38c8e5468de07914f6b395f,
+        type: 3}
       propertyPath: victoryText
       value: 
       objectReference: {fileID: 448969159}
@@ -2018,6 +2023,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8625839453618627176, guid: 884633b0d38c8e5468de07914f6b395f,
+        type: 3}
+      propertyPath: closeButton
+      value: 
+      objectReference: {fileID: 925174470}
     - target: {fileID: 8625839453618627176, guid: 884633b0d38c8e5468de07914f6b395f,
         type: 3}
       propertyPath: leaveButton

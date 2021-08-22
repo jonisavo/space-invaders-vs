@@ -1,5 +1,6 @@
 ﻿using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace SIVS
 {
@@ -14,11 +15,16 @@ namespace SIVS
         [Tooltip("The text component to write the victory reason on.")]
         public TMP_Text victoryReasonText;
 
+        [Tooltip("The button to select when the canvas is shown.")]
+        public Button leaveButton;
+
         public void ShowVictoryScreen(string nickName, VictoryReason reason)
         {
             resultCanvas.SetActive(true);
             victoryHeaderText.text = $"{nickName} won!";
             victoryReasonText.text = GetVictoryReasonText(reason);
+            
+            leaveButton.Select();
         }
 
         private static string GetVictoryReasonText(VictoryReason reason)
