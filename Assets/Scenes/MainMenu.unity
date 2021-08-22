@@ -424,9 +424,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controlPanel: {fileID: 557291949}
   progressLabel: {fileID: 1202018268}
-  connectButton: {fileID: 769824667}
-  joinRoomButton: {fileID: 1975907002}
-  cancelButton: {fileID: 1828041205}
+  quickPlayButton: {fileID: 769824669}
+  joinRoomButton: {fileID: 1975907005}
+  cancelButton: {fileID: 1828041206}
 --- !u!4 &546127511
 Transform:
   m_ObjectHideFlags: 0
@@ -3119,7 +3119,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 2.86875
+  orthographic size: 1.2264127
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -3445,7 +3445,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 1282983422}
+  m_FirstSelected: {fileID: 769824667}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
 --- !u!4 &1877058256

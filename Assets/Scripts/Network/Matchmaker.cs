@@ -14,14 +14,14 @@ namespace SIVS
         [Tooltip("The UI Label to inform the user that the connection is in progress")]
         public GameObject progressLabel;
 
-        [Tooltip("The Button to let the user start matchmaking")]
-        public GameObject connectButton;
+        [Tooltip("The Button to let the user start matchmaking quickly")]
+        public Button quickPlayButton;
 
         [Tooltip("The Button to let the user join a room")]
-        public GameObject joinRoomButton;
+        public Button joinRoomButton;
 
         [Tooltip("The Button to let the user cancel matchmaking")]
-        public GameObject cancelButton;
+        public Button cancelButton;
 
         private bool _isMatchmaking;
 
@@ -33,10 +33,10 @@ namespace SIVS
             set
             {
                 _allowMatchmaking = value;
-                if (connectButton)
-                    connectButton.GetComponent<Button>().interactable = value;
+                if (quickPlayButton)
+                    quickPlayButton.interactable = value;
                 if (joinRoomButton)
-                    joinRoomButton.GetComponent<Button>().interactable = value;
+                    joinRoomButton.interactable = value;
             }
         }
 
@@ -96,6 +96,8 @@ namespace SIVS
             
             HideCancelButton();
             HideProgressLabel();
+            
+            quickPlayButton.Select();
         }
 
         #region PUN Callbacks
@@ -189,9 +191,11 @@ namespace SIVS
             PhotonNetwork.LoadLevel("InGame");
         }
 
-        private void ShowCancelButton() => cancelButton.SetActive(true);
+        private void ShowCancelButton() =>
+            cancelButton.gameObject.SetActive(true);
 
-        private void HideCancelButton() => cancelButton.SetActive(false);
+        private void HideCancelButton() =>
+            cancelButton.gameObject.SetActive(false);
         
         private void ShowProgressLabel()
         {
