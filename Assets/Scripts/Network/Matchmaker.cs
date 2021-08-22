@@ -1,8 +1,8 @@
-﻿using ExitGames.Client.Photon;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 namespace SIVS
 {
@@ -81,7 +81,9 @@ namespace SIVS
 
         public void CancelMatchmaking()
         {
-            PhotonNetwork.LeaveRoom();
+            if (PhotonNetwork.InRoom)
+                PhotonNetwork.LeaveRoom();
+
             StopMatchmaking();
             AllowMatchmaking = PhotonNetwork.IsConnectedAndReady;
         }
@@ -119,13 +121,19 @@ namespace SIVS
                 MaxPlayers = 2,
                 CustomRoomProperties = new Hashtable()
                 {
-                    {"Active", false}
+                    { Match.ActivePropertyKey, false }
                 }
             });
         }
 
         public override void OnJoinedRoom()
         {
+            if (!_isMatchmaking)
+            {
+                PhotonNetwork.LeaveRoom();
+                return;
+            }
+
             if (!HasUniqueNickname())
             {
                 CancelMatchmaking();
@@ -174,7 +182,8 @@ namespace SIVS
 
         private void StartGame()
         {
-            if (!PhotonNetwork.IsMasterClient) return;
+            if (!PhotonNetwork.IsMasterClient)
+                return;
 
             PhotonNetwork.CurrentRoom.IsOpen = false;
             PhotonNetwork.LoadLevel("InGame");
