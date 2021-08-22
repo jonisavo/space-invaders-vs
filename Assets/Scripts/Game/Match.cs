@@ -5,13 +5,15 @@ namespace SIVS
 {
     public static class Match
     {
+        public const string ActivePropertyKey = "Active";
+        
         public static bool IsActive
         {
             set
             {
                 PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable()
                 {
-                    {"Active", value}
+                    {ActivePropertyKey, value}
                 });
             }
             get
