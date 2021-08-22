@@ -33,8 +33,17 @@ namespace SIVS
             set
             {
                 _allowMatchmaking = value;
+                
                 if (quickPlayButton)
+                {
+                    var shouldSelect = !quickPlayButton.interactable && value;
+
                     quickPlayButton.interactable = value;
+                    
+                    if (shouldSelect)
+                        quickPlayButton.Select();
+                }
+
                 if (joinRoomButton)
                     joinRoomButton.interactable = value;
             }
@@ -96,8 +105,6 @@ namespace SIVS
             
             HideCancelButton();
             HideProgressLabel();
-            
-            quickPlayButton.Select();
         }
 
         #region PUN Callbacks
