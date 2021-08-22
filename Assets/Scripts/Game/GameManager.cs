@@ -7,7 +7,7 @@ using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 namespace SIVS
 {
-    [RequireComponent(typeof(UIManager))]
+    [RequireComponent(typeof(VictoryUIManager))]
     [RequireComponent(typeof(InvaderManager))]
     [RequireComponent(typeof(OptionsManager))]
     public class GameManager : MonoBehaviourPunCallbacks
@@ -120,7 +120,7 @@ namespace SIVS
 
             GetComponent<OptionsManager>().CloseCanvas();
 
-            GetComponent<UIManager>()
+            GetComponent<VictoryUIManager>()
                 .ShowVictoryScreen(winner == null ? "No one" : winner.NickName, reason);
 
             GameObject.Find("Music Player")

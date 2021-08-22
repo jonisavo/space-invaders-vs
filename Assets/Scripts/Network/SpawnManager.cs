@@ -22,8 +22,13 @@ namespace SIVS
                 {
                     _playerIndex = entry.Key;
                 }
+                
+                var playAreaObject = GameObject.Find("Play Area " + entry.Key);
+                
+                playAreaObject.GetComponent<PlayerInfoUI>()
+                    .Initialize(entry.Value);
 
-                _playAreas[entry.Key] = GameObject.Find("Play Area " + entry.Key);
+                _playAreas[entry.Key] = playAreaObject;
             }
         }
 
