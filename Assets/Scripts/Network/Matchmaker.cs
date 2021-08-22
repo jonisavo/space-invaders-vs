@@ -46,6 +46,12 @@ namespace SIVS
             AllowMatchmaking = PhotonNetwork.IsConnectedAndReady;
         }
 
+        private void Update()
+        {
+            if (_isMatchmaking && Input.GetButtonDown("Cancel"))
+                CancelMatchmaking();
+        }
+
         public void BeginMatchmaking()
         {
             if (string.IsNullOrEmpty(PhotonNetwork.NickName.Trim())) return;
