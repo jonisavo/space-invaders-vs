@@ -136,8 +136,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08f484de47c64023a5eee5647e406f7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletType: 1
   soundEffect: {fileID: 8300000, guid: e02efb5ed48520e4c84148201b41031d, type: 3}
+  popupObject: {fileID: 4740737177052898925, guid: be8dcd7e14df1d84f8bd6af2305f8223,
+    type: 3}
+  popupText: <animation=slowsine>DOUBLE SHOT</animation>
+  bulletType: 1
+  pointsPopup: {fileID: 4604369377521931590, guid: 861c3cbef5070db46ab2fda2d6556fba,
+    type: 3}
 --- !u!114 &4828910147107934662
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -153,10 +158,10 @@ MonoBehaviour:
   ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
-  observableSearch: 2
   Synchronization: 3
   OwnershipTransfer: 0
+  observableSearch: 2
   ObservedComponents: []
-  viewIdField: 0
+  sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0

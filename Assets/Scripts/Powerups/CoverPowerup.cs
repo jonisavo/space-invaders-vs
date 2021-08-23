@@ -1,40 +1,19 @@
 ﻿using Photon.Pun;
+using Photon.Realtime;
 using UnityEngine;
 
 namespace SIVS
 {
-    public class CoverPowerup : MonoBehaviourPun
+    public class CoverPowerup : Powerup
     {
-        [Tooltip("Sound effect played when the powerup is obtained.")]
-        public AudioClip soundEffect;
-        
-        private void OnTriggerEnter2D(Collider2D other)
+        protected override void OnPowerupGet(GameObject obj, Player player)
         {
-            if (!other.gameObject.CompareTag("Player"))
-                return;
-
-            var player = other.gameObject.GetPhotonView().Owner;
-
-            if (PhotonNetwork.LocalPlayer.ActorNumber != player.ActorNumber)
-                return;
-            
             photonView.RPC(nameof(AddCover),
                 RpcTarget.AllBuffered, player.ActorNumber, Match.SumOfRounds);
             
-            SoundPlayer.PlaySound(soundEffect);
-            
-            photonView.RPC(nameof(DestroyPowerup), RpcTarget.All);
+            base.OnPowerupGet(obj, player);
         }
 
-        [PunRPC]
-        private void DestroyPowerup()
-        {
-            if (photonView.IsMine)
-                PhotonNetwork.Destroy(gameObject);
-            else
-            if (gameObject) gameObject.SetActive(false);
-        }
-        
         [PunRPC]
         private void AddCover(int actorNumber, int sumOfRounds)
         {

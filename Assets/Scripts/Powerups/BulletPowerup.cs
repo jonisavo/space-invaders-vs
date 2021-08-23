@@ -1,44 +1,32 @@
-﻿using Photon.Pun;
-using Photon.Pun.UtilityScripts;
+﻿using Photon.Pun.UtilityScripts;
+using Photon.Realtime;
 using UnityEngine;
 
 namespace SIVS
 {
-    public class BulletPowerup : MonoBehaviourPun
+    public class BulletPowerup : Powerup
     {
+        private const int BulletInUsePoints = 250;
+        
         [Tooltip("The id of the bullet given by this powerup.")]
         public int bulletType;
+        
+        [Tooltip("A popup to show when the bullet type is already in use.")]
+        public GameObject pointsPopup;
 
-        [Tooltip("Sound effect played when the powerup is obtained.")]
-        public AudioClip soundEffect;
-
-        private void OnTriggerEnter2D(Collider2D other)
+        protected override void OnPowerupGet(GameObject obj, Player player)
         {
-            if (!other.gameObject.CompareTag("Player"))
-                return;
-
-            var player = other.gameObject.GetPhotonView().Owner;
-
-            if (PhotonNetwork.LocalPlayer.ActorNumber != player.ActorNumber)
-                return;
-
             if (PlayerStats.GetBulletType(player) == bulletType)
-                player.AddScore(250);
+            {
+                ChangeTextPopup(pointsPopup, BulletInUsePoints.ToString());
+                player.AddScore(BulletInUsePoints);
+            }
             else
+            {
                 PlayerStats.ChangeBulletType(player, bulletType);
+            }
 
-            SoundPlayer.PlaySound(soundEffect);
-
-            photonView.RPC(nameof(DestroyPowerup), RpcTarget.All);
-        }
-
-        [PunRPC]
-        private void DestroyPowerup()
-        {
-            if (photonView.IsMine)
-                PhotonNetwork.Destroy(gameObject);
-            else
-                if (gameObject) gameObject.SetActive(false);
+            base.OnPowerupGet(obj, player);
         }
     }
 }

@@ -1,41 +1,29 @@
-﻿using Photon.Pun;
-using Photon.Pun.UtilityScripts;
+﻿using Photon.Pun.UtilityScripts;
+using Photon.Realtime;
 using UnityEngine;
 
 namespace SIVS
 {
-    public class LifePowerup : MonoBehaviourPun
+    public class LifePowerup : Powerup
     {
-        [Tooltip("Sound effect played when the powerup is obtained.")]
-        public AudioClip soundEffect;
+        private const int MaxLifePoints = 500;
+
+        [Tooltip("A popup to show when max lives have been reached.")]
+        public GameObject pointsPopup;
         
-        private void OnTriggerEnter2D(Collider2D other)
+        protected override void OnPowerupGet(GameObject obj, Player player)
         {
-            if (!other.gameObject.CompareTag("Player"))
-                return;
-
-            var player = other.gameObject.GetPhotonView().Owner;
-
-            if (PhotonNetwork.LocalPlayer.ActorNumber != player.ActorNumber)
-                return;
-            
             if (PlayerStats.HasMaximumLives(player))
-                player.AddScore(500);
+            {
+                ChangeTextPopup(pointsPopup, MaxLifePoints.ToString());
+                player.AddScore(MaxLifePoints);
+            }
             else
+            {
                 PlayerStats.AddLife(player);
-            
-            SoundPlayer.PlaySound(soundEffect);
-            
-            photonView.RPC(nameof(DestroyPowerup), RpcTarget.All);
-        }
+            }
 
-        [PunRPC]
-        private void DestroyPowerup()
-        {
-            if (photonView.IsMine)
-                PhotonNetwork.Destroy(gameObject);
-            else
-                if (gameObject) gameObject.SetActive(false);
+            base.OnPowerupGet(obj, player);
         }
     }
 }

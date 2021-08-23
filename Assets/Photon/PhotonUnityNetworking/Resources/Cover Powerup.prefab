@@ -137,6 +137,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   soundEffect: {fileID: 8300000, guid: e02efb5ed48520e4c84148201b41031d, type: 3}
+  popupObject: {fileID: 4740737177052898925, guid: be8dcd7e14df1d84f8bd6af2305f8223,
+    type: 3}
+  popupText: <animation=slowsine>COVER</animation>
 --- !u!114 &-3677311940710024262
 MonoBehaviour:
   m_ObjectHideFlags: 0
