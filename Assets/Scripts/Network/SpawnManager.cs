@@ -38,7 +38,22 @@ namespace SIVS
             SpawnCover();
         }
 
+        public override void OnEnable()
+        {
+            base.OnEnable();
+            PlayerHealth.OnSelfHit += RespawnSelf;
+        }
+        
+        public override void OnDisable()
+        {
+            base.OnDisable();
+            PlayerHealth.OnSelfHit -= RespawnSelf;
+        }
+
         #endregion
+
+        private void RespawnSelf(GameObject playerObject) =>
+            playerObject.transform.position = OwnSpawnPoint();
 
         public Vector3 OwnAreaPosition(float x, float y) =>
             PlayAreaPosition(_playerIndex, x, y);
