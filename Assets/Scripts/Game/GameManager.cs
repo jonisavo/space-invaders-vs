@@ -64,7 +64,7 @@ namespace SIVS
             if (!changedProps.ContainsKey(PlayerStats.CurrentRound))
                 return;
 
-            if ((int) changedProps[PlayerStats.CurrentRound] >= 6)
+            if ((int) changedProps[PlayerStats.CurrentRound] > Match.FinalRound) 
                 EndGame(targetPlayer, VictoryReason.Round5);
         }
 

@@ -72,8 +72,10 @@ namespace SIVS
             }
         }
 
-        private void UpdateRound(int round) => roundLabel.text = $"Round {round}";
+        private void UpdateRound(int round) =>
+            roundLabel.text = round > Match.FinalRound ? "Victory!" : $"Round {round}";
 
-        private void UpdateScore(int score) => scoreLabel.text = score.ToString("D5");
+        private void UpdateScore(int score) =>
+            scoreLabel.text = score.ToString("D5");
     }
 }

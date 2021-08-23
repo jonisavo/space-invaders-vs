@@ -6,6 +6,8 @@ namespace SIVS
     public static class Match
     {
         public const string ActivePropertyKey = "Active";
+
+        public const int FinalRound = 5;
         
         public static bool IsActive
         {
