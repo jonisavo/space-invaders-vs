@@ -11,6 +11,14 @@ namespace SIVS
 
         public Button closeButton;
 
+        public delegate void OptionsOpenDelegate();
+
+        public delegate void OptionsCloseDelegate();
+
+        public static event OptionsOpenDelegate OnOptionsOpen;
+
+        public static event OptionsCloseDelegate OnOptionsClose;
+
         private bool _allowOpeningOptions = true;
 
         private void Update()
@@ -30,13 +38,24 @@ namespace SIVS
 
         public void ToggleCanvas()
         {
-            optionsCanvas.SetActive(!optionsCanvas.activeInHierarchy);
-            
             if (optionsCanvas.activeInHierarchy)
-                closeButton.Select();
+                CloseCanvas();
+            else
+                OpenCanvas();
         }
 
-        public void CloseCanvas() => optionsCanvas.SetActive(false);
+        public void OpenCanvas()
+        {
+            optionsCanvas.SetActive(true);
+            OnOptionsOpen?.Invoke();
+            closeButton.Select();
+        }
+
+        public void CloseCanvas()
+        {
+            optionsCanvas.SetActive(false);
+            OnOptionsClose?.Invoke();
+        }
 
         public bool IsCanvasActive() => optionsCanvas.activeInHierarchy;
     }

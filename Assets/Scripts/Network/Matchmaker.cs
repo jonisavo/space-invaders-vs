@@ -84,7 +84,8 @@ namespace SIVS
                         {"Active", false}
                     }
                 },
-                TypedLobby.Default);
+                TypedLobby.Default
+            );
             ShowProgressLabel();
         }
 
@@ -198,8 +199,11 @@ namespace SIVS
             PhotonNetwork.LoadLevel("InGame");
         }
 
-        private void ShowCancelButton() =>
+        private void ShowCancelButton()
+        {
             cancelButton.gameObject.SetActive(true);
+            cancelButton.Select();
+        }
 
         private void HideCancelButton() =>
             cancelButton.gameObject.SetActive(false);
