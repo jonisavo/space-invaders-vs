@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8981374749833720210}
   - component: {fileID: 4952811828870948952}
   - component: {fileID: 6956191052478331278}
+  - component: {fileID: 8144042987775528125}
   m_Layer: 5
   m_Name: Fullscreen Toggle
   m_TagString: Untagged
@@ -112,6 +113,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d17cad932568491a8e2b8f0291a31253, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8144042987775528125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2740057740540856377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e68d16f07644048b5b8a26f9ea07de1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  standalone: 0
+  playStation4: 1
 --- !u!1 &6447981087416510042
 GameObject:
   m_ObjectHideFlags: 0

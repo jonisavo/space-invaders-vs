@@ -266,6 +266,7 @@ GameObject:
   - component: {fileID: 374302373}
   - component: {fileID: 374302375}
   - component: {fileID: 374302374}
+  - component: {fileID: 374302376}
   m_Layer: 5
   m_Name: Controls
   m_TagString: Untagged
@@ -393,6 +394,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 374302372}
   m_CullTransparentMesh: 0
+--- !u!114 &374302376
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 374302372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e68d16f07644048b5b8a26f9ea07de1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  standalone: 0
+  playStation4: 1
 --- !u!1 &546127509
 GameObject:
   m_ObjectHideFlags: 0
@@ -3162,7 +3177,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 1.2264127
+  orthographic size: 2.8687499
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2

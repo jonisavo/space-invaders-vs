@@ -285,7 +285,7 @@ PrefabInstance:
     - target: {fileID: 4369918431784854408, guid: bf5e249699761cf45adbe36ed1bbc41f,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4369918431784854408, guid: bf5e249699761cf45adbe36ed1bbc41f,
         type: 3}
@@ -295,7 +295,7 @@ PrefabInstance:
     - target: {fileID: 4369918431784854408, guid: bf5e249699761cf45adbe36ed1bbc41f,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4369918431784854408, guid: bf5e249699761cf45adbe36ed1bbc41f,
         type: 3}
@@ -350,7 +350,7 @@ PrefabInstance:
     - target: {fileID: 4369918431784854408, guid: bf5e249699761cf45adbe36ed1bbc41f,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -80
+      value: 70
       objectReference: {fileID: 0}
     - target: {fileID: 4369918431784854408, guid: bf5e249699761cf45adbe36ed1bbc41f,
         type: 3}
@@ -942,7 +942,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 3.09375
+  orthographic size: 1.4069768
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1095,6 +1095,7 @@ GameObject:
   - component: {fileID: 773004770}
   - component: {fileID: 773004772}
   - component: {fileID: 773004771}
+  - component: {fileID: 773004773}
   m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
@@ -1161,6 +1162,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 773004769}
   m_CullTransparentMesh: 0
+--- !u!114 &773004773
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 773004769}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da64a940217a40cd99047339c35c81ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  standalone: 0
+  playStation4: 1
+  changePosition: 0
+  position: {x: 0, y: 0, z: 0}
+  changeWidthAndHeight: 1
+  rectTransformWidth: 320
+  rectTransformHeight: 100
 --- !u!1 &848209708
 GameObject:
   m_ObjectHideFlags: 0
@@ -1459,9 +1479,9 @@ RectTransform:
   m_Father: {fileID: 773004770}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -119}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 0, y: 31}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &925174470
