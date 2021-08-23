@@ -58,12 +58,12 @@ namespace SIVS
             Match.IsActive && !OwnBulletExists() && !_shootingBlockedByOptions;
 
         [PunRPC]
-        private void FireBullet(int bulletType)
+        private void FireBullet(PlayerBulletType bulletType)
         {
             if (photonView.IsMine)
                 _audioSource.PlayOneShot(fireSound);
 
-            var bulletObject = Instantiate(bulletTypes[bulletType],
+            var bulletObject = Instantiate(bulletTypes[(int) bulletType],
                 GetBulletSpawnPoint(), Quaternion.identity);
 
             if (bulletObject.TryGetComponent(out PlayerBullet bullet))

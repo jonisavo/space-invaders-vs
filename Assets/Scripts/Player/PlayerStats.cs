@@ -24,7 +24,7 @@ namespace SIVS
                 { CurrentRound, 1 },
                 { Lives, InitialLives },
                 { InvaderKills, 0 },
-                { BulletType, 0 }
+                { BulletType, PlayerBulletType.Normal }
             });
             player.SetScore(0);
         }
@@ -87,15 +87,15 @@ namespace SIVS
             return (int) player.CustomProperties[Lives] >= MaxLives;
         }
 
-        public static int GetBulletType(Player player)
+        public static PlayerBulletType GetBulletType(Player player)
         {
             if (player.CustomProperties.TryGetValue(BulletType, out var type))
-                return (int) type;
+                return (PlayerBulletType) type;
             
-            return 0;
+            return PlayerBulletType.Normal;
         }
 
-        public static void ChangeBulletType(Player player, int type)
+        public static void ChangeBulletType(Player player, PlayerBulletType type)
         {
             player.SetCustomProperties(new Hashtable()
             {

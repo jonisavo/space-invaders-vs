@@ -9,7 +9,7 @@ namespace SIVS
         private const int BulletInUsePoints = 250;
         
         [Tooltip("The id of the bullet given by this powerup.")]
-        public int bulletType;
+        public PlayerBulletType bulletType = PlayerBulletType.Normal;
         
         [Tooltip("A popup to show when the bullet type is already in use.")]
         public GameObject pointsPopup;
