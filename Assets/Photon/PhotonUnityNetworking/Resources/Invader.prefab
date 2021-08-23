@@ -142,6 +142,8 @@ MonoBehaviour:
     type: 3}
   hurtSound: {fileID: 8300000, guid: e089254ce94942448a9de7f1e2d7c6eb, type: 3}
   deathSound: {fileID: 8300000, guid: 5afe39f3d8ca6cc4880933633f2603e7, type: 3}
+  pointsPopup: {fileID: 4604369377521931590, guid: 861c3cbef5070db46ab2fda2d6556fba,
+    type: 3}
 --- !u!114 &-919248742932177090
 MonoBehaviour:
   m_ObjectHideFlags: 0

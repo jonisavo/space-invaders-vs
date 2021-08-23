@@ -8,11 +8,16 @@ namespace SIVS
     [RequireComponent(typeof(AudioSource))]
     public class UFOHealth : MonoBehaviourPunCallbacks
     {
+        private const int KillPoints = 1000;
+
         [Tooltip("GameObject to instantiate as the UFO's explosion.")]
         public GameObject explosion;
 
         [Tooltip("Audio clip to play upon death.")]
         public AudioClip deathSound;
+
+        [Tooltip("GameObject containing a TextPopup component to instantiate when the UFO is destroyed.")]
+        public GameObject pointsObject;
 
         private bool _hidden;
 
@@ -27,7 +32,10 @@ namespace SIVS
 
             var bulletOwner = other.gameObject.GetComponent<PlayerBullet>().Owner;
 
-            bulletOwner.AddScore(1000);
+            bulletOwner.AddScore(KillPoints);
+
+            var pointsObj = Instantiate(pointsObject, transform.position, Quaternion.identity);
+            pointsObj.GetComponent<TextPopup>().Show($"<animation=slowsine>{KillPoints}</animation>");
 
             photonView.RPC(nameof(Die), RpcTarget.All);
         }

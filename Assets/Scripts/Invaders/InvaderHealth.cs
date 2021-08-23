@@ -21,6 +21,9 @@ namespace SIVS
         [Tooltip("Audio clip to play upon death.")]
         public AudioClip deathSound;
 
+        [Tooltip("Popup to instantiate for displaying points.")]
+        public GameObject pointsPopup;
+
         private int _health;
 
         private int _initialHealth;
@@ -104,8 +107,13 @@ namespace SIVS
             {
                 SoundPlayer.PlaySound(deathSound);
 
+                var pointsToGive = 50 * _initialHealth;
+
                 PhotonNetwork.CurrentRoom.Players[_killerActorNumber]
-                    .AddScore(50 * _initialHealth);
+                    .AddScore(pointsToGive);
+
+                var pointsObj = Instantiate(pointsPopup, GetCenterPoint(), Quaternion.identity);
+                pointsObj.GetComponent<TextPopup>().Show(pointsToGive.ToString());
 
                 StartCoroutine(DestroyDelay());
             }
@@ -152,12 +160,14 @@ namespace SIVS
 
         private void SpawnExplosion()
         {
+            Instantiate(explosion, GetCenterPoint(), Quaternion.identity);
+        }
+        
+        private Vector2 GetCenterPoint()
+        {
             var size = _spriteRenderer.size;
-
-            var centerPoint =
-                (Vector2) transform.position + new Vector2(size.x / 2, -size.y / 2);
-
-            Instantiate(explosion, centerPoint, Quaternion.identity);
+            
+            return (Vector2) transform.position + new Vector2(size.x / 2, -size.y / 2);
         }
 
         private bool IsDead() => _health <= 0;
