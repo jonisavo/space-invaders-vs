@@ -5,23 +5,28 @@ using Photon.Pun.UtilityScripts;
 using Photon.Realtime;
 using RedBlueGames.Tools.TextTyper;
 using UnityEngine;
-using TMPro;
 
 namespace SIVS
 {
     public class PlayerInfoUI : MonoBehaviourPunCallbacks
     {
         public Canvas uiCanvas;
-        public TMP_Text nameLabel;
-        public TMP_Text scoreLabel;
-        public TextTyper roundTextTyper;
+        public TextTyper nameTextTyper;
+        public TextTyper scoreTextTyper;
         public GameObject lifeObject;
 
+        [Header("Rounds")]
+        public TextTyper roundTextTyper;
         public GameObject nextRoundPopupObject;
+        public RainbowGradientText roundRainbowTextComponent;
 
         private int _actorNumber = -1;
 
         private readonly List<GameObject> _lifeObjects = new List<GameObject>();
+
+        private int _cachedScore = -1;
+        
+        private void Awake() => roundRainbowTextComponent.enabled = false;
 
         public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
         {
@@ -37,13 +42,18 @@ namespace SIVS
                 ShowRoundChangePopup((int) changedProps[PlayerStats.CurrentRound]);
             }
 
-            UpdateScore(targetPlayer.GetScore());
+            var score = targetPlayer.GetScore();
+            
+            if (score != _cachedScore)
+                UpdateScore(targetPlayer.GetScore());
+
+            _cachedScore = score;
         }
 
         public void Initialize(Player player)
         {
             _actorNumber = player.ActorNumber;
-            nameLabel.text = player.NickName;
+            nameTextTyper.TypeText(player.NickName);
         }
 
         private void AddLife()
@@ -80,7 +90,7 @@ namespace SIVS
 
         private void ShowRoundChangePopup(int round)
         {
-            if (round == 1)
+            if (round == 1 || round > Match.FinalRound)
                 return;
             
             var roundPopupObject = Instantiate(nextRoundPopupObject, gameObject.transform, false);
@@ -88,17 +98,25 @@ namespace SIVS
             var textPopup = roundPopupObject.GetComponent<TextPopup>();
             
             if (round == Match.FinalRound)
+            {
                 textPopup.ChangeText("FINAL ROUND!");
-            
+                var rainbowText = textPopup.gameObject.AddComponent<RainbowGradientText>();
+                rainbowText.EnableAllAnimation();
+                rainbowText.animationSpeed = 25;
+            }
+
             textPopup.Show();
         }
 
         private void UpdateRound(int round)
         {
+            if (round >= Match.FinalRound)
+                roundRainbowTextComponent.enabled = true;
+            
             roundTextTyper.TypeText(round > Match.FinalRound ? "Victory!" : $"Round {round}", 0.05f);
         }
 
         private void UpdateScore(int score) =>
-            scoreLabel.text = score.ToString("D5");
+            scoreTextTyper.TypeText(score.ToString("D5"));
     }
 }

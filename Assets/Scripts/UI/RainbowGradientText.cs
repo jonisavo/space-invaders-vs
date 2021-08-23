@@ -65,6 +65,14 @@ namespace SIVS
             );
         }
 
+        public void EnableAllAnimation()
+        {
+            animateTopLeft = true;
+            animateTopRight = true;
+            animateBottomLeft = true;
+            animateBottomRight = true;
+        }
+
         private void AnimateHues()
         {
             if (animateBottomLeft)

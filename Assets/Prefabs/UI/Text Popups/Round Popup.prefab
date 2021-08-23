@@ -17,6 +17,11 @@ PrefabInstance:
       propertyPath: m_fontSizeBase
       value: 0.25
       objectReference: {fileID: 0}
+    - target: {fileID: 7188108506993826266, guid: a942262790723754c8d30f05cfebbd84,
+        type: 3}
+      propertyPath: m_enableVertexGradient
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7188108506993826268, guid: a942262790723754c8d30f05cfebbd84,
         type: 3}
       propertyPath: text

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1691711538856042428}
   - component: {fileID: 824154719136266563}
   - component: {fileID: 9006455939901564841}
+  - component: {fileID: 6501173137466248598}
   m_Layer: 0
   m_Name: Score Label
   m_TagString: Untagged
@@ -134,6 +135,27 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &6501173137466248598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 981274083662087801}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40868536fcc3c2c458788a1cd1298e8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shakeLibrary: {fileID: 11400000, guid: 2bcfeb1cb055f234e8fef159e0c5f016, type: 2}
+  curveLibrary: {fileID: 11400000, guid: 0287491f8abce3b4da006977d00f94cb, type: 2}
+  useUnscaledTime: 0
+  printCompleted:
+    m_PersistentCalls:
+      m_Calls: []
+  characterPrinted:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &3050906944904549808
 GameObject:
   m_ObjectHideFlags: 0
@@ -146,6 +168,7 @@ GameObject:
   - component: {fileID: 8216197911808435421}
   - component: {fileID: 8042364624813826528}
   - component: {fileID: 7475626533414517411}
+  - component: {fileID: 8131374746926622684}
   m_Layer: 0
   m_Name: Round Label
   m_TagString: Untagged
@@ -211,7 +234,7 @@ MonoBehaviour:
     serializedVersion: 2
     rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
-  m_enableVertexGradient: 0
+  m_enableVertexGradient: 1
   m_colorMode: 3
   m_fontColorGradient:
     topLeft: {r: 1, g: 1, b: 1, a: 1}
@@ -290,6 +313,27 @@ MonoBehaviour:
   characterPrinted:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &8131374746926622684
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3050906944904549808}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ee18694b11cf8448983c13dcf13ccd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animationSpeed: 18
+  animateBottomLeft: 1
+  initialBottomLeftHue: 0
+  animateBottomRight: 1
+  initialBottomRightHue: 0
+  animateTopLeft: 1
+  initialTopLeftHue: 0
+  animateTopRight: 1
+  initialTopRightHue: 0
 --- !u!1 &3530492717057178173
 GameObject:
   m_ObjectHideFlags: 0
@@ -437,13 +481,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiCanvas: {fileID: 4771675084165739869}
-  nameLabel: {fileID: 4380838214192786380}
-  scoreLabel: {fileID: 9006455939901564841}
-  roundTextTyper: {fileID: 7475626533414517411}
+  nameTextTyper: {fileID: 5121736890878833518}
+  scoreTextTyper: {fileID: 6501173137466248598}
   lifeObject: {fileID: 6368846757185479815, guid: 023e0e9a3c3449e429109f400c1094f0,
     type: 3}
+  roundTextTyper: {fileID: 7475626533414517411}
   nextRoundPopupObject: {fileID: 6003438915261307852, guid: 68a16a34e6b54ba48b3ef690f46fcd0a,
     type: 3}
+  roundRainbowTextComponent: {fileID: 8131374746926622684}
 --- !u!1 &5451214795840955482
 GameObject:
   m_ObjectHideFlags: 0
@@ -455,6 +500,7 @@ GameObject:
   - component: {fileID: 7111652377805013867}
   - component: {fileID: 7939690995200085391}
   - component: {fileID: 4380838214192786380}
+  - component: {fileID: 5121736890878833518}
   m_Layer: 0
   m_Name: Name Label
   m_TagString: Untagged
@@ -578,6 +624,27 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &5121736890878833518
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5451214795840955482}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40868536fcc3c2c458788a1cd1298e8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shakeLibrary: {fileID: 11400000, guid: 2bcfeb1cb055f234e8fef159e0c5f016, type: 2}
+  curveLibrary: {fileID: 11400000, guid: 0287491f8abce3b4da006977d00f94cb, type: 2}
+  useUnscaledTime: 0
+  printCompleted:
+    m_PersistentCalls:
+      m_Calls: []
+  characterPrinted:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &5870305446446588202
 GameObject:
   m_ObjectHideFlags: 0
