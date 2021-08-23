@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using Photon.Pun;
 
 namespace SIVS
@@ -14,14 +15,27 @@ namespace SIVS
 
         private AudioSource _audioSource;
 
+        private bool _shootingBlockedByOptions;
+
         private OptionsManager _optionsManager;
 
         private void Awake()
         {
             _audioSource = GetComponent<AudioSource>();
-            _optionsManager = GameObject.Find("Game Manager").GetComponent<OptionsManager>();
         }
 
+        public override void OnEnable()
+        {
+            OptionsManager.OnOptionsOpen += HandleOptionsOpen;
+            OptionsManager.OnOptionsClose += HandleOptionsClose;
+        }
+
+        public override void OnDisable()
+        {
+            OptionsManager.OnOptionsOpen -= HandleOptionsOpen;
+            OptionsManager.OnOptionsClose -= HandleOptionsClose;
+        }
+        
         private void Update()
         {
             if (!photonView.IsMine) return;
@@ -41,7 +55,7 @@ namespace SIVS
         }
 
         private bool CanFire() =>
-            Match.IsActive && !OwnBulletExists() && !_optionsManager.IsCanvasActive();
+            Match.IsActive && !OwnBulletExists() && !_shootingBlockedByOptions;
 
         [PunRPC]
         private void FireBullet(int bulletType)
@@ -70,6 +84,21 @@ namespace SIVS
                     return true;
 
             return false;
+        }
+
+        private void HandleOptionsOpen()
+        {
+            StopCoroutine(nameof(UnblockShootingCoroutine));
+            _shootingBlockedByOptions = true;
+        }
+
+        private void HandleOptionsClose() => StartCoroutine(nameof(UnblockShootingCoroutine));
+
+        private IEnumerator UnblockShootingCoroutine()
+        {
+            yield return new WaitForSeconds(0.25f);
+
+            _shootingBlockedByOptions = false;
         }
     }
 }
