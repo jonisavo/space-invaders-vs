@@ -19,7 +19,9 @@ namespace SIVS
         [Tooltip("A debug option to make players invincible.")]
         public bool invincibility;
 
-        private SpawnManager _spawnManager;
+        public delegate void OnHitDelegate(GameObject playerObject);
+
+        public static event OnHitDelegate OnSelfHit;
 
         private AudioSource _audioSource;
 
@@ -27,11 +29,7 @@ namespace SIVS
 
         #region Unity Callbacks
 
-        private void Awake()
-        {
-            _audioSource = GetComponent<AudioSource>();
-            _spawnManager = GameObject.Find("Game Manager").GetComponent<SpawnManager>();
-        }
+        private void Awake() => _audioSource = GetComponent<AudioSource>();
 
         private void OnCollisionEnter2D(Collision2D other)
         {
@@ -76,8 +74,8 @@ namespace SIVS
             photonView.RPC(nameof(MakeInvincible), RpcTarget.All);
 
             PlayerStats.ChangeBulletType(PhotonNetwork.LocalPlayer, 0);
-
-            transform.position = _spawnManager.OwnSpawnPoint();
+            
+            OnSelfHit?.Invoke(gameObject);
 
             PlayerStats.RemoveLife(PhotonNetwork.LocalPlayer);
         }
