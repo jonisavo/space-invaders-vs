@@ -630,6 +630,7 @@ GameObject:
   - component: {fileID: 769824671}
   - component: {fileID: 769824670}
   - component: {fileID: 769824669}
+  - component: {fileID: 769824672}
   m_Layer: 5
   m_Name: Quick Play Button
   m_TagString: Untagged
@@ -748,6 +749,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 769824667}
   m_CullTransparentMesh: 0
+--- !u!114 &769824672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 769824667}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e517230a54aa45ae9c054a0c1eb21a8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animationSpeed: 10
 --- !u!1 &789787582
 GameObject:
   m_ObjectHideFlags: 0
@@ -1786,6 +1800,7 @@ GameObject:
   - component: {fileID: 1282983426}
   - component: {fileID: 1282983425}
   - component: {fileID: 1282983424}
+  - component: {fileID: 1282983428}
   m_Layer: 5
   m_Name: Name Input Field
   m_TagString: Untagged
@@ -1973,6 +1988,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1282983422}
   m_CullTransparentMesh: 0
+--- !u!114 &1282983428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1282983422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e517230a54aa45ae9c054a0c1eb21a8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animationSpeed: 10
 --- !u!1 &1300688863
 GameObject:
   m_ObjectHideFlags: 0
@@ -2304,6 +2332,7 @@ GameObject:
   - component: {fileID: 1468274549}
   - component: {fileID: 1468274548}
   - component: {fileID: 1468274547}
+  - component: {fileID: 1468274551}
   m_Layer: 5
   m_Name: Room Input Field
   m_TagString: Untagged
@@ -2465,6 +2494,19 @@ RectTransform:
   m_AnchoredPosition: {x: 155, y: -88}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1468274551
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1468274546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e517230a54aa45ae9c054a0c1eb21a8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animationSpeed: 10
 --- !u!1 &1585884572
 GameObject:
   m_ObjectHideFlags: 0
@@ -3174,6 +3216,7 @@ GameObject:
   - component: {fileID: 1828041208}
   - component: {fileID: 1828041207}
   - component: {fileID: 1828041206}
+  - component: {fileID: 1828041210}
   m_Layer: 5
   m_Name: Cancel Button
   m_TagString: Untagged
@@ -3292,6 +3335,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -44}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1828041210
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1828041205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e517230a54aa45ae9c054a0c1eb21a8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animationSpeed: 10
 --- !u!1 &1829824469
 GameObject:
   m_ObjectHideFlags: 0
@@ -3615,6 +3671,7 @@ GameObject:
   - component: {fileID: 1975907006}
   - component: {fileID: 1975907005}
   - component: {fileID: 1975907004}
+  - component: {fileID: 1975907008}
   m_Layer: 5
   m_Name: Join Room Button
   m_TagString: Untagged
@@ -3747,6 +3804,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1975907002}
   m_CullTransparentMesh: 0
+--- !u!114 &1975907008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1975907002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e517230a54aa45ae9c054a0c1eb21a8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animationSpeed: 10
 --- !u!1001 &7102811575712433547
 PrefabInstance:
   m_ObjectHideFlags: 0

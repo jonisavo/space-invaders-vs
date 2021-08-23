@@ -1443,6 +1443,7 @@ GameObject:
   - component: {fileID: 925174472}
   - component: {fileID: 925174471}
   - component: {fileID: 925174470}
+  - component: {fileID: 925174473}
   m_Layer: 5
   m_Name: Close Button
   m_TagString: Untagged
@@ -1561,6 +1562,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 925174468}
   m_CullTransparentMesh: 0
+--- !u!114 &925174473
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 925174468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e517230a54aa45ae9c054a0c1eb21a8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animationSpeed: 10
 --- !u!1 &938189746
 GameObject:
   m_ObjectHideFlags: 0

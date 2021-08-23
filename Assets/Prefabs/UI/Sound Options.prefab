@@ -49,6 +49,7 @@ GameObject:
   - component: {fileID: 7102811574191001673}
   - component: {fileID: 5639859247044567148}
   - component: {fileID: 791947022007388689}
+  - component: {fileID: 6311135049527028504}
   m_Layer: 5
   m_Name: SE Volume Slider
   m_TagString: Untagged
@@ -262,6 +263,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2819a72c44b748b7bbaa12760fff4952, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6311135049527028504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7102811574191001675}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e517230a54aa45ae9c054a0c1eb21a8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animationSpeed: 8
 --- !u!1 &7102811574360495870
 GameObject:
   m_ObjectHideFlags: 0
@@ -814,6 +828,7 @@ GameObject:
   - component: {fileID: 7102811575287722610}
   - component: {fileID: 7102811575287722608}
   - component: {fileID: 7102811575287722609}
+  - component: {fileID: 8792542518853130360}
   m_Layer: 5
   m_Name: Music Volume Slider
   m_TagString: Untagged
@@ -918,6 +933,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mixer: {fileID: 24100000, guid: acf163535136aba42a137421b53cd0ee, type: 2}
   parameterName: MusicVolume
+--- !u!114 &8792542518853130360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7102811575287722611}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e517230a54aa45ae9c054a0c1eb21a8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animationSpeed: 8
 --- !u!1 &7102811575617162374
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,11 +4,8 @@ using TMPro;
 namespace SIVS
 {
     [RequireComponent(typeof(TMP_Text))]
-    public class RainbowGradientText : MonoBehaviour
+    public class RainbowGradientText : RainbowGradientMonoBehaviour
     {
-        [Tooltip("Determines the speed of the rainbow gradient animation.")]
-        public float animationSpeed = 5.0f;
-        
         [Tooltip("Toggles whether the bottom left portion is animated.")]
         public bool animateBottomLeft;
         
@@ -81,12 +78,6 @@ namespace SIVS
             
             if (animateTopRight)
                 AnimateSingleHue(ref _currentTopRightHue);
-        }
-
-        private void AnimateSingleHue(ref float hue)
-        {
-            hue += animationSpeed * Time.deltaTime;
-            if (hue > 360) hue = 0;
         }
     }
 }
