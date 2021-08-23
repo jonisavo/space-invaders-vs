@@ -20,11 +20,11 @@ namespace SIVS
         {
             player.SetCustomProperties(new Hashtable()
             {
-                {Ready, false},
-                {CurrentRound, 1},
-                {Lives, InitialLives},
-                {InvaderKills, 0},
-                {BulletType, 0}
+                { Ready, false },
+                { CurrentRound, 1 },
+                { Lives, InitialLives },
+                { InvaderKills, 0 },
+                { BulletType, 0 }
             });
             player.SetScore(0);
         }
@@ -33,7 +33,7 @@ namespace SIVS
         {
             player.SetCustomProperties(new Hashtable()
             {
-                {Ready, value}
+                { Ready, value }
             });
         }
 
@@ -51,7 +51,7 @@ namespace SIVS
         {
             player.SetCustomProperties(new Hashtable()
             {
-                {CurrentRound, GetRound(player) + 1}
+                { CurrentRound, GetRound(player) + 1 }
             });
         }
 
@@ -64,7 +64,7 @@ namespace SIVS
 
             player.SetCustomProperties(new Hashtable()
             {
-                {Lives, lives}
+                { Lives, lives }
             });
         }
 
@@ -75,7 +75,7 @@ namespace SIVS
 
             player.SetCustomProperties(new Hashtable()
             {
-                {Lives, lives + 1}
+                { Lives, lives + 1 }
             });
         }
 
@@ -99,7 +99,7 @@ namespace SIVS
         {
             player.SetCustomProperties(new Hashtable()
             {
-                {BulletType, type}
+                { BulletType, type }
             });
         }
     }
