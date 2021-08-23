@@ -18,25 +18,25 @@ namespace SIVS
         [Tooltip("The button to select when the canvas is shown.")]
         public Button leaveButton;
 
-        public void ShowVictoryScreen(string nickName, VictoryReason reason)
+        public void ShowVictoryScreen(string winnerNickName, string loserNickName, VictoryReason reason)
         {
             resultCanvas.SetActive(true);
-            victoryHeaderText.text = $"{nickName} won!";
-            victoryReasonText.text = GetVictoryReasonText(reason);
+            victoryHeaderText.text = $"{winnerNickName} won!";
+            victoryReasonText.text = GetVictoryReasonText(reason, loserNickName);
             
             leaveButton.Select();
         }
 
-        private static string GetVictoryReasonText(VictoryReason reason)
+        private static string GetVictoryReasonText(VictoryReason reason, string loserNickName)
         {
             switch (reason)
             {
                 case VictoryReason.Leave:
-                    return "The other player left.";
+                    return $"{loserNickName} left.";
                 case VictoryReason.Round5:
                     return "The last round was beaten.";
                 case VictoryReason.LastStanding:
-                    return "The other player ran out of lives.";
+                    return $"{loserNickName} ran out of lives.";
                 default:
                     return "Congratulations to the winner!";
             }

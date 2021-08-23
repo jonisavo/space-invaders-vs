@@ -58,14 +58,14 @@ namespace SIVS
             if (changedProps.ContainsKey(PlayerStats.Lives))
             {
                 if ((int) changedProps[PlayerStats.Lives] <= 0)
-                    EndGame(GetOtherPlayer(targetPlayer), VictoryReason.LastStanding);
+                    EndGame(GetOtherPlayer(targetPlayer), targetPlayer, VictoryReason.LastStanding);
             }
 
             if (!changedProps.ContainsKey(PlayerStats.CurrentRound))
                 return;
 
             if ((int) changedProps[PlayerStats.CurrentRound] > Match.FinalRound) 
-                EndGame(targetPlayer, VictoryReason.Round5);
+                EndGame(targetPlayer, GetOtherPlayer(targetPlayer), VictoryReason.Round5);
         }
 
         public override void OnLeftRoom()
@@ -77,7 +77,7 @@ namespace SIVS
         {
             if (_gameOver) return;
 
-            EndGame(GetOtherPlayer(otherPlayer), VictoryReason.Leave);
+            EndGame(GetOtherPlayer(otherPlayer), otherPlayer, VictoryReason.Leave);
         }
 
         #endregion
@@ -109,7 +109,7 @@ namespace SIVS
             return null;
         }
 
-        private void EndGame(Player winner, VictoryReason reason)
+        private void EndGame(Player winner, Player loser, VictoryReason victoryReason)
         {
             _gameOver = true;
 
@@ -120,8 +120,7 @@ namespace SIVS
 
             GetComponent<OptionsManager>().CloseCanvas();
 
-            GetComponent<VictoryUIManager>()
-                .ShowVictoryScreen(winner == null ? "No one" : winner.NickName, reason);
+            ShowVictoryScreen(winner, loser, victoryReason);
 
             GameObject.Find("Music Player")
                 .GetComponent<AudioSource>()
@@ -133,6 +132,16 @@ namespace SIVS
             SetHighScore();
 
             StopGameProcessing();
+        }
+
+        private void ShowVictoryScreen(Player winner, Player loser, VictoryReason victoryReason)
+        {
+            var winnerNickName = winner == null ? "No one" : winner.NickName;
+
+            var loserNickName = loser == null ? "The opponent" : loser.NickName;
+
+            GetComponent<VictoryUIManager>()
+                .ShowVictoryScreen(winnerNickName, loserNickName, victoryReason);
         }
 
         private void StopGameProcessing()
