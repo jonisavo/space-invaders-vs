@@ -145,6 +145,7 @@ GameObject:
   - component: {fileID: 1371836264427490634}
   - component: {fileID: 8216197911808435421}
   - component: {fileID: 8042364624813826528}
+  - component: {fileID: 7475626533414517411}
   m_Layer: 0
   m_Name: Round Label
   m_TagString: Untagged
@@ -268,6 +269,27 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &7475626533414517411
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3050906944904549808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40868536fcc3c2c458788a1cd1298e8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shakeLibrary: {fileID: 11400000, guid: 2bcfeb1cb055f234e8fef159e0c5f016, type: 2}
+  curveLibrary: {fileID: 11400000, guid: 0287491f8abce3b4da006977d00f94cb, type: 2}
+  useUnscaledTime: 0
+  printCompleted:
+    m_PersistentCalls:
+      m_Calls: []
+  characterPrinted:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &3530492717057178173
 GameObject:
   m_ObjectHideFlags: 0
@@ -417,8 +439,10 @@ MonoBehaviour:
   uiCanvas: {fileID: 4771675084165739869}
   nameLabel: {fileID: 4380838214192786380}
   scoreLabel: {fileID: 9006455939901564841}
-  roundLabel: {fileID: 8042364624813826528}
+  roundTextTyper: {fileID: 7475626533414517411}
   lifeObject: {fileID: 6368846757185479815, guid: 023e0e9a3c3449e429109f400c1094f0,
+    type: 3}
+  nextRoundPopupObject: {fileID: 6003438915261307852, guid: 68a16a34e6b54ba48b3ef690f46fcd0a,
     type: 3}
 --- !u!1 &5451214795840955482
 GameObject:

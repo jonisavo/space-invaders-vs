@@ -3,6 +3,7 @@ using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Pun.UtilityScripts;
 using Photon.Realtime;
+using RedBlueGames.Tools.TextTyper;
 using UnityEngine;
 using TMPro;
 
@@ -13,8 +14,10 @@ namespace SIVS
         public Canvas uiCanvas;
         public TMP_Text nameLabel;
         public TMP_Text scoreLabel;
-        public TMP_Text roundLabel;
+        public TextTyper roundTextTyper;
         public GameObject lifeObject;
+
+        public GameObject nextRoundPopupObject;
 
         private int _actorNumber = -1;
 
@@ -29,8 +32,11 @@ namespace SIVS
                 UpdateLifeObjects((int) changedProps[PlayerStats.Lives]);
             
             if (changedProps.ContainsKey(PlayerStats.CurrentRound))
+            {
                 UpdateRound((int) changedProps[PlayerStats.CurrentRound]);
-            
+                ShowRoundChangePopup((int) changedProps[PlayerStats.CurrentRound]);
+            }
+
             UpdateScore(targetPlayer.GetScore());
         }
 
@@ -72,8 +78,25 @@ namespace SIVS
             }
         }
 
-        private void UpdateRound(int round) =>
-            roundLabel.text = round > Match.FinalRound ? "Victory!" : $"Round {round}";
+        private void ShowRoundChangePopup(int round)
+        {
+            if (round == 1)
+                return;
+            
+            var roundPopupObject = Instantiate(nextRoundPopupObject, gameObject.transform, false);
+
+            var textPopup = roundPopupObject.GetComponent<TextPopup>();
+            
+            if (round == Match.FinalRound)
+                textPopup.ChangeText("FINAL ROUND!");
+            
+            textPopup.Show();
+        }
+
+        private void UpdateRound(int round)
+        {
+            roundTextTyper.TypeText(round > Match.FinalRound ? "Victory!" : $"Round {round}", 0.05f);
+        }
 
         private void UpdateScore(int score) =>
             scoreLabel.text = score.ToString("D5");

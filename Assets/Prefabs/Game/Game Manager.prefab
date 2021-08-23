@@ -73,76 +73,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1841486759ec5c549bc2910725e11e4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifeTexture: {fileID: 2800000, guid: 269803f0a79d59d44a920a2a923aee3c, type: 3}
   resultCanvas: {fileID: 0}
-  victoryText: {fileID: 0}
-  guiStyle:
-    m_Name: 
-    m_Normal:
-      m_Background: {fileID: 0}
-      m_ScaledBackgrounds: []
-      m_TextColor: {r: 1, g: 1, b: 1, a: 1}
-    m_Hover:
-      m_Background: {fileID: 0}
-      m_ScaledBackgrounds: []
-      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
-    m_Active:
-      m_Background: {fileID: 0}
-      m_ScaledBackgrounds: []
-      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
-    m_Focused:
-      m_Background: {fileID: 0}
-      m_ScaledBackgrounds: []
-      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
-    m_OnNormal:
-      m_Background: {fileID: 0}
-      m_ScaledBackgrounds: []
-      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
-    m_OnHover:
-      m_Background: {fileID: 0}
-      m_ScaledBackgrounds: []
-      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
-    m_OnActive:
-      m_Background: {fileID: 0}
-      m_ScaledBackgrounds: []
-      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
-    m_OnFocused:
-      m_Background: {fileID: 0}
-      m_ScaledBackgrounds: []
-      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
-    m_Border:
-      m_Left: 0
-      m_Right: 0
-      m_Top: 0
-      m_Bottom: 0
-    m_Margin:
-      m_Left: 0
-      m_Right: 0
-      m_Top: 0
-      m_Bottom: 0
-    m_Padding:
-      m_Left: 0
-      m_Right: 0
-      m_Top: 0
-      m_Bottom: 0
-    m_Overflow:
-      m_Left: 0
-      m_Right: 0
-      m_Top: 0
-      m_Bottom: 0
-    m_Font: {fileID: 12800000, guid: 252fff7f0e336c444a67548e170f6dff, type: 3}
-    m_FontSize: 16
-    m_FontStyle: 0
-    m_Alignment: 0
-    m_WordWrap: 0
-    m_RichText: 1
-    m_TextClipping: 0
-    m_ImagePosition: 0
-    m_ContentOffset: {x: 0, y: 0}
-    m_FixedWidth: 0
-    m_FixedHeight: 0
-    m_StretchWidth: 0
-    m_StretchHeight: 0
+  victoryHeaderText: {fileID: 0}
+  victoryReasonText: {fileID: 0}
+  leaveButton: {fileID: 0}
 --- !u!114 &2407172818296431271
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -155,6 +89,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56cce6cb170ce7c4ea9d20d9e8817fc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  textPopupObject: {fileID: 3883194513542154728, guid: 3201deba66b0ef746a00127cf5cc3c2e,
+    type: 3}
   debugMode: 0
   debugRows: 0
   debugColumns: 0
@@ -175,11 +111,11 @@ MonoBehaviour:
   ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
-  observableSearch: 2
   Synchronization: 3
   OwnershipTransfer: 0
+  observableSearch: 2
   ObservedComponents: []
-  viewIdField: 0
+  sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!114 &8625839453618627176
@@ -194,4 +130,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f180cd8e61f24540aef4774051565314, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _optionsCanvas: {fileID: 0}
+  optionsCanvas: {fileID: 0}
+  closeButton: {fileID: 0}

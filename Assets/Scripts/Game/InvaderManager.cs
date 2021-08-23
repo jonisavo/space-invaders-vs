@@ -10,6 +10,9 @@ namespace SIVS
     [RequireComponent(typeof(SpawnManager))]
     public class InvaderManager : MonoBehaviourPunCallbacks
     {
+        [Tooltip("GameObject containing a TextPopup component to show when a UFO is spawned.")]
+        public GameObject textPopupObject;
+        
         [Tooltip("Toggles debug options.")]
         public bool debugMode = false;
 
@@ -119,12 +122,22 @@ namespace SIVS
 
                 PhotonNetwork.Instantiate("UFO",
                     position, Quaternion.identity, 0, instantiationData);
+                
+                photonView.RPC(nameof(UFOSpawned), RpcTarget.All);
 
                 ufosSpawned++;
             }
         }
 
         #endregion
+
+        [PunRPC]
+        private void UFOSpawned()
+        {
+            var popupObject = Instantiate(textPopupObject, Vector3.zero, Quaternion.identity);
+            
+            popupObject.GetComponent<TextPopup>().Show("<animation=verticalpos>GET THAT UFO!</animation>");
+        }
 
         public void InitializeInvaders()
         {
