@@ -18,6 +18,10 @@ namespace SIVS
 
         [Tooltip("GameObject containing a TextPopup component to instantiate when the UFO is destroyed.")]
         public GameObject pointsObject;
+        
+        public delegate void OnKillDelegate(int killerActorNumber);
+
+        public static event OnKillDelegate OnKill;
 
         private bool _hidden;
 
@@ -34,18 +38,22 @@ namespace SIVS
 
             bulletOwner.AddScore(KillPoints);
 
-            var pointsObj = Instantiate(pointsObject, transform.position, Quaternion.identity);
-            pointsObj.GetComponent<TextPopup>().Show($"<animation=slowsine>{KillPoints}</animation>");
-
-            photonView.RPC(nameof(Die), RpcTarget.All);
+            photonView.RPC(nameof(Die), RpcTarget.All, bulletOwner.ActorNumber);
         }
 
         [PunRPC]
-        private void Die()
+        private void Die(int actorNumber)
         {
             if (_hidden) return;
 
             SoundPlayer.PlaySound(deathSound);
+            
+            OnKill?.Invoke(actorNumber);
+
+            var currentPosition = transform.position;
+            
+            var pointsObj = Instantiate(pointsObject, currentPosition, Quaternion.identity);
+            pointsObj.GetComponent<TextPopup>().Show($"<animation=slowsine>{KillPoints}</animation>");
 
             if (gameObject.TryGetComponent(out PowerupDrop drop))
                 drop.GeneratePowerupDrop();
@@ -55,7 +63,8 @@ namespace SIVS
 
             Hide();
 
-            Instantiate(explosion, transform.position, Quaternion.identity);
+            Instantiate(explosion, currentPosition, Quaternion.identity);
+            Instantiate(explosionParticles, currentPosition, Quaternion.identity);
         }
 
         private IEnumerator DestroyDelay()

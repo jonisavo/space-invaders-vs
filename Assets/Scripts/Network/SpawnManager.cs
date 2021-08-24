@@ -15,7 +15,17 @@ namespace SIVS
         private void Awake()
         {
             _playAreas = new Dictionary<int, GameObject>();
+        }
 
+        private void Start()
+        {
+            InitPlayAreas();
+            SpawnShip();
+            SpawnCover();
+        }
+
+        private void InitPlayAreas()
+        {
             foreach (var entry in PhotonNetwork.CurrentRoom.Players)
             {
                 if (entry.Value.ActorNumber == PhotonNetwork.LocalPlayer.ActorNumber)
@@ -25,17 +35,13 @@ namespace SIVS
                 
                 var playAreaObject = GameObject.Find("Play Area " + entry.Key);
                 
+                playAreaObject.GetComponent<PlayArea>().Initialize(entry.Value, entry.Key);
+                
                 playAreaObject.GetComponent<PlayerInfoUI>()
                     .Initialize(entry.Value);
 
                 _playAreas[entry.Key] = playAreaObject;
             }
-        }
-
-        private void Start()
-        {
-            SpawnShip();
-            SpawnCover();
         }
 
         public override void OnEnable()

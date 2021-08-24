@@ -34,6 +34,10 @@ namespace SIVS
 
         private SpriteRenderer _spriteRenderer;
 
+        public delegate void OnKillDelegate(int killerActorNumber);
+
+        public static event OnKillDelegate OnKill;
+
         #region Unity Callbacks
 
         private void Awake()
@@ -58,15 +62,14 @@ namespace SIVS
             Destroy(other.gameObject);
 
             if (!photonView.IsMine) return;
+            
+            var bulletOwner = other.gameObject.GetComponent<PlayerBullet>().Owner;
 
-            _killerActorNumber =
-                other.gameObject.GetComponent<PlayerBullet>().Owner.ActorNumber;
+            _killerActorNumber = bulletOwner.ActorNumber;
 
             photonView.RPC(nameof(LoseHealth), RpcTarget.All);
 
             if (!IsDead()) return;
-
-            var bulletOwner = other.gameObject.GetComponent<PlayerBullet>().Owner;
 
             bulletOwner.SetCustomProperties(new Hashtable()
             {
@@ -102,6 +105,13 @@ namespace SIVS
                 drop.GeneratePowerupDrop();
 
             SpawnExplosion();
+            
+            var pointsToGive = 50 * _initialHealth;
+            
+            OnKill?.Invoke(_killerActorNumber);
+
+            var pointsObj = Instantiate(pointsPopup, GetCenterPoint(), Quaternion.identity);
+            pointsObj.GetComponent<TextPopup>().Show(pointsToGive.ToString());
 
             if (photonView.IsMine)
             {
@@ -111,9 +121,6 @@ namespace SIVS
 
                 PhotonNetwork.CurrentRoom.Players[_killerActorNumber]
                     .AddScore(pointsToGive);
-
-                var pointsObj = Instantiate(pointsPopup, GetCenterPoint(), Quaternion.identity);
-                pointsObj.GetComponent<TextPopup>().Show(pointsToGive.ToString());
 
                 StartCoroutine(DestroyDelay());
             }

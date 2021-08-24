@@ -23,6 +23,10 @@ namespace SIVS
 
         private InvaderManager _invaderManager;
 
+        public delegate void RoundChangeDelegate(Player player, int round);
+
+        public static event RoundChangeDelegate OnRoundChange;
+
         #region Unity Callbacks
 
         private void Awake()
@@ -67,7 +71,11 @@ namespace SIVS
             if (!changedProps.ContainsKey(PlayerStats.CurrentRound))
                 return;
 
-            if ((int) changedProps[PlayerStats.CurrentRound] > Match.FinalRound) 
+            var round = (int) changedProps[PlayerStats.CurrentRound];
+            
+            OnRoundChange?.Invoke(targetPlayer, round);
+
+            if (round > Match.FinalRound) 
                 EndGame(targetPlayer, GetOtherPlayer(targetPlayer), VictoryReason.Round5);
         }
 

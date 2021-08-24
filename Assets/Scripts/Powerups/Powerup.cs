@@ -16,6 +16,10 @@ namespace SIVS
         [Tooltip("Text for the popup. Leave blank to use the component's own text field.")]
         public string popupText;
 
+        public delegate void OnGetDelegate(int actorNumber);
+
+        public static event OnGetDelegate OnGet;
+
         private TextPopup _textPopup;
 
         private void Awake() => _textPopup = popupObject.GetComponent<TextPopup>();
@@ -32,13 +36,26 @@ namespace SIVS
             
             OnPowerupGet(other.gameObject, player);
             
-            photonView.RPC(nameof(DestroyPowerup), RpcTarget.All);
+            photonView.RPC(nameof(ObtainPowerup), RpcTarget.All, player.ActorNumber);
         }
 
         protected virtual void OnPowerupGet(GameObject obj, Player player)
         {
             SoundPlayer.PlaySound(soundEffect);
+        }
+
+        [PunRPC]
+        protected void ObtainPowerup(int actorNumber)
+        {
+            OnGet?.Invoke(actorNumber);
             
+            ShowTextPopup();
+            
+            DestroyPowerup();
+        }
+
+        private void ShowTextPopup()
+        {
             var popupObj = Instantiate(popupObject, transform.position, Quaternion.identity);
             _textPopup = popupObj.GetComponent<TextPopup>();
 
@@ -48,8 +65,7 @@ namespace SIVS
             _textPopup.Show();
         }
 
-        [PunRPC]
-        protected void DestroyPowerup()
+        private void DestroyPowerup()
         {
             if (photonView.IsMine)
                 PhotonNetwork.Destroy(gameObject);
