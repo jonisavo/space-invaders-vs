@@ -116,8 +116,8 @@ namespace SIVS
             if (photonView.IsMine)
             {
                 SoundPlayer.PlaySound(deathSound);
-
-                var pointsToGive = 50 * _initialHealth;
+                
+                CameraShaker.ShakeAll(0.08f, 0.3f);
 
                 PhotonNetwork.CurrentRoom.Players[_killerActorNumber]
                     .AddScore(pointsToGive);

@@ -59,7 +59,10 @@ namespace SIVS
                 drop.GeneratePowerupDrop();
 
             if (photonView.IsMine)
+            {
                 StartCoroutine(DestroyDelay());
+                CameraShaker.ShakeAll(0.1f, 0.35f);
+            }
 
             Hide();
 
