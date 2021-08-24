@@ -120,7 +120,7 @@ Rigidbody2D:
   m_GameObject: {fileID: 1264031408608096527}
   m_BodyType: 1
   m_Simulated: 1
-  m_UseFullKinematicContacts: 0
+  m_UseFullKinematicContacts: 1
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
@@ -143,3 +143,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd3b54812ad44a5bb5421b98ed0349a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  explosionParticles: {fileID: 8827146657002083237, guid: 5e7a9ede9de367d4cba3c034e3d1a23e,
+    type: 3}

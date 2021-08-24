@@ -15,6 +15,9 @@ namespace SIVS
         [Tooltip("GameObject to instantiate as the invader's explosion.")]
         public GameObject explosion;
 
+        [Tooltip("Particle effect GameObject to instantiate with the explosion.")]
+        public GameObject explosionParticles;
+
         [Tooltip("Audio clip to play when losing health (without dying).")]
         public AudioClip hurtSound;
 
@@ -168,6 +171,7 @@ namespace SIVS
         private void SpawnExplosion()
         {
             Instantiate(explosion, GetCenterPoint(), Quaternion.identity);
+            Instantiate(explosionParticles, GetCenterPoint(), Quaternion.identity);
         }
         
         private Vector2 GetCenterPoint()

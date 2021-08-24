@@ -12,6 +12,9 @@ namespace SIVS
 
         [Tooltip("GameObject to instantiate as the UFO's explosion.")]
         public GameObject explosion;
+        
+        [Tooltip("Particle effect GameObject to instantiate with the explosion.")]
+        public GameObject explosionParticles;
 
         [Tooltip("Audio clip to play upon death.")]
         public AudioClip deathSound;

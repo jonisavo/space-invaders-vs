@@ -5,6 +5,9 @@ namespace SIVS
 {
     public class CoverPiece : MonoBehaviour
     {
+        [Tooltip("Particle effect GameObject to instantiate when the cover piece is hit.")]
+        public GameObject explosionParticles;
+        
         private Cover _cover;
 
         private int _id;
@@ -17,6 +20,8 @@ namespace SIVS
                 return;
             
             Destroy(other.gameObject);
+
+            Instantiate(explosionParticles, transform.position, Quaternion.identity);
 
             if (!_cover.photonView.IsMine) return;
 

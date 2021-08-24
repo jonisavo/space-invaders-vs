@@ -280,6 +280,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   explosion: {fileID: 6270844337201857325, guid: 9d0a87861be6f3b4596c2cd9fbd86415,
     type: 3}
+  explosionParticles: {fileID: 3171204397745840280, guid: 3a0ea9a1aca44df4a8f6a31ec0c81c9d,
+    type: 3}
   deathSound: {fileID: 8300000, guid: d79ab3b73c30a4c4281c5f1720130aef, type: 3}
   pointsObject: {fileID: 3883194513542154728, guid: 3201deba66b0ef746a00127cf5cc3c2e,
     type: 3}

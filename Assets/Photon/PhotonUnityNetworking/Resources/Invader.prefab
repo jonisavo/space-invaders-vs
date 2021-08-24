@@ -140,6 +140,8 @@ MonoBehaviour:
   tintSprite: 1
   explosion: {fileID: 4923263774660198280, guid: ae72d48e7684e9a49a3c77015e7c55b9,
     type: 3}
+  explosionParticles: {fileID: 7344547758458668132, guid: 120137ca27ff00d44added53dc2d5e65,
+    type: 3}
   hurtSound: {fileID: 8300000, guid: e089254ce94942448a9de7f1e2d7c6eb, type: 3}
   deathSound: {fileID: 8300000, guid: 5afe39f3d8ca6cc4880933633f2603e7, type: 3}
   pointsPopup: {fileID: 4604369377521931590, guid: 861c3cbef5070db46ab2fda2d6556fba,
