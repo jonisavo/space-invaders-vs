@@ -1,9 +1,11 @@
-﻿using Photon.Pun;
+﻿using System;
+using Photon.Pun;
 using Photon.Pun.UtilityScripts;
 using Photon.Realtime;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
+using Random = UnityEngine.Random;
 
 namespace SIVS
 {
@@ -26,6 +28,7 @@ namespace SIVS
         private void Awake()
         {
             PlayerStats.InitializeStats(PhotonNetwork.LocalPlayer);
+            Random.InitState((int) DateTime.Now.Ticks + PhotonNetwork.LocalPlayer.ActorNumber);
             _invaderManager = GetComponent<InvaderManager>();
         }
 
