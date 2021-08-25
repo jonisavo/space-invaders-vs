@@ -9,7 +9,7 @@ namespace SIVS
         /// <summary>
         /// This client's version number
         /// </summary>
-        private const string GameVersion = "1.1";
+        private const string GameVersion = "1.2";
 
         private bool _isConnecting;
 
