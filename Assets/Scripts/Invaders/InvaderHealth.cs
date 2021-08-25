@@ -96,7 +96,10 @@ namespace SIVS
             else
             {
                 if (photonView.IsMine)
+                {
                     SoundPlayer.PlaySound(hurtSound);
+                    CameraShaker.ShakeAll(0.04f, 0.1f);
+                }
 
                 TintSprite();
             }
