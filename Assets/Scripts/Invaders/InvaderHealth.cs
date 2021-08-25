@@ -18,6 +18,9 @@ namespace SIVS
         [Tooltip("Particle effect GameObject to instantiate with the explosion.")]
         public GameObject explosionParticles;
 
+        [Tooltip("Particle effect GameObject to instantiate with hits that don't result in death.")]
+        public GameObject hitParticles;
+
         [Tooltip("Audio clip to play when losing health (without dying).")]
         public AudioClip hurtSound;
 
@@ -100,6 +103,8 @@ namespace SIVS
                     SoundPlayer.PlaySound(hurtSound);
                     CameraShaker.ShakeAll(0.04f, 0.1f);
                 }
+                
+                SpawnParticleObject(hitParticles);
 
                 TintSprite();
             }
@@ -173,9 +178,12 @@ namespace SIVS
 
         private void SpawnExplosion()
         {
-            Instantiate(explosion, GetCenterPoint(), Quaternion.identity);
-            Instantiate(explosionParticles, GetCenterPoint(), Quaternion.identity);
+            SpawnParticleObject(explosion);
+            SpawnParticleObject(explosionParticles);
         }
+        
+        private void SpawnParticleObject(GameObject particleObject) =>
+            Instantiate(particleObject, GetCenterPoint(), Quaternion.identity);
         
         private Vector2 GetCenterPoint()
         {
