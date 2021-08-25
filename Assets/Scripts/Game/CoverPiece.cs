@@ -7,6 +7,9 @@ namespace SIVS
     {
         [Tooltip("Particle effect GameObject to instantiate when the cover piece is hit.")]
         public GameObject explosionParticles;
+
+        [Tooltip("Sound effect to play with the explosion.")]
+        public AudioClip explosionSound;
         
         private Cover _cover;
 
@@ -24,6 +27,8 @@ namespace SIVS
             Instantiate(explosionParticles, transform.position, Quaternion.identity);
 
             if (!_cover.photonView.IsMine) return;
+            
+            SoundPlayer.PlaySound(explosionSound, 0.65f);
 
             _cover.photonView.RPC("DestroyPiece", RpcTarget.AllBuffered, _id);
         }
