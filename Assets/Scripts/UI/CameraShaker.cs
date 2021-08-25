@@ -13,12 +13,17 @@ namespace SIVS
 
         private static event StartShakingDelegate OnStartShaking;
 
+        private float _currentShakeAmplitude = -1f;
+
         public void OnEnable() => OnStartShaking += HandleStartShaking;
 
         public void OnDisable() => OnStartShaking -= HandleStartShaking;
 
         public void Shake(float amplitude, float duration, float damping = 0.8f)
         {
+            if (amplitude < _currentShakeAmplitude)
+                return;
+            
             var clampedDamping = Mathf.Clamp(damping, 0.0f, 1.0f);
             
             StopCoroutine(nameof(ShakeCoroutine));
@@ -33,6 +38,8 @@ namespace SIVS
 
         private IEnumerator ShakeCoroutine(float amplitude, float duration, float damping)
         {
+            _currentShakeAmplitude = amplitude;
+
             var originalPosition = transform.position;
 
             var elapsedTime = 0.0f;
@@ -57,6 +64,8 @@ namespace SIVS
             }
 
             transform.position = originalPosition;
+
+            _currentShakeAmplitude = -1f;
         }
 
         private void HandleStartShaking(int idToShake, float amplitude, float duration, float damping)
