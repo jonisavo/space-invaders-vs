@@ -2,7 +2,7 @@
 
 ![screenshot](./screenshot.png)
 
-This is a university assignment I created in a month: a working multiplayer game made with Unity.
+This project started out as a university assignment: a working multiplayer game made with Unity.
 It is a multiplayer Space Invaders clone, where two players race to beat the last round.
 
 The project has two big dependencies: Photon Unity Networking 2 and TextMeshPro.
@@ -16,6 +16,8 @@ Music by [YouFulca](https://wingless-seraph.net/en/)
 [Press Start 2P](https://www.1001fonts.com/press-start-2p-font.html) font by codeman38
 
 [Karmatic Arcade](https://www.1001fonts.com/karmatic-arcade-font.html) font by Vic Fieger
+
+[unity-text-typer](https://github.com/redbluegames/unity-text-typer) package by Red Blue Games
 
 ## Set up
 
