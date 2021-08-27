@@ -4,6 +4,9 @@ using UnityEngine;
 namespace SIVS
 {
     [RequireComponent(typeof(Camera))]
+    // Based on the work of Jordan Kisiel:
+    // http://jordankisiel.com/writing/screen_shake.php
+    // https://github.com/JordanKisiel/UnityCameraShake/
     public class CameraShaker : MonoBehaviour
     {
         [Min(-1)]
