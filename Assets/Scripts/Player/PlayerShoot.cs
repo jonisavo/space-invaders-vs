@@ -5,7 +5,7 @@ using Photon.Pun;
 namespace SIVS
 {
     [RequireComponent(typeof(AudioSource))]
-    public class PlayerShoot : MonoBehaviourPunCallbacks
+    public class PlayerShoot : MonoBehaviourPun
     {
         [Tooltip("Bullet(s) that can be shot.")]
         public GameObject[] bulletTypes;
@@ -22,13 +22,13 @@ namespace SIVS
             _audioSource = GetComponent<AudioSource>();
         }
 
-        public override void OnEnable()
+        private void OnEnable()
         {
             OptionsManager.OnOptionsOpen += HandleOptionsOpen;
             OptionsManager.OnOptionsClose += HandleOptionsClose;
         }
 
-        public override void OnDisable()
+        private void OnDisable()
         {
             OptionsManager.OnOptionsOpen -= HandleOptionsOpen;
             OptionsManager.OnOptionsClose -= HandleOptionsClose;
@@ -61,17 +61,19 @@ namespace SIVS
             if (photonView.IsMine)
                 _audioSource.PlayOneShot(fireSound);
 
-            var bulletObject = Instantiate(bulletTypes[(int) bulletType],
+            var bulletObj = bulletTypes[(int) bulletType];
+
+            var bulletObject = Instantiate(bulletObj,
                 GetBulletSpawnPoint(), Quaternion.identity);
 
             if (bulletObject.TryGetComponent(out PlayerBullet bullet))
             {
-                bullet.SetOwner(Match.GetPlayer(PhotonNetwork.LocalPlayer.ActorNumber));
+                bullet.SetOwner(Match.GetPlayer(photonView.Owner.ActorNumber));
             }
             else
             {
                 foreach (var childBullet in bulletObject.GetComponentsInChildren<PlayerBullet>())
-                    childBullet.SetOwner(photonView.Owner.toSIVSPlayer());
+                    childBullet.SetOwner(Match.GetPlayer(photonView.Owner.ActorNumber));
             }
         }
 
