@@ -1,15 +1,20 @@
 ﻿using System.Collections;
 using UnityEngine;
-using Photon.Pun;
-using Photon.Realtime;
-using Hashtable = ExitGames.Client.Photon.Hashtable;
 using Random = UnityEngine.Random;
 
 namespace SIVS
 {
     [RequireComponent(typeof(SpawnManager))]
-    public class InvaderManager : MonoBehaviourPunCallbacks
+    public class InvaderManager : MonoBehaviour
     {
+        [SerializeField]
+        [Tooltip("Invader object to spawn.")]
+        private GameObject invaderObject;
+
+        [SerializeField]
+        [Tooltip("UFO object to spawn.")]
+        private GameObject ufoObject;
+        
         [Tooltip("GameObject containing a TextPopup component to show when a UFO is spawned.")]
         public GameObject textPopupObject;
         
@@ -27,57 +32,53 @@ namespace SIVS
 
         [Tooltip("If debug mode is on, logs all invader movement.")]
         public bool debugLog = false;
+        
+        protected SpawnManager _spawnManager;
 
         private int _totalInvaderKills = 0;
-
-        private SpawnManager _spawnManager;
 
         private static readonly float[] MovementIntervals = { 2.0f, 1.75f, 1.5f, 1.25f, 1.0f };
 
         #region Callbacks
 
-        private void Awake()
-        {
-            _spawnManager = GetComponent<SpawnManager>();
-        }
+        protected virtual void Awake() => _spawnManager = GetComponent<SpawnManager>();
 
-        public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
+        private void OnEnable() => SIVSPlayer.OnInvaderKillsChange += HandleInvaderKillsChange;
+
+        private void OnDisable() => SIVSPlayer.OnInvaderKillsChange -= HandleInvaderKillsChange;
+
+        private void HandleInvaderKillsChange(SIVSPlayer player, int newKills)
         {
             if (!Match.IsActive) return;
 
-            if (!changedProps.ContainsKey(PlayerPhotonPropertyKey.InvaderKills)) return;
-
             var invaderKills = 0;
 
-            foreach (var player in PhotonNetwork.CurrentRoom.Players.Values)
-                if (player.CustomProperties.ContainsKey(PlayerPhotonPropertyKey.InvaderKills))
-                    invaderKills += (int) player.CustomProperties[PlayerPhotonPropertyKey.InvaderKills];
+            foreach (var roomPlayer in GameManager.Players.Values)
+                invaderKills += roomPlayer.InvaderKills;
 
             _totalInvaderKills = invaderKills;
 
-            if (OwnInvaderCount() > 0) return;
+            if (GetInvaderCountOfPlayer(player) > 0) return;
 
-            var nextRound = PhotonNetwork.LocalPlayer.GetRound() + 1;
+            var nextRound = player.CurrentRound + 1;
             
-            PhotonNetwork.LocalPlayer.GoToNextRound();
+            player.GoToNextRound();
 
-            if (nextRound < 6)
-                SpawnOwnInvaders();
+            if (nextRound <= Match.FinalRound)
+                SpawnInvadersForPlayer(player);
         }
 
         #endregion
 
         #region Coroutines
 
-        private IEnumerator MoveInvaders()
+        private IEnumerator MoveInvaders(SIVSPlayer player)
         {
-            var side = PhotonNetwork.LocalPlayer.ActorNumber;
-
             while (true)
             {
-                yield return new WaitForSeconds(GetMoveInterval());
+                yield return new WaitForSeconds(GetMoveIntervalForPlayer(player));
 
-                var invader = GetOwnInvader();
+                var invader = GetInvaderForPlayer(player);
 
                 if (!invader) continue;
 
@@ -86,26 +87,25 @@ namespace SIVS
                 if (movement.CanMoveHorizontally())
                 {
                     if (debugLog)
-                        Debug.Log($"Moving invaders of side {side} horizontally");
-                    MoveOwnInvaders(movement.GetMovementDirection());
+                        Debug.Log($"Moving invaders of side {player.Number} horizontally");
+                    MoveInvadersOfPlayer(player, movement.GetMovementDirection());
                 }
                 else
                 {
                     if (movement.CanMoveDown())
                     {
                         if (debugLog)
-                            Debug.Log($"Moving invaders of side {side} vertically");
-                        MoveOwnInvaders(Vector2.down);
+                            Debug.Log($"Moving invaders of side {player.Number} vertically");
+                        MoveInvadersOfPlayer(player, Vector2.down);
                     }
-                    TurnAroundOwnInvaders();
+                    TurnAroundInvadersOfPlayer(player);
                 }
             }
         }
 
-        private IEnumerator SpawnUFOs()
+        private IEnumerator SpawnUFOs(SIVSPlayer player)
         {
             var ufosSpawned = 0;
-            var side = PhotonNetwork.LocalPlayer.ActorNumber;
 
             while (ufosSpawned < 5)
             {
@@ -116,14 +116,7 @@ namespace SIVS
                 if (GameObject.FindGameObjectWithTag("UFO") != null)
                     continue;
 
-                var position = _spawnManager.OwnAreaPosition(side == 1 ? -3.0f : 3.0f, 2.0f);
-
-                object[] instantiationData = { side == 1 };
-
-                PhotonNetwork.Instantiate("UFO",
-                    position, Quaternion.identity, 0, instantiationData);
-                
-                photonView.RPC(nameof(UFOSpawned), RpcTarget.All);
+                SpawnUFOForPlayer(player);
 
                 ufosSpawned++;
             }
@@ -131,45 +124,67 @@ namespace SIVS
 
         #endregion
 
-        [PunRPC]
-        private void UFOSpawned()
+        protected virtual void SpawnUFOForPlayer(SIVSPlayer player)
+        {
+            var spawnXCoord = player.Number == 1 ? -3.0f : 3.0f;
+            var position = _spawnManager.PlayAreaPosition(player.Number, spawnXCoord, 2.0f);
+
+            var ufo = Instantiate(ufoObject, position, Quaternion.identity);
+
+            ufo.GetComponent<Ownership>().Owner = player;
+                
+            ShowUFOSpawnedPopup();
+        }
+        
+        protected void ShowUFOSpawnedPopup()
         {
             var popupObject = Instantiate(textPopupObject, Vector3.zero, Quaternion.identity);
             
             popupObject.GetComponent<TextPopup>().Show("<animation=verticalpos>GET THAT UFO!</animation>");
         }
 
-        public void InitializeInvaders()
+        public virtual void InitializeAllInvaders()
         {
-            SpawnOwnInvaders();
-            StartCoroutine(MoveInvaders());
-            StartCoroutine(SpawnUFOs());
+            InitializeInvadersForPlayer(GameManager.Players[1]);
+            InitializeInvadersForPlayer(GameManager.Players[2]);
         }
 
-        private void SpawnOwnInvaders()
+        protected void InitializeInvadersForPlayer(SIVSPlayer player)
         {
-            var ownRound = PhotonNetwork.LocalPlayer.GetRound();
-            
-            var rows = debugMode && debugRows > 0 ? debugRows : 3 + ownRound;
+            SpawnInvadersForPlayer(player);
+            StartCoroutine(MoveInvaders(player));
+            StartCoroutine(SpawnUFOs(player));
+        }
 
-            var columns = debugMode && debugColumns > 0 ? debugColumns : 3 + ownRound / 2;
+        protected virtual void SpawnInvadersForPlayer(SIVSPlayer player)
+        {
+            var round = player.CurrentRound;
+            
+            var rows = debugMode && debugRows > 0 ? debugRows : 3 + round;
+
+            var columns = debugMode && debugColumns > 0 ? debugColumns : 3 + round / 2;
 
             for (var row = 0; row < rows; row++)
                 for (var column = 0; column < columns; column++)
-                    SpawnOneInvader(PhotonNetwork.LocalPlayer.ActorNumber, row, column);
+                    SpawnOneInvaderForPlayer(player, row, column);
         }
 
-        private void SpawnOneInvader(int side, int row, int column)
+        protected virtual void SpawnOneInvaderForPlayer(SIVSPlayer player, int row, int column)
         {
-            object[] instantiationData = {side, GenerateInvaderHealth(), Random.Range(3.0f, 4.75f)};
+            // object[] instantiationData = {side, GenerateInvaderHealth(), Random.Range(3.0f, 4.75f)};
 
-            var position = _spawnManager.OwnAreaPosition(-1.75f + row * 0.4f, 2.1f - column * 0.3f);
+            var position = _spawnManager.PlayAreaPosition(
+                player.Number, -1.75f + row * 0.4f, 2.1f - column * 0.3f
+            );
 
-            PhotonNetwork.Instantiate("Invader",
-                position, Quaternion.identity, 0, instantiationData);
+            var invader = Instantiate(invaderObject, position, Quaternion.identity);
+
+            invader.GetComponent<Ownership>().Owner = player;
+            
+            invader.GetComponent<InvaderHealth>().InitializeHealth(GenerateInvaderHealth());
         }
 
-        private int GenerateInvaderHealth()
+        protected int GenerateInvaderHealth()
         {
             if (_totalInvaderKills < 15)
                 return 1;
@@ -183,61 +198,68 @@ namespace SIVS
             return Random.Range(2, 5);
         }
 
-        private GameObject GetOwnInvader()
+        private GameObject GetInvaderForPlayer(SIVSPlayer player)
         {
-            GameObject invaderFromSide = null;
+            GameObject invaderForPlayer = null;
 
             foreach (var invader in GameObject.FindGameObjectsWithTag("Invader"))
             {
-                if (invader.GetPhotonView().IsMine)
+                if (InvaderOwnedByPlayer(invader, player))
                 {
-                    invaderFromSide = invader;
+                    invaderForPlayer = invader;
                     break;
                 }
             }
 
-            return invaderFromSide;
+            return invaderForPlayer;
         }
 
-        private float GetMoveInterval()
+        private float GetMoveIntervalForPlayer(SIVSPlayer player)
         {
-            if (debugMode && debugMoveRate != 0) return debugMoveRate;
+            if (debugMode && debugMoveRate != 0)
+                return debugMoveRate;
 
-            var ownRound = PhotonNetwork.LocalPlayer.GetRound();
-
-            var round = Mathf.Clamp(ownRound - 1, 0, MovementIntervals.Length - 1);
+            var round = Mathf.Clamp(player.CurrentRound - 1, 0, MovementIntervals.Length - 1);
 
             return MovementIntervals[round];
         }
 
-        private void MoveOwnInvaders(Vector2 direction)
+        private void MoveInvadersOfPlayer(SIVSPlayer player, Vector2 direction)
         {
             foreach (var invader in GameObject.FindGameObjectsWithTag("Invader"))
             {
-                if (!invader.GetPhotonView().IsMine) continue;
+                if (!InvaderOwnedByPlayer(invader, player))
+                    continue;
 
                 invader.GetComponent<InvaderMovement>().Move(direction);
             }
         }
 
-        private void TurnAroundOwnInvaders()
+        private void TurnAroundInvadersOfPlayer(SIVSPlayer player)
         {
             foreach (var invader in GameObject.FindGameObjectsWithTag("Invader"))
             {
-                if (!invader.GetPhotonView().IsMine) continue;
+                if (!InvaderOwnedByPlayer(invader, player))
+                    continue;
 
                 invader.GetComponent<InvaderMovement>().ChangeDirection();
             }
         }
 
-        private int OwnInvaderCount()
+        private int GetInvaderCountOfPlayer(SIVSPlayer player)
         {
             var count = 0;
 
             foreach (var invader in GameObject.FindGameObjectsWithTag("Invader"))
-                if (invader.GetPhotonView().IsMine) count++;
+                if (InvaderOwnedByPlayer(invader, player))
+                    count++;
 
             return count;
+        }
+
+        protected virtual bool InvaderOwnedByPlayer(GameObject invader, SIVSPlayer player)
+        {
+            return invader.GetComponent<Ownership>().Owner.Number == player.Number;
         }
     }
 }

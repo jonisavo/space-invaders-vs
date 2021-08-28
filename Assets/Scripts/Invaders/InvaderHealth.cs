@@ -1,11 +1,10 @@
 ﻿using System.Collections;
-using Photon.Pun;
 using UnityEngine;
 
 namespace SIVS
 {
     [RequireComponent(typeof(SpriteRenderer))]
-    public class InvaderHealth : MonoBehaviourPunCallbacks
+    public class InvaderHealth : MonoBehaviour
     {
         [Tooltip("Toggles whether to automatically tint the invader sprite red.")]
         public bool tintSprite = true;
@@ -28,15 +27,11 @@ namespace SIVS
         [Tooltip("Popup to instantiate for displaying points.")]
         public GameObject pointsPopup;
 
-        private int _health;
+        protected int _health;
 
-        private int _initialHealth;
+        protected int _initialHealth;
 
-        private int _killerActorNumber;
-
-        private bool _hidden;
-
-        private SpriteRenderer _spriteRenderer;
+        protected SpriteRenderer _spriteRenderer;
 
         public delegate void OnKillDelegate(int killerActorNumber);
 
@@ -44,19 +39,7 @@ namespace SIVS
 
         #region Unity Callbacks
 
-        private void Awake()
-        {
-            _spriteRenderer = GetComponent<SpriteRenderer>();
-
-            if (photonView.InstantiationData != null)
-                _health = (int) photonView.InstantiationData[1];
-            else
-                _health = 1;
-
-            _initialHealth = _health;
-
-            TintSprite();
-        }
+        protected virtual void Awake() => _spriteRenderer = GetComponent<SpriteRenderer>();
 
         private void OnTriggerEnter2D(Collider2D other)
         {
@@ -64,40 +47,36 @@ namespace SIVS
                 return;
 
             Destroy(other.gameObject);
-
-            if (!photonView.IsMine) return;
             
-            var bulletOwner = other.gameObject.GetComponent<PlayerBullet>().Owner;
-
-            _killerActorNumber = bulletOwner.Number;
-
-            photonView.RPC(nameof(LoseHealth), RpcTarget.All);
-
-            // if (!IsDead()) return;
-            //
-            // bulletOwner.InvaderKills += 1;
+            OnBulletHit(other.gameObject.GetComponent<PlayerBullet>().Owner);
         }
 
         #endregion
 
-        [PunRPC]
-        private void LoseHealth()
+        public void InitializeHealth(int health)
         {
-            if (!gameObject || _hidden) return;
-
+            _health = health;
+            _initialHealth = health;
+            
+            TintSprite();
+        }
+        
+        protected virtual void OnBulletHit(SIVSPlayer player)
+        {
+            LoseHealth(player.Number);
+        }
+        
+        protected void LoseHealth(int playerWhoHitNumber)
+        {
             _health--;
 
             if (IsDead())
             {
-                Die();
+                Die(GameManager.Players[playerWhoHitNumber]);
             }
             else
             {
-                if (photonView.IsMine)
-                {
-                    SoundPlayer.PlaySound(hurtSound);
-                    CameraShaker.ShakeAll(0.04f, 0.1f);
-                }
+                PlayHurtSoundAndShake();
                 
                 SpawnParticleObject(hitParticles);
 
@@ -105,7 +84,13 @@ namespace SIVS
             }
         }
 
-        private void Die()
+        protected virtual void PlayHurtSoundAndShake()
+        {
+            SoundPlayer.PlaySound(hurtSound);
+            CameraShaker.ShakeAll(0.04f, 0.1f);
+        }
+
+        private void Die(SIVSPlayer killer)
         {
             if (gameObject.TryGetComponent(out PowerupDrop drop))
                 drop.GeneratePowerupDrop();
@@ -114,30 +99,31 @@ namespace SIVS
             
             var pointsToGive = 50 * _initialHealth;
             
-            OnKill?.Invoke(_killerActorNumber);
+            OnKill?.Invoke(killer.Number);
 
             var pointsObj = Instantiate(pointsPopup, GetCenterPoint(), Quaternion.identity);
             pointsObj.GetComponent<TextPopup>().Show(pointsToGive.ToString());
+            
+            PlayDeathSoundAndShake();
 
-            if (photonView.IsMine)
-            {
-                SoundPlayer.PlaySound(deathSound);
-                
-                CameraShaker.ShakeAll(0.08f, 0.3f);
-
-                PhotonNetwork.CurrentRoom.Players[_killerActorNumber]
-                    .AddScore(pointsToGive);
-
-                StartCoroutine(DestroyDelay());
-            }
-
+            GivePointsToKiller(killer, pointsToGive);
+            
+            StartCoroutine(DestroyDelay(killer));
+            
             Hide();
+        }
+
+        protected virtual void GivePointsToKiller(SIVSPlayer killer, int points) =>
+            killer.AddScore(points);
+
+        protected virtual void PlayDeathSoundAndShake()
+        {
+            SoundPlayer.PlaySound(deathSound);
+            CameraShaker.ShakeAll(0.08f, 0.3f);
         }
 
         private void Hide()
         {
-            _hidden = true;
-
             _spriteRenderer.enabled = false;
 
             GetComponent<Collider2D>().enabled = false;
@@ -146,23 +132,18 @@ namespace SIVS
                 shootManager.StopShooting();
         }
 
-        private IEnumerator DestroyDelay()
+        private IEnumerator DestroyDelay(SIVSPlayer killer)
         {
             yield return new WaitForSeconds(0.5f);
 
-            PhotonNetwork.Destroy(gameObject);
+            DestroyObject(killer);
+        }
 
-            if (!PhotonNetwork.CurrentRoom.Players.ContainsKey(_killerActorNumber))
-                yield break;
+        protected virtual void DestroyObject(SIVSPlayer killer)
+        {
+            Destroy(gameObject);
 
-            var killer = PhotonNetwork.CurrentRoom.Players[_killerActorNumber];
-            
-            killer.SetInvaderKills(killer.GetInvaderKills() + 1);
-
-            // killer.SetCustomProperties(new Hashtable()
-            // {
-            //     {PlayerStats.InvaderKills, (int) killer.CustomProperties[PlayerStats.InvaderKills] + 1}
-            // });
+            killer.InvaderKills += 1;
         }
 
         private void TintSprite()
@@ -189,6 +170,6 @@ namespace SIVS
             return (Vector2) transform.position + new Vector2(size.x / 2, -size.y / 2);
         }
 
-        private bool IsDead() => _health <= 0;
+        protected bool IsDead() => _health <= 0;
     }
 }

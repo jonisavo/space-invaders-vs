@@ -28,7 +28,7 @@ namespace SIVS
         private void OnEnable()
         {
             _playArea.OnInitialize += HandlePlayAreaInitialize;
-            InvaderHealth.OnKill += HandleInvaderKill;
+            InvaderHealthOnline.OnKill += HandleInvaderKill;
             Powerup.OnGet += HandlePowerupGet;
             UFOHealth.OnKill += HandleUFOKill;
             SIVSPlayer.OnRoundChange += HandleRoundChange;
@@ -37,7 +37,7 @@ namespace SIVS
         private void OnDisable()
         {
             _playArea.OnInitialize -= HandlePlayAreaInitialize;
-            InvaderHealth.OnKill -= HandleInvaderKill;
+            InvaderHealthOnline.OnKill -= HandleInvaderKill;
             Powerup.OnGet -= HandlePowerupGet;
             UFOHealth.OnKill -= HandleUFOKill;
             SIVSPlayer.OnRoundChange -= HandleRoundChange;
