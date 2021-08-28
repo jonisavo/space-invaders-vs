@@ -8,19 +8,19 @@ namespace SIVS
         public const string ActivePropertyKey = "Active";
 
         public const int FinalRound = 5;
-        
+
         public static bool IsActive
         {
             set
             {
                 PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable()
                 {
-                    {ActivePropertyKey, value}
+                    { ActivePropertyKey, value }
                 });
             }
             get
             {
-                if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("Active", out var isActive))
+                if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue(ActivePropertyKey, out var isActive))
                     return (bool) isActive;
 
                 return false;
@@ -34,10 +34,12 @@ namespace SIVS
                 var sum = 0;
                 
                 foreach (var player in PhotonNetwork.CurrentRoom.Players.Values)
-                    sum += PlayerStats.GetRound(player);
+                    sum += player.GetRound();
                 
                 return sum;
             }
         }
+
+        public static SIVSPlayer GetPlayer(int num) => GameManager.Players[num];
     }
 }

@@ -1,6 +1,4 @@
-﻿using Photon.Pun.UtilityScripts;
-using Photon.Realtime;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace SIVS
 {
@@ -14,16 +12,16 @@ namespace SIVS
         [Tooltip("A popup to show when the bullet type is already in use.")]
         public GameObject pointsPopup;
 
-        protected override void OnPowerupGet(GameObject obj, Player player)
+        protected override void OnPowerupGet(GameObject obj, SIVSPlayer player)
         {
-            if (PlayerStats.GetBulletType(player) == bulletType)
+            if (player.BulletType == bulletType)
             {
                 ChangeTextPopup(pointsPopup, BulletInUsePoints.ToString());
                 player.AddScore(BulletInUsePoints);
             }
             else
             {
-                PlayerStats.ChangeBulletType(player, bulletType);
+                player.BulletType = bulletType;
             }
 
             base.OnPowerupGet(obj, player);

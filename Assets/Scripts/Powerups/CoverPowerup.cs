@@ -1,15 +1,14 @@
 ﻿using Photon.Pun;
-using Photon.Realtime;
 using UnityEngine;
 
 namespace SIVS
 {
     public class CoverPowerup : Powerup
     {
-        protected override void OnPowerupGet(GameObject obj, Player player)
+        protected override void OnPowerupGet(GameObject obj, SIVSPlayer player)
         {
             photonView.RPC(nameof(AddCover),
-                RpcTarget.AllBuffered, player.ActorNumber, Match.SumOfRounds);
+                RpcTarget.AllBuffered, player.Number, Match.SumOfRounds);
             
             base.OnPowerupGet(obj, player);
         }

@@ -1,6 +1,4 @@
-﻿using Photon.Pun.UtilityScripts;
-using Photon.Realtime;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace SIVS
 {
@@ -11,16 +9,16 @@ namespace SIVS
         [Tooltip("A popup to show when max lives have been reached.")]
         public GameObject pointsPopup;
         
-        protected override void OnPowerupGet(GameObject obj, Player player)
+        protected override void OnPowerupGet(GameObject obj, SIVSPlayer player)
         {
-            if (PlayerStats.HasMaximumLives(player))
+            if (player.Lives >= SIVSPlayer.MaxLives)
             {
                 ChangeTextPopup(pointsPopup, MaxLifePoints.ToString());
                 player.AddScore(MaxLifePoints);
             }
             else
             {
-                PlayerStats.AddLife(player);
+                player.AddLife();
             }
 
             base.OnPowerupGet(obj, player);

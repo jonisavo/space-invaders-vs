@@ -17,8 +17,6 @@ namespace SIVS
 
         private bool _shootingBlockedByOptions;
 
-        private OptionsManager _optionsManager;
-
         private void Awake()
         {
             _audioSource = GetComponent<AudioSource>();
@@ -42,7 +40,7 @@ namespace SIVS
 
             if (PressingFireButton() && CanFire())
                 photonView.RPC(nameof(FireBullet),
-                    RpcTarget.All, PlayerStats.GetBulletType(PhotonNetwork.LocalPlayer));
+                    RpcTarget.All, PhotonNetwork.LocalPlayer.GetBulletType());
         }
 
         private bool PressingFireButton() =>
@@ -68,19 +66,19 @@ namespace SIVS
 
             if (bulletObject.TryGetComponent(out PlayerBullet bullet))
             {
-                bullet.SetOwner(photonView.Owner);
+                bullet.SetOwner(Match.GetPlayer(PhotonNetwork.LocalPlayer.ActorNumber));
             }
             else
             {
                 foreach (var childBullet in bulletObject.GetComponentsInChildren<PlayerBullet>())
-                    childBullet.SetOwner(photonView.Owner);
+                    childBullet.SetOwner(photonView.Owner.toSIVSPlayer());
             }
         }
 
         private bool OwnBulletExists()
         {
             foreach (var bullet in GameObject.FindGameObjectsWithTag("PlayerBullet"))
-                if (bullet.GetComponent<PlayerBullet>().Owner.ActorNumber == PhotonNetwork.LocalPlayer.ActorNumber)
+                if (bullet.GetComponent<PlayerBullet>().Owner.Number == PhotonNetwork.LocalPlayer.ActorNumber)
                     return true;
 
             return false;

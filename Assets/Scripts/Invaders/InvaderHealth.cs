@@ -1,8 +1,6 @@
 ﻿using System.Collections;
 using Photon.Pun;
-using Photon.Pun.UtilityScripts;
 using UnityEngine;
-using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 namespace SIVS
 {
@@ -71,16 +69,13 @@ namespace SIVS
             
             var bulletOwner = other.gameObject.GetComponent<PlayerBullet>().Owner;
 
-            _killerActorNumber = bulletOwner.ActorNumber;
+            _killerActorNumber = bulletOwner.Number;
 
             photonView.RPC(nameof(LoseHealth), RpcTarget.All);
 
-            if (!IsDead()) return;
-
-            bulletOwner.SetCustomProperties(new Hashtable()
-            {
-                {PlayerStats.InvaderKills, (int) bulletOwner.CustomProperties[PlayerStats.InvaderKills] + 1}
-            });
+            // if (!IsDead()) return;
+            //
+            // bulletOwner.InvaderKills += 1;
         }
 
         #endregion
@@ -161,11 +156,13 @@ namespace SIVS
                 yield break;
 
             var killer = PhotonNetwork.CurrentRoom.Players[_killerActorNumber];
+            
+            killer.SetInvaderKills(killer.GetInvaderKills() + 1);
 
-            killer.SetCustomProperties(new Hashtable()
-            {
-                {PlayerStats.InvaderKills, (int) killer.CustomProperties[PlayerStats.InvaderKills] + 1}
-            });
+            // killer.SetCustomProperties(new Hashtable()
+            // {
+            //     {PlayerStats.InvaderKills, (int) killer.CustomProperties[PlayerStats.InvaderKills] + 1}
+            // });
         }
 
         private void TintSprite()

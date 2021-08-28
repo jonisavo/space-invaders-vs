@@ -1,12 +1,9 @@
-﻿using ExitGames.Client.Photon;
-using Photon.Pun;
-using Photon.Realtime;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace SIVS
 {
     [RequireComponent(typeof(MusicLoop))]
-    public class RoundMusic : MonoBehaviourPunCallbacks
+    public class RoundMusic : MonoBehaviour
     {
         public int round = 1;
 
@@ -18,17 +15,15 @@ namespace SIVS
 
         private MusicLoop _musicLoop;
 
-        private void Awake()
-        {
-            _musicLoop = GetComponent<MusicLoop>();
-        }
+        private void Awake() => _musicLoop = GetComponent<MusicLoop>();
 
-        public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
+        private void OnEnable() => SIVSPlayer.OnRoundChange += HandleRoundChange;
+
+        private void OnDisable() => SIVSPlayer.OnRoundChange -= HandleRoundChange;
+
+        private void HandleRoundChange(SIVSPlayer player, int newRound)
         {
-            if (!changedProps.ContainsKey(PlayerStats.CurrentRound))
-                return;
-            
-            if (!_reachedRound && (int) changedProps[PlayerStats.CurrentRound] >= round)
+            if (!_reachedRound && newRound >= round)
                 PlayMusic();
         }
 

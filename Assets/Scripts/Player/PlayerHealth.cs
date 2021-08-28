@@ -72,12 +72,12 @@ namespace SIVS
             photonView.RPC(nameof(SpawnExplosion), RpcTarget.All);
 
             photonView.RPC(nameof(MakeInvincible), RpcTarget.All);
-
-            PlayerStats.ChangeBulletType(PhotonNetwork.LocalPlayer, 0);
             
-            OnSelfHit?.Invoke(gameObject);
+            PhotonNetwork.LocalPlayer.SetBulletType(PlayerBulletType.Normal);
 
-            PlayerStats.RemoveLife(PhotonNetwork.LocalPlayer);
+            OnSelfHit?.Invoke(gameObject);
+            
+            PhotonNetwork.LocalPlayer.RemoveLife();
         }
 
         [PunRPC]

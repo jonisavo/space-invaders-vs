@@ -41,7 +41,7 @@ namespace SIVS
 
             bulletOwner.AddScore(KillPoints);
 
-            photonView.RPC(nameof(Die), RpcTarget.All, bulletOwner.ActorNumber);
+            photonView.RPC(nameof(Die), RpcTarget.All, bulletOwner.Number);
         }
 
         [PunRPC]

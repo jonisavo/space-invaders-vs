@@ -45,21 +45,21 @@ namespace SIVS
         {
             if (!Match.IsActive) return;
 
-            if (!changedProps.ContainsKey(PlayerStats.InvaderKills)) return;
+            if (!changedProps.ContainsKey(PlayerPhotonPropertyKey.InvaderKills)) return;
 
             var invaderKills = 0;
 
             foreach (var player in PhotonNetwork.CurrentRoom.Players.Values)
-                if (player.CustomProperties.ContainsKey(PlayerStats.InvaderKills))
-                    invaderKills += (int) player.CustomProperties[PlayerStats.InvaderKills];
+                if (player.CustomProperties.ContainsKey(PlayerPhotonPropertyKey.InvaderKills))
+                    invaderKills += (int) player.CustomProperties[PlayerPhotonPropertyKey.InvaderKills];
 
             _totalInvaderKills = invaderKills;
 
             if (OwnInvaderCount() > 0) return;
 
-            var nextRound = PlayerStats.GetOwnRound() + 1;
-
-            PlayerStats.GoToNextRound(PhotonNetwork.LocalPlayer);
+            var nextRound = PhotonNetwork.LocalPlayer.GetRound() + 1;
+            
+            PhotonNetwork.LocalPlayer.GoToNextRound();
 
             if (nextRound < 6)
                 SpawnOwnInvaders();
@@ -148,9 +148,11 @@ namespace SIVS
 
         private void SpawnOwnInvaders()
         {
-            var rows = debugMode && debugRows > 0 ? debugRows : 3 + PlayerStats.GetOwnRound();
+            var ownRound = PhotonNetwork.LocalPlayer.GetRound();
+            
+            var rows = debugMode && debugRows > 0 ? debugRows : 3 + ownRound;
 
-            var columns = debugMode && debugColumns > 0 ? debugColumns : 3 + PlayerStats.GetOwnRound() / 2;
+            var columns = debugMode && debugColumns > 0 ? debugColumns : 3 + ownRound / 2;
 
             for (var row = 0; row < rows; row++)
                 for (var column = 0; column < columns; column++)
@@ -201,8 +203,9 @@ namespace SIVS
         {
             if (debugMode && debugMoveRate != 0) return debugMoveRate;
 
-            var round =
-                Mathf.Clamp(PlayerStats.GetOwnRound() - 1, 0, MovementIntervals.Length - 1);
+            var ownRound = PhotonNetwork.LocalPlayer.GetRound();
+
+            var round = Mathf.Clamp(ownRound - 1, 0, MovementIntervals.Length - 1);
 
             return MovementIntervals[round];
         }

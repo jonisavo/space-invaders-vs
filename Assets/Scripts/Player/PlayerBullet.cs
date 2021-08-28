@@ -15,7 +15,7 @@ namespace SIVS
 
         private Rect _ownArea;
 
-        public Player Owner { get; private set; }
+        public SIVSPlayer Owner { get; private set; }
 
         private void Update()
         {
@@ -40,13 +40,13 @@ namespace SIVS
                    position.x < _ownArea.x;
         }
 
-        public void SetOwner(Player newOwner)
+        public void SetOwner(SIVSPlayer newOwner)
         {
             Owner = newOwner;
 
             _ownArea = GameObject.Find("Game Manager")
                 .GetComponent<SpawnManager>()
-                .PlayAreaRect(newOwner.ActorNumber);
+                .PlayAreaRect(newOwner.Number);
 
             _ownerSet = true;
         }

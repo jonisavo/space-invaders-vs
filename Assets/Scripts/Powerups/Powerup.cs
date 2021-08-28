@@ -34,12 +34,12 @@ namespace SIVS
             if (PhotonNetwork.LocalPlayer.ActorNumber != player.ActorNumber)
                 return;
             
-            OnPowerupGet(other.gameObject, player);
+            OnPowerupGet(other.gameObject, player.toSIVSPlayer());
             
             photonView.RPC(nameof(ObtainPowerup), RpcTarget.All, player.ActorNumber);
         }
 
-        protected virtual void OnPowerupGet(GameObject obj, Player player)
+        protected virtual void OnPowerupGet(GameObject obj, SIVSPlayer player)
         {
             SoundPlayer.PlaySound(soundEffect);
         }

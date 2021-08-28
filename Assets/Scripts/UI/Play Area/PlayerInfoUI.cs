@@ -33,13 +33,13 @@ namespace SIVS
             if (targetPlayer.ActorNumber != _actorNumber)
                 return;
             
-            if (changedProps.ContainsKey(PlayerStats.Lives))
-                UpdateLifeObjects((int) changedProps[PlayerStats.Lives]);
+            if (changedProps.ContainsKey(PlayerPhotonPropertyKey.Lives))
+                UpdateLifeObjects((int) changedProps[PlayerPhotonPropertyKey.Lives]);
             
-            if (changedProps.ContainsKey(PlayerStats.CurrentRound))
+            if (changedProps.ContainsKey(PlayerPhotonPropertyKey.CurrentRound))
             {
-                UpdateRound((int) changedProps[PlayerStats.CurrentRound]);
-                ShowRoundChangePopup((int) changedProps[PlayerStats.CurrentRound]);
+                UpdateRound((int) changedProps[PlayerPhotonPropertyKey.CurrentRound]);
+                ShowRoundChangePopup((int) changedProps[PlayerPhotonPropertyKey.CurrentRound]);
             }
 
             var score = targetPlayer.GetScore();

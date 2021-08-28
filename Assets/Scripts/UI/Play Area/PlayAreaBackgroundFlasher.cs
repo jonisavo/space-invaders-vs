@@ -72,9 +72,9 @@ namespace SIVS
             _backgroundPlane.Flash(PurpleFlashColor, 4, 0.04f);
         }
 
-        private void HandleRoundChange(Player player, int round)
+        private void HandleRoundChange(SIVSPlayer player, int round)
         {
-            if (player.ActorNumber != _actorNumber || round <= 1)
+            if (player.Number != _actorNumber || round <= 1)
                 return;
             
             if (round == Match.FinalRound)
