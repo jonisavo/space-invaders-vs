@@ -71,16 +71,14 @@ namespace SIVS
         {
             var leftCorner = PlayAreaPosition(key, -2.0f, -2.3f);
 
-            return new Rect(leftCorner.x, leftCorner.y, 4, 4.6f);
+            return new Rect(leftCorner.x, leftCorner.y, 4f, 4.6f);
         }
-
-        public Rect OwnAreaRect() => PlayAreaRect(_playerIndex);
 
         public Vector3 OwnSpawnPoint() => OwnAreaPosition(0.0f, -1.6f);
 
         private void SpawnShip()
         {
-            object[] playerData = {PhotonNetwork.NickName};
+            object[] playerData = { PhotonNetwork.NickName };
 
             PhotonNetwork.Instantiate("PlayerShip",
                 OwnSpawnPoint(), Quaternion.identity, 0, playerData);
