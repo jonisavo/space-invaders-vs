@@ -21,7 +21,7 @@ namespace SIVS
                 if (cover.GetPhotonView().Owner.ActorNumber != actorNumber)
                     continue;
                 
-                cover.GetComponent<Cover>().AddPieces(10 + sumOfRounds * 2);
+                cover.GetComponent<CoverOnline>().AddPieces(10 + sumOfRounds * 2);
             }
         }
     }

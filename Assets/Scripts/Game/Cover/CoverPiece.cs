@@ -1,5 +1,4 @@
-﻿using Photon.Pun;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace SIVS
 {
@@ -10,10 +9,10 @@ namespace SIVS
 
         [Tooltip("Sound effect to play with the explosion.")]
         public AudioClip explosionSound;
+
+        protected int _id;
         
         private Cover _cover;
-
-        private int _id;
         
         #region Unity Callbacks
 
@@ -25,15 +24,18 @@ namespace SIVS
             Destroy(other.gameObject);
 
             Instantiate(explosionParticles, transform.position, Quaternion.identity);
-
-            if (!_cover.photonView.IsMine) return;
             
-            SoundPlayer.PlaySound(explosionSound, 0.65f);
-
-            _cover.photonView.RPC("DestroyPiece", RpcTarget.AllBuffered, _id);
+            OnPieceHit();
         }
         
         #endregion
+
+        protected virtual void OnPieceHit()
+        {
+            SoundPlayer.PlaySound(explosionSound, 0.65f);
+            
+            _cover.DestroyPiece(_id);
+        }
 
         public void InitializeCoverPiece(int id, Cover coverComponent)
         {

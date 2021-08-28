@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
-using Photon.Pun;
 using UnityEngine;
 
 namespace SIVS
 {
-    public class Cover : MonoBehaviourPunCallbacks
+    public class Cover : MonoBehaviour
     {
         [Tooltip("The cover piece object the cover consists of.")]
         public GameObject coverPiece;
@@ -15,23 +14,16 @@ namespace SIVS
         [Tooltip("The number of cover piece columns.")]
         public int columns = 4;
         
-        private Dictionary<int, GameObject> _pieces;
+        protected Dictionary<int, GameObject> _pieces;
         
         #region Unity Callbacks
 
-        private void Awake()
-        {
-            _pieces = new Dictionary<int, GameObject>();
-        }
+        protected virtual void Awake() => _pieces = new Dictionary<int, GameObject>();
 
-        private void Start()
-        {
-            InstantiateAllPieces();
-        }
-        
+        protected void Start() => InstantiateAllPieces();
+
         #endregion
-
-        [PunRPC]
+        
         public void DestroyPiece(int id)
         {
             if (!_pieces.ContainsKey(id)) return;
@@ -83,9 +75,14 @@ namespace SIVS
                     
             piece.transform.SetParent(gameObject.transform, false);
 
-            piece.GetComponent<CoverPiece>().InitializeCoverPiece(id, this);
+            InitializePiece(piece, id);
 
             _pieces[id] = piece;
+        }
+
+        protected virtual void InitializePiece(GameObject piece, int id)
+        {
+            piece.GetComponent<CoverPiece>().InitializeCoverPiece(id, this);
         }
     }
 }
