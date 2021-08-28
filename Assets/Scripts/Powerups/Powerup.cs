@@ -65,6 +65,9 @@ namespace SIVS
             _textPopup.Show();
         }
 
+        [PunRPC]
+        public void DestroyPowerupRPC() => DestroyPowerup();
+
         private void DestroyPowerup()
         {
             if (photonView.IsMine)

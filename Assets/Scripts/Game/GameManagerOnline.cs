@@ -121,7 +121,7 @@ namespace SIVS
 
                 if (!powerUpPhotonView.IsMine) continue;
 
-                powerUpPhotonView.RPC("DestroyPowerup", RpcTarget.All);
+                powerUpPhotonView.RPC("DestroyPowerupRPC", RpcTarget.All);
             }
         }
     }
