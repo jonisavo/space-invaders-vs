@@ -10,7 +10,7 @@ using Random = UnityEngine.Random;
 namespace SIVS
 {
     [RequireComponent(typeof(VictoryUIManager))]
-    [RequireComponent(typeof(InvaderManager))]
+    [RequireComponent(typeof(InvaderManagerOnline))]
     [RequireComponent(typeof(OptionsManager))]
     public class GameManagerOnline : GameManager, IInRoomCallbacks, IMatchmakingCallbacks
     {
