@@ -1,161 +1,124 @@
-﻿using System;
-using Photon.Pun;
-using Photon.Pun.UtilityScripts;
-using Photon.Realtime;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using Hashtable = ExitGames.Client.Photon.Hashtable;
-using Random = UnityEngine.Random;
 
 namespace SIVS
 {
     [RequireComponent(typeof(VictoryUIManager))]
     [RequireComponent(typeof(InvaderManager))]
     [RequireComponent(typeof(OptionsManager))]
-    public class GameManager : MonoBehaviourPunCallbacks
+    public class GameManager : MonoBehaviour
     {
         [Tooltip("Audio clip to play upon a victory.")]
         public AudioClip victorySound;
 
-        private bool _bothReady;
+        public static readonly Dictionary<int, SIVSPlayer> Players =
+            new Dictionary<int, SIVSPlayer>();
 
-        private bool _gameOver;
+        protected bool _gameOver;
 
-        private InvaderManager _invaderManager;
+        protected InvaderManager _invaderManager;
 
-        public delegate void RoundChangeDelegate(Player player, int round);
+        protected VictoryUIManager _victoryUIManager;
 
-        public static event RoundChangeDelegate OnRoundChange;
+        protected OptionsManager _optionsManager;
 
-        #region Unity Callbacks
-
-        private void Awake()
+        protected virtual void Awake()
         {
-            PlayerStats.InitializeStats(PhotonNetwork.LocalPlayer);
-            Random.InitState((int) DateTime.Now.Ticks + PhotonNetwork.LocalPlayer.ActorNumber);
             _invaderManager = GetComponent<InvaderManager>();
+            _victoryUIManager = GetComponent<VictoryUIManager>();
+            _optionsManager = GetComponent<OptionsManager>();
+            
+            InitializePlayers();
         }
 
-        private void Start()
+        protected virtual void OnEnable()
         {
-            PlayerStats.SetReady(PhotonNetwork.LocalPlayer, true);
+            SIVSPlayer.OnReadyChange += HandleReadyChange;
+            SIVSPlayer.OnLivesChange += HandleLivesChange;
+            SIVSPlayer.OnRoundChange += HandleRoundChange;
         }
 
-        #endregion
-
-        #region PUN Callbacks
-
-        public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
+        protected virtual void OnDisable()
         {
-            if (_gameOver) return;
+            SIVSPlayer.OnReadyChange -= HandleReadyChange;
+            SIVSPlayer.OnLivesChange -= HandleLivesChange;
+            SIVSPlayer.OnRoundChange -= HandleRoundChange;
+        }
 
-            if (changedProps.ContainsKey(PlayerStats.Ready))
-            {
-                if (!_bothReady && IsEveryoneReady())
-                {
-                    _bothReady = true;
-
-                    _invaderManager.InitializeInvaders();
-
-                    if (PhotonNetwork.IsMasterClient)
-                        Match.IsActive = true;
-                }
-            }
-
-            if (changedProps.ContainsKey(PlayerStats.Lives))
-            {
-                if ((int) changedProps[PlayerStats.Lives] <= 0)
-                    EndGame(GetOtherPlayer(targetPlayer), targetPlayer, VictoryReason.LastStanding);
-            }
-
-            if (!changedProps.ContainsKey(PlayerStats.CurrentRound))
+        private void HandleReadyChange(SIVSPlayer player, bool isReady)
+        {
+            if (Match.IsActive || !IsEveryoneReady() || _gameOver)
                 return;
 
-            var round = (int) changedProps[PlayerStats.CurrentRound];
+            _invaderManager.InitializeAllInvaders();
+                
+            Match.IsActive = true;
+        }
+
+        private void HandleLivesChange(SIVSPlayer player, int newLives)
+        {
+            if (newLives > 0 || _gameOver)
+                return;
+
+            var otherPlayerNumber = player.Number == 1 ? 2 : 1;
             
-            OnRoundChange?.Invoke(targetPlayer, round);
-
-            if (round > Match.FinalRound) 
-                EndGame(targetPlayer, GetOtherPlayer(targetPlayer), VictoryReason.Round5);
+            EndGame(Players[otherPlayerNumber],
+                Players[player.Number],
+                VictoryReason.LastStanding
+            );
         }
 
-        public override void OnLeftRoom()
+        private void HandleRoundChange(SIVSPlayer player, int newRound)
         {
-            SceneManager.LoadScene("MainMenu");
+            if (newRound <= Match.FinalRound || _gameOver)
+                return;
+            
+            var otherPlayerNumber = player.Number == 1 ? 2 : 1;
+            
+            EndGame(Players[player.Number],
+                Players[otherPlayerNumber],
+                VictoryReason.Round5
+            );
         }
 
-        public override void OnPlayerLeftRoom(Player otherPlayer)
+        protected virtual void InitializePlayers()
         {
-            if (_gameOver) return;
-
-            EndGame(GetOtherPlayer(otherPlayer), otherPlayer, VictoryReason.Leave);
+            Players[1] = new SIVSPlayer("Player 1", 1);
+            Players[2] = new SIVSPlayer("Player 2", 2);
+            
+            Players[1].InitializeStats();
+            Players[2].InitializeStats();
         }
-
-        #endregion
-
-        public void LeaveGame() => PhotonNetwork.LeaveRoom();
-
-        private bool IsEveryoneReady()
-        {
-            foreach (var player in PhotonNetwork.CurrentRoom.Players.Values)
-            {
-                if (player == null) return false;
-
-                if (!player.CustomProperties.ContainsKey(PlayerStats.Ready))
-                    return false;
-
-                if (!(bool)player.CustomProperties[PlayerStats.Ready])
-                    return false;
-            }
-
-            return true;
-        }
-
-        private Player GetOtherPlayer(Player firstPlayer)
-        {
-            foreach (var player in PhotonNetwork.CurrentRoom.Players.Values)
-                if (player.ActorNumber != firstPlayer.ActorNumber)
-                    return player;
-
-            return null;
-        }
-
-        private void EndGame(Player winner, Player loser, VictoryReason victoryReason)
+        
+        protected virtual void EndGame(SIVSPlayer winner, SIVSPlayer loser, VictoryReason victoryReason)
         {
             _gameOver = true;
+            
+            Match.IsActive = false;
 
-            if (PhotonNetwork.IsMasterClient)
-                Match.IsActive = false;
-
-            PlayerStats.SetReady(PhotonNetwork.LocalPlayer, false);
-
-            GetComponent<OptionsManager>().CloseCanvas();
+            _optionsManager.CloseCanvas();
 
             ShowVictoryScreen(winner, loser, victoryReason);
 
             GameObject.Find("Music Player")
                 .GetComponent<AudioSource>()
                 .Stop();
-
-            if (winner != null && winner.ActorNumber == PhotonNetwork.LocalPlayer.ActorNumber)
-                SoundPlayer.PlaySound(victorySound);
-
-            SetHighScore();
+            
+            SoundPlayer.PlaySound(victorySound);
 
             StopGameProcessing();
         }
-
-        private void ShowVictoryScreen(Player winner, Player loser, VictoryReason victoryReason)
+        
+        private void ShowVictoryScreen(SIVSPlayer winner, SIVSPlayer loser, VictoryReason victoryReason)
         {
-            var winnerNickName = winner == null ? "No one" : winner.NickName;
+            var winnerNickName = winner == null ? "No one" : winner.Name;
 
-            var loserNickName = loser == null ? "The opponent" : loser.NickName;
+            var loserNickName = loser == null ? "The opponent" : loser.Name;
 
-            GetComponent<VictoryUIManager>()
-                .ShowVictoryScreen(winnerNickName, loserNickName, victoryReason);
+            _victoryUIManager.ShowVictoryScreen(winnerNickName, loserNickName, victoryReason);
         }
 
-        private void StopGameProcessing()
+        protected void StopGameProcessing()
         {
             StopAllCoroutines();
             DestroyBullets();
@@ -166,17 +129,7 @@ namespace SIVS
                 invader.GetComponent<InvaderShoot>().StopShooting();
         }
 
-        private void SetHighScore()
-        {
-            var highScore = PlayerPrefs.GetInt("HighScore", 0);
-
-            var score = PhotonNetwork.LocalPlayer.GetScore();
-
-            if (score > highScore)
-                PlayerPrefs.SetInt("HighScore", score);
-        }
-
-        private void DestroyBullets()
+        protected void DestroyBullets()
         {
             foreach (var playerBullet in GameObject.FindGameObjectsWithTag("PlayerBullet"))
                 Destroy(playerBullet);
@@ -185,16 +138,23 @@ namespace SIVS
                 Destroy(enemyBullet);
         }
 
-        private void DestroyPowerups()
+        protected virtual void DestroyPowerups()
         {
             foreach (var powerUp in GameObject.FindGameObjectsWithTag("Powerup"))
+                Destroy(powerUp);
+        }
+        
+        private bool IsEveryoneReady()
+        {
+            foreach (var player in Players.Values)
             {
-                var powerUpPhotonView = powerUp.GetPhotonView();
+                if (player == null) return false;
 
-                if (!powerUpPhotonView.IsMine) continue;
-
-                powerUpPhotonView.RPC("DestroyPowerup", RpcTarget.All);
+                if (!player.Ready)
+                    return false;
             }
+
+            return true;
         }
     }
 }
