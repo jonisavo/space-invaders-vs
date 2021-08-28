@@ -3,7 +3,7 @@ using Photon.Pun;
 
 namespace SIVS
 {
-    public class PlayerMovement : MonoBehaviourPunCallbacks
+    public class PlayerMovement : MonoBehaviourPun
     {
         [Tooltip("The movement speed for the player.")]
         public float moveSpeed = 10;
@@ -14,16 +14,14 @@ namespace SIVS
 
         private void Awake() => _rb = GetComponent<Rigidbody2D>();
 
-        public override void OnEnable()
+        private void OnEnable()
         {
-            base.OnEnable();
             OptionsManager.OnOptionsOpen += HandleOptionsOpen;
             OptionsManager.OnOptionsClose += HandleOptionsClose;
         }
 
-        public override void OnDisable()
+        private void OnDisable()
         {
-            base.OnDisable();
             OptionsManager.OnOptionsOpen -= HandleOptionsOpen;
             OptionsManager.OnOptionsClose -= HandleOptionsClose;
         }
