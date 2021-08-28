@@ -68,7 +68,7 @@ namespace SIVS
                 EmitReadyChangeEvent((bool) changedProps[PlayerPhotonPropertyKey.Ready]);
             
             if (changedProps.ContainsKey(PlayerPhotonPropertyKey.BulletType))
-                EmitBulletTypeChangeEvent((PlayerBulletType) changedProps[PlayerPhotonPropertyKey.Lives]);
+                EmitBulletTypeChangeEvent((PlayerBulletType) changedProps[PlayerPhotonPropertyKey.BulletType]);
             
             if (changedProps.ContainsKey(PlayerPhotonPropertyKey.CurrentRound))
                 EmitRoundChangeEvent((int) changedProps[PlayerPhotonPropertyKey.CurrentRound]);
