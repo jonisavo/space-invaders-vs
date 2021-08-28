@@ -57,6 +57,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -175,6 +176,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementAmount: 0.25
+  raycastMask:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!114 &-3034183532053049872
 MonoBehaviour:
   m_ObjectHideFlags: 0

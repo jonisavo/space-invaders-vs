@@ -1,33 +1,30 @@
-﻿using Photon.Pun;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace SIVS
 {
-    public class InvaderMovement : MonoBehaviourPunCallbacks
+    public class InvaderMovement : MonoBehaviour
     {
         [Tooltip("The distance to move the invader each cycle.")]
         public float movementAmount = 0.25f;
 
-        private int _side;
+        [Tooltip("The layer mask to use for raycasts.")]
+        public LayerMask raycastMask;
+
+        private int _playerNumber;
 
         private bool _goingRight = true;
 
         private Vector3 _distanceToCenter;
 
-        #region Unity Callbacks
-
-        private void Awake()
+        protected virtual void Awake()
         {
             var bounds = GetComponent<BoxCollider2D>().bounds;
             _distanceToCenter = new Vector3(bounds.size.x / 2, -bounds.size.y / 2, 0);
 
-            if (photonView.InstantiationData != null)
-                _side = (int) photonView.InstantiationData[0];
-            else
-                _side = 1;
+            _playerNumber = GetPlayerNumber();
         }
 
-        #endregion
+        protected virtual int GetPlayerNumber() => GetComponent<Ownership>().Owner.Number;
 
         public void Move(Vector2 direction) =>
             transform.Translate(direction.normalized *  movementAmount);
@@ -44,9 +41,9 @@ namespace SIVS
         {
             foreach (var invader in GameObject.FindGameObjectsWithTag("Invader"))
             {
-                var movement = invader.GetComponent<InvaderMovement>();
+                var movement = invader.GetComponent<InvaderMovementOnline>();
 
-                if (movement._side != _side) continue;
+                if (movement._playerNumber != _playerNumber) continue;
 
                 if (!movement.CanMove(direction, rayDistance))
                     return false;
@@ -58,7 +55,7 @@ namespace SIVS
         private bool CanMove(Vector2 direction, float rayDistance)
         {
             var hit = Physics2D.Raycast(GetRaycastStartPoint(), direction,
-                rayDistance, LayerMask.GetMask("Walls"));
+                rayDistance, raycastMask);
 
             return hit.collider == null;
         }
