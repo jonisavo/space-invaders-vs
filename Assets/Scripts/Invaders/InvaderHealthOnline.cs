@@ -22,6 +22,9 @@ namespace SIVS
 
         protected override void OnBulletHit(SIVSPlayer player)
         {
+            if (!_photonView.IsMine)
+                return;
+            
             _photonView.RPC(nameof(LoseHealthRPC), RpcTarget.All, player.Number);
         }
 
