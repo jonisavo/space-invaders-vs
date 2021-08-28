@@ -55,9 +55,9 @@ namespace SIVS
 
         public void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
         {
-            if (!targetPlayer.Equals(_photonPlayer))
+            if (targetPlayer.ActorNumber != _photonPlayer.ActorNumber)
                 return;
-            
+
             if (changedProps.ContainsKey(PlayerPhotonPropertyKey.Lives))
                 EmitLivesChangeEvent((int) changedProps[PlayerPhotonPropertyKey.Lives]);
             
@@ -66,7 +66,7 @@ namespace SIVS
             
             if (changedProps.ContainsKey(PlayerPhotonPropertyKey.Ready))
                 EmitReadyChangeEvent((bool) changedProps[PlayerPhotonPropertyKey.Ready]);
-            
+
             if (changedProps.ContainsKey(PlayerPhotonPropertyKey.BulletType))
                 EmitBulletTypeChangeEvent((PlayerBulletType) changedProps[PlayerPhotonPropertyKey.BulletType]);
             

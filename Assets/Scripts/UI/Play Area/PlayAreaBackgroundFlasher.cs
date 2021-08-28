@@ -31,7 +31,7 @@ namespace SIVS
             InvaderHealth.OnKill += HandleInvaderKill;
             Powerup.OnGet += HandlePowerupGet;
             UFOHealth.OnKill += HandleUFOKill;
-            GameManager.OnRoundChange += HandleRoundChange;
+            SIVSPlayer.OnRoundChange += HandleRoundChange;
         }
 
         private void OnDisable()
@@ -40,7 +40,7 @@ namespace SIVS
             InvaderHealth.OnKill -= HandleInvaderKill;
             Powerup.OnGet -= HandlePowerupGet;
             UFOHealth.OnKill -= HandleUFOKill;
-            GameManager.OnRoundChange -= HandleRoundChange;
+            SIVSPlayer.OnRoundChange -= HandleRoundChange;
         }
 
         private void HandlePlayAreaInitialize(Player player, int playerNumber)

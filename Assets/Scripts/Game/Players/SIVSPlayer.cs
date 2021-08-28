@@ -155,7 +155,7 @@ namespace SIVS
         
         protected void EmitReadyChangeEvent(bool isReady) =>
             OnReadyChange?.Invoke(this, isReady);
-        
+
         protected void EmitRoundChangeEvent(int newRound) =>
             OnRoundChange?.Invoke(this, newRound);
         
