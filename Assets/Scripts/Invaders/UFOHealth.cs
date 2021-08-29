@@ -41,6 +41,8 @@ namespace SIVS
             if (_hidden) return;
 
             SoundPlayer.PlaySound(deathSound);
+
+            killer.Score += KillPoints;
             
             OnKill?.Invoke(killer.Number);
 
