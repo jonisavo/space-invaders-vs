@@ -8,7 +8,7 @@ namespace SIVS
     {
         private void Awake()
         {
-            var highScore = PlayerPrefs.GetInt("HighScore", 0);
+            var highScore = PlayerPrefs.GetInt("OnlineHighScore", 0);
 
             GetComponent<TMP_Text>().text = highScore.ToString("D6");
         }
