@@ -1,11 +1,10 @@
 ﻿using System.Collections;
 using UnityEngine;
-using Photon.Pun;
 
 namespace SIVS
 {
     [RequireComponent(typeof(AudioSource))]
-    public class PlayerHealth : MonoBehaviourPunCallbacks
+    public class PlayerHealth : MonoBehaviour
     {
         [Tooltip("GameObject to instantiate as the player's explosion.")]
         public GameObject explosion;
@@ -19,17 +18,21 @@ namespace SIVS
         [Tooltip("A debug option to make players invincible.")]
         public bool invincibility;
 
-        public delegate void OnHitDelegate(GameObject playerObject);
+        public delegate void OnHitDelegate(SIVSPlayer player, GameObject playerGameObject);
 
-        public static event OnHitDelegate OnSelfHit;
+        public static event OnHitDelegate OnHit;
 
         private AudioSource _audioSource;
 
         private bool _invincibilityFrames;
 
-        #region Unity Callbacks
+        private SIVSPlayer _player;
 
-        private void Awake() => _audioSource = GetComponent<AudioSource>();
+        protected virtual void Awake()
+        {
+            _audioSource = GetComponent<AudioSource>();
+            _player = GetThisPlayer();
+        }
 
         private void OnCollisionEnter2D(Collision2D other)
         {
@@ -40,14 +43,15 @@ namespace SIVS
 
             Destroy(other.gameObject);
 
-            if (photonView.IsMine && !_invincibilityFrames)
+            if (ShouldRegisterHit())
                 GetHit();
         }
 
-        #endregion
+        protected virtual SIVSPlayer GetThisPlayer() => GetComponent<Ownership>().Owner;
 
-        [PunRPC]
-        private void MakeInvincible()
+        protected virtual bool ShouldRegisterHit() => !_invincibilityFrames;
+        
+        protected virtual void MakeInvincible()
         {
             StartCoroutine(InvincibilityFrames());
         }
@@ -69,19 +73,18 @@ namespace SIVS
         {
             _audioSource.PlayOneShot(explosionSound);
 
-            photonView.RPC(nameof(SpawnExplosion), RpcTarget.All);
+            SpawnExplosion();
 
-            photonView.RPC(nameof(MakeInvincible), RpcTarget.All);
+            MakeInvincible();
             
-            PhotonNetwork.LocalPlayer.SetBulletType(PlayerBulletType.Normal);
+            _player.BulletType = PlayerBulletType.Normal;
 
-            OnSelfHit?.Invoke(gameObject);
+            OnHit?.Invoke(_player, gameObject);
             
-            PhotonNetwork.LocalPlayer.RemoveLife();
+            _player.RemoveLife();
         }
-
-        [PunRPC]
-        private void SpawnExplosion() =>
+        
+        protected virtual void SpawnExplosion() =>
             Instantiate(explosion, transform.position, Quaternion.identity);
     }
 }
