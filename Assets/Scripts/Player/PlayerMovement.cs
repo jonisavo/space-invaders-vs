@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
-using Photon.Pun;
 
 namespace SIVS
 {
-    public class PlayerMovement : MonoBehaviourPun
+    public class PlayerMovement : MonoBehaviour
     {
         [Tooltip("The movement speed for the player.")]
         public float moveSpeed = 10;
@@ -12,15 +11,28 @@ namespace SIVS
 
         private bool _optionsOpen;
 
-        private void Awake() => _rb = GetComponent<Rigidbody2D>();
+        private string _inputAxisName;
 
-        private void OnEnable()
+        protected virtual void Awake()
+        {
+            _rb = GetComponent<Rigidbody2D>();
+            _inputAxisName = GetInputAxisName();
+        }
+
+        protected virtual string GetInputAxisName()
+        {
+            var playerNumber = GetComponent<Ownership>().Owner.Number;
+
+            return $"Player {playerNumber} Horizontal";
+        }
+
+        protected void OnEnable()
         {
             OptionsManager.OnOptionsOpen += HandleOptionsOpen;
             OptionsManager.OnOptionsClose += HandleOptionsClose;
         }
 
-        private void OnDisable()
+        protected void OnDisable()
         {
             OptionsManager.OnOptionsOpen -= HandleOptionsOpen;
             OptionsManager.OnOptionsClose -= HandleOptionsClose;
@@ -28,13 +40,15 @@ namespace SIVS
 
         private void FixedUpdate()
         {
-            if (!photonView.IsMine || _optionsOpen || !Match.IsActive)
+            if (DisallowMovement())
                 return;
 
-            var movementAmount = Input.GetAxis("Horizontal") * moveSpeed * Time.deltaTime;
+            var movementAmount = Input.GetAxis(_inputAxisName) * moveSpeed * Time.deltaTime;
 
             _rb.MovePosition((Vector2)transform.position + Vector2.right * movementAmount);
         }
+
+        protected virtual bool DisallowMovement() => _optionsOpen || !Match.IsActive;
 
         private void HandleOptionsOpen() => _optionsOpen = true;
 
