@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using RedBlueGames.NotNull;
+using UnityEngine;
 
 namespace SIVS
 {
@@ -7,8 +8,10 @@ namespace SIVS
     {
         public int round = 1;
 
+        [NotNull]
         public AudioClip intro;
 
+        [NotNull]
         public AudioClip loop;
 
         private bool _reachedRound;

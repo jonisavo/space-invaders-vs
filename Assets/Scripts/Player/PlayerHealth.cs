@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using RedBlueGames.NotNull;
 using UnityEngine;
 
 namespace SIVS
@@ -7,12 +8,15 @@ namespace SIVS
     public class PlayerHealth : MonoBehaviour
     {
         [Tooltip("GameObject to instantiate as the player's explosion.")]
+        [NotNull]
         public GameObject explosion;
 
         [Tooltip("Audio clip to play upon explosion.")]
+        [NotNull]
         public AudioClip explosionSound;
 
         [Tooltip("The player's sprite renderer.")]
+        [NotNull]
         public SpriteRenderer spriteRenderer;
 
         [Tooltip("A debug option to make players invincible.")]

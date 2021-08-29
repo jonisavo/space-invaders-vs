@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using RedBlueGames.NotNull;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,15 +8,19 @@ namespace SIVS
     public class VictoryUIManager : MonoBehaviour
     {
         [Tooltip("The canvas to show when the game is over.")]
+        [NotNull (IgnorePrefab = true)]
         public GameObject resultCanvas;
 
         [Tooltip("The victory header to write text on.")]
+        [NotNull (IgnorePrefab = true)]
         public TMP_Text victoryHeaderText;
 
         [Tooltip("The text component to write the victory reason on.")]
+        [NotNull (IgnorePrefab = true)]
         public TMP_Text victoryReasonText;
 
         [Tooltip("The button to select when the canvas is shown.")]
+        [NotNull (IgnorePrefab = true)]
         public Button leaveButton;
 
         public void ShowVictoryScreen(string winnerNickName, string loserNickName, VictoryReason reason)

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using RedBlueGames.NotNull;
+using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
 
@@ -7,6 +8,7 @@ namespace SIVS
     [RequireComponent(typeof(Slider))]
     public class VolumeSlider : MonoBehaviour
     {
+        [NotNull]
         public AudioMixer mixer;
 
         public string parameterName;

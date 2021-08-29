@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using RedBlueGames.NotNull;
 using RedBlueGames.Tools.TextTyper;
 using UnityEngine;
 
@@ -6,14 +7,26 @@ namespace SIVS
 {
     public class PlayerInfoUI : MonoBehaviour
     {
+        [NotNull]
         public Canvas uiCanvas;
+        
+        [NotNull]
         public TextTyper nameTextTyper;
+        
+        [NotNull]
         public TextTyper scoreTextTyper;
+        
+        [NotNull]
         public GameObject lifeObject;
 
         [Header("Rounds")]
+        [NotNull]
         public TextTyper roundTextTyper;
+        
+        [NotNull]
         public GameObject nextRoundPopupObject;
+        
+        [NotNull]
         public RainbowGradientText roundRainbowTextComponent;
 
         private int _playerNumber = -1;

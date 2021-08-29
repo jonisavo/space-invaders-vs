@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using RedBlueGames.NotNull;
 using UnityEngine;
 
 namespace SIVS
@@ -9,15 +10,19 @@ namespace SIVS
         private const int KillPoints = 1000;
 
         [Tooltip("GameObject to instantiate as the UFO's explosion.")]
+        [NotNull]
         public GameObject explosion;
         
         [Tooltip("Particle effect GameObject to instantiate with the explosion.")]
+        [NotNull]
         public GameObject explosionParticles;
 
         [Tooltip("Audio clip to play upon death.")]
+        [NotNull]
         public AudioClip deathSound;
 
         [Tooltip("GameObject containing a TextPopup component to instantiate when the UFO is destroyed.")]
+        [NotNull]
         public GameObject pointsObject;
         
         public delegate void OnKillDelegate(int killerPlayerNumber);

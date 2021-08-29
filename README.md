@@ -19,6 +19,8 @@ Music by [YouFulca](https://wingless-seraph.net/en/)
 
 [unity-text-typer](https://github.com/redbluegames/unity-text-typer) package by Red Blue Games
 
+[unity-notnullattribute](https://github.com/redbluegames/unity-notnullattribute) package by Red Blue Games
+
 ## Set up
 
 1. Clone the repository

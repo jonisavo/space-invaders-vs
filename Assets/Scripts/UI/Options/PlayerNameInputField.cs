@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
 using Photon.Pun;
+using RedBlueGames.NotNull;
 using TMPro;
 
 namespace SIVS
@@ -12,6 +13,7 @@ namespace SIVS
     public class PlayerNameInputField : MonoBehaviour
     {
         [Tooltip("The warning label object to show in case of an empty nickname.")]
+        [NotNull]
         public GameObject warningLabel;
         
         private const string PlayerNamePrefKey = "PlayerName";

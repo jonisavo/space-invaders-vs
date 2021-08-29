@@ -2,13 +2,16 @@
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
+using RedBlueGames.NotNull;
 
 namespace SIVS
 {
     public class OptionsManager : MonoBehaviourPunCallbacks
     {
+        [NotNull (IgnorePrefab = true)]
         public GameObject optionsCanvas;
 
+        [NotNull (IgnorePrefab = true)]
         public Button closeButton;
 
         public delegate void OptionsOpenDelegate();

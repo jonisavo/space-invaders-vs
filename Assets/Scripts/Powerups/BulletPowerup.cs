@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using RedBlueGames.NotNull;
+using UnityEngine;
 
 namespace SIVS
 {
@@ -10,6 +11,7 @@ namespace SIVS
         public PlayerBulletType bulletType = PlayerBulletType.Normal;
         
         [Tooltip("A popup to show when the bullet type is already in use.")]
+        [NotNull]
         public GameObject pointsPopup;
 
         protected override void OnPowerupGet(GameObject obj, SIVSPlayer player)

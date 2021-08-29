@@ -118,7 +118,8 @@ namespace SIVS
                 .GetComponent<AudioSource>()
                 .Stop();
             
-            SoundPlayer.PlaySound(victorySound);
+            if (victorySound)
+                SoundPlayer.PlaySound(victorySound);
 
             StopGameProcessing();
         }

@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using RedBlueGames.NotNull;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -16,6 +17,7 @@ namespace SIVS
         private GameObject ufoObject;
         
         [Tooltip("GameObject containing a TextPopup component to show when a UFO is spawned.")]
+        [NotNull]
         public GameObject textPopupObject;
         
         [Tooltip("Toggles debug options.")]

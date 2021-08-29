@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using RedBlueGames.NotNull;
+using UnityEngine;
 
 namespace SIVS
 {
@@ -7,6 +8,7 @@ namespace SIVS
         private const int MaxLifePoints = 500;
 
         [Tooltip("A popup to show when max lives have been reached.")]
+        [NotNull]
         public GameObject pointsPopup;
         
         protected override void OnPowerupGet(GameObject obj, SIVSPlayer player)

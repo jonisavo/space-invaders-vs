@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
+using RedBlueGames.NotNull;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 namespace SIVS
@@ -9,18 +10,23 @@ namespace SIVS
     public class Matchmaker : MonoBehaviourPunCallbacks
     {
         [Tooltip("The UI Panel to let the user enter name, connect and play")]
+        [NotNull]
         public GameObject controlPanel;
 
         [Tooltip("The UI Label to inform the user that the connection is in progress")]
+        [NotNull]
         public GameObject progressLabel;
 
         [Tooltip("The Button to let the user start matchmaking quickly")]
+        [NotNull]
         public Button quickPlayButton;
 
         [Tooltip("The Button to let the user join a room")]
+        [NotNull]
         public Button joinRoomButton;
 
         [Tooltip("The Button to let the user cancel matchmaking")]
+        [NotNull]
         public Button cancelButton;
 
         private bool _isMatchmaking;

@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using RedBlueGames.NotNull;
 using UnityEngine;
 
 namespace SIVS
@@ -10,21 +11,27 @@ namespace SIVS
         public bool tintSprite = true;
 
         [Tooltip("GameObject to instantiate as the invader's explosion.")]
+        [NotNull]
         public GameObject explosion;
 
         [Tooltip("Particle effect GameObject to instantiate with the explosion.")]
+        [NotNull]
         public GameObject explosionParticles;
 
         [Tooltip("Particle effect GameObject to instantiate with hits that don't result in death.")]
+        [NotNull]
         public GameObject hitParticles;
 
         [Tooltip("Audio clip to play when losing health (without dying).")]
+        [NotNull]
         public AudioClip hurtSound;
 
         [Tooltip("Audio clip to play upon death.")]
+        [NotNull]
         public AudioClip deathSound;
 
         [Tooltip("Popup to instantiate for displaying points.")]
+        [NotNull]
         public GameObject pointsPopup;
 
         protected int _health;

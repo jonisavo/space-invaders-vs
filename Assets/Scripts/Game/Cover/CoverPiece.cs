@@ -12,7 +12,7 @@ namespace SIVS
 
         protected int _id;
         
-        private Cover _cover;
+        protected Cover _cover;
         
         #region Unity Callbacks
 
@@ -23,7 +23,8 @@ namespace SIVS
             
             Destroy(other.gameObject);
 
-            Instantiate(explosionParticles, transform.position, Quaternion.identity);
+            if (explosionParticles)
+                Instantiate(explosionParticles, transform.position, Quaternion.identity);
             
             OnPieceHit();
         }
@@ -32,7 +33,8 @@ namespace SIVS
 
         protected virtual void OnPieceHit()
         {
-            SoundPlayer.PlaySound(explosionSound, 0.65f);
+            if (explosionSound)
+                SoundPlayer.PlaySound(explosionSound, 0.65f);
             
             _cover.DestroyPiece(_id);
         }

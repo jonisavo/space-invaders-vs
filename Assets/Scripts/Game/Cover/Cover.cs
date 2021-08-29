@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using RedBlueGames.NotNull;
 using UnityEngine;
 
 namespace SIVS
@@ -6,6 +7,7 @@ namespace SIVS
     public class Cover : MonoBehaviour
     {
         [Tooltip("The cover piece object the cover consists of.")]
+        [NotNull]
         public GameObject coverPiece;
         
         [Tooltip("The number of cover piece rows.")]

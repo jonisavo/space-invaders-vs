@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using RedBlueGames.NotNull;
 using UnityEngine;
 
 namespace SIVS
@@ -8,9 +9,11 @@ namespace SIVS
     public class InvaderShoot : MonoBehaviour
     {
         [Tooltip("The bullet to shoot.")]
+        [NotNull]
         public GameObject bullet;
 
         [Tooltip("Audio clip to play when shooting.")]
+        [NotNull]
         public AudioClip shootSound;
 
         private Vector3 _distanceToShootPoint;

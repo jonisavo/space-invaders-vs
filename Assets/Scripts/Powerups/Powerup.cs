@@ -1,13 +1,16 @@
-﻿using UnityEngine;
+﻿using RedBlueGames.NotNull;
+using UnityEngine;
 
 namespace SIVS
 {
     public class Powerup : MonoBehaviour
     {
         [Tooltip("Sound effect played when the powerup is obtained.")]
+        [NotNull]
         public AudioClip soundEffect;
 
         [Tooltip("GameObject with a TextPopup component to instantiate when the powerup is obtained.")]
+        [NotNull]
         public GameObject popupObject;
 
         [TextArea]

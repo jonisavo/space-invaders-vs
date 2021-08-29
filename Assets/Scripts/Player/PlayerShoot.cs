@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using RedBlueGames.NotNull;
 using UnityEngine;
 
 namespace SIVS
@@ -7,9 +8,11 @@ namespace SIVS
     public class PlayerShoot : MonoBehaviour
     {
         [Tooltip("Bullet(s) that can be shot.")]
+        [NotNull]
         public GameObject[] bulletTypes;
 
         [Tooltip("The audio clip to play when firing.")]
+        [NotNull]
         public AudioClip fireSound;
 
         private AudioSource _audioSource;
