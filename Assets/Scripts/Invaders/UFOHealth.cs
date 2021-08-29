@@ -1,12 +1,10 @@
 ﻿using System.Collections;
-using Photon.Pun;
-using Photon.Pun.UtilityScripts;
 using UnityEngine;
 
 namespace SIVS
 {
     [RequireComponent(typeof(AudioSource))]
-    public class UFOHealth : MonoBehaviourPunCallbacks
+    public class UFOHealth : MonoBehaviour
     {
         private const int KillPoints = 1000;
 
@@ -22,7 +20,7 @@ namespace SIVS
         [Tooltip("GameObject containing a TextPopup component to instantiate when the UFO is destroyed.")]
         public GameObject pointsObject;
         
-        public delegate void OnKillDelegate(int killerActorNumber);
+        public delegate void OnKillDelegate(int killerPlayerNumber);
 
         public static event OnKillDelegate OnKill;
 
@@ -35,23 +33,16 @@ namespace SIVS
 
             Destroy(other.gameObject);
 
-            if (!photonView.IsMine) return;
-
-            var bulletOwner = other.gameObject.GetComponent<PlayerBullet>().Owner;
-
-            bulletOwner.AddScore(KillPoints);
-
-            photonView.RPC(nameof(Die), RpcTarget.All, bulletOwner.Number);
+            Die(other.gameObject.GetComponent<PlayerBullet>().Owner);
         }
-
-        [PunRPC]
-        private void Die(int actorNumber)
+        
+        protected virtual void Die(SIVSPlayer killer)
         {
             if (_hidden) return;
 
             SoundPlayer.PlaySound(deathSound);
             
-            OnKill?.Invoke(actorNumber);
+            OnKill?.Invoke(killer.Number);
 
             var currentPosition = transform.position;
             
@@ -61,11 +52,7 @@ namespace SIVS
             if (gameObject.TryGetComponent(out PowerupDrop drop))
                 drop.GeneratePowerupDrop();
 
-            if (photonView.IsMine)
-            {
-                StartCoroutine(DestroyDelay());
-                CameraShaker.ShakeAll(0.1f, 0.35f);
-            }
+            ShakeCameraAndStartDestroy();
 
             Hide();
 
@@ -73,12 +60,20 @@ namespace SIVS
             Instantiate(explosionParticles, currentPosition, Quaternion.identity);
         }
 
+        protected virtual void ShakeCameraAndStartDestroy()
+        {
+            CameraShaker.ShakeAll(0.1f, 0.35f);
+            StartCoroutine(DestroyDelay());
+        }
+
         private IEnumerator DestroyDelay()
         {
             yield return new WaitForSeconds(0.5f);
 
-            PhotonNetwork.Destroy(gameObject);
+            DestroyObject();
         }
+
+        protected virtual void DestroyObject() => Destroy(gameObject);
 
         private void Hide()
         {
