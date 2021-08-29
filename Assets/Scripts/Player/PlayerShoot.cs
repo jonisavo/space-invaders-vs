@@ -1,11 +1,10 @@
 ﻿using System.Collections;
 using UnityEngine;
-using Photon.Pun;
 
 namespace SIVS
 {
     [RequireComponent(typeof(AudioSource))]
-    public class PlayerShoot : MonoBehaviourPun
+    public class PlayerShoot : MonoBehaviour
     {
         [Tooltip("Bullet(s) that can be shot.")]
         public GameObject[] bulletTypes;
@@ -17,18 +16,23 @@ namespace SIVS
 
         private bool _shootingBlockedByOptions;
 
-        private void Awake()
+        private SIVSPlayer _player;
+
+        protected virtual void Awake()
         {
             _audioSource = GetComponent<AudioSource>();
+            _player = GetPlayerObject();
         }
 
-        private void OnEnable()
+        protected virtual SIVSPlayer GetPlayerObject() => GetComponent<Ownership>().Owner;
+
+        protected void OnEnable()
         {
             OptionsManager.OnOptionsOpen += HandleOptionsOpen;
             OptionsManager.OnOptionsClose += HandleOptionsClose;
         }
 
-        private void OnDisable()
+        protected void OnDisable()
         {
             OptionsManager.OnOptionsOpen -= HandleOptionsOpen;
             OptionsManager.OnOptionsClose -= HandleOptionsClose;
@@ -36,15 +40,12 @@ namespace SIVS
         
         private void Update()
         {
-            if (!photonView.IsMine) return;
-
             if (PressingFireButton() && CanFire())
-                photonView.RPC(nameof(FireBullet),
-                    RpcTarget.All, PhotonNetwork.LocalPlayer.GetBulletType());
+                FireBullet(_player.BulletType);
         }
 
-        private bool PressingFireButton() =>
-            Input.GetButtonDown("Fire1") || Input.GetButtonDown("Submit");
+        protected virtual bool PressingFireButton() =>
+            Input.GetButtonDown($"Player {_player.Number} Fire");
 
         private Vector2 GetBulletSpawnPoint()
         {
@@ -52,14 +53,12 @@ namespace SIVS
             return playerTransform.position + playerTransform.forward * 3;
         }
 
-        private bool CanFire() =>
+        protected virtual bool CanFire() =>
             Match.IsActive && !OwnBulletExists() && !_shootingBlockedByOptions;
-
-        [PunRPC]
-        private void FireBullet(PlayerBulletType bulletType)
+        
+        protected virtual void FireBullet(PlayerBulletType bulletType)
         {
-            if (photonView.IsMine)
-                _audioSource.PlayOneShot(fireSound);
+            PlayFireSound();
 
             var bulletObj = bulletTypes[(int) bulletType];
 
@@ -68,19 +67,21 @@ namespace SIVS
 
             if (bulletObject.TryGetComponent(out PlayerBullet bullet))
             {
-                bullet.SetOwner(Match.GetPlayer(photonView.Owner.ActorNumber));
+                bullet.SetOwner(_player);
             }
             else
             {
                 foreach (var childBullet in bulletObject.GetComponentsInChildren<PlayerBullet>())
-                    childBullet.SetOwner(Match.GetPlayer(photonView.Owner.ActorNumber));
+                    childBullet.SetOwner(_player);
             }
         }
+        
+        protected virtual void PlayFireSound() => _audioSource.PlayOneShot(fireSound);
 
         private bool OwnBulletExists()
         {
             foreach (var bullet in GameObject.FindGameObjectsWithTag("PlayerBullet"))
-                if (bullet.GetComponent<PlayerBullet>().Owner.Number == PhotonNetwork.LocalPlayer.ActorNumber)
+                if (bullet.GetComponent<PlayerBullet>().Owner.Number == _player.Number)
                     return true;
 
             return false;
