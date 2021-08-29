@@ -1,12 +1,11 @@
 ﻿using System.Collections;
-using Photon.Pun;
 using UnityEngine;
 
 namespace SIVS
 {
     [RequireComponent(typeof(BoxCollider2D))]
     [RequireComponent(typeof(AudioSource))]
-    public class InvaderShoot : MonoBehaviourPunCallbacks
+    public class InvaderShoot : MonoBehaviour
     {
         [Tooltip("The bullet to shoot.")]
         public GameObject bullet;
@@ -16,11 +15,11 @@ namespace SIVS
 
         private Vector3 _distanceToShootPoint;
 
-        private float _shootInterval;
+        private float _shootInterval = 1.5f;
 
         private AudioSource _audioSource;
 
-        private void Awake()
+        protected virtual void Awake()
         {
             var bounds = GetComponent<BoxCollider2D>().bounds;
             _distanceToShootPoint = bounds.min - transform.position;
@@ -29,14 +28,13 @@ namespace SIVS
 
             _audioSource = GetComponent<AudioSource>();
 
-            if (photonView.InstantiationData != null)
-                _shootInterval = (float) photonView.InstantiationData[2];
-            else
-                _shootInterval = 1.5f;
+            _shootInterval = Random.Range(3.0f, 4.75f);
 
-            if (photonView.IsMine)
-                StartCoroutine(ShootCoroutine());
+            StartShooting();
         }
+
+        protected virtual void StartShooting() =>
+            StartCoroutine(ShootCoroutine());
 
         private IEnumerator ShootCoroutine()
         {
@@ -49,29 +47,30 @@ namespace SIVS
 
                 if (hit.collider) continue;
             
-                photonView.RPC(nameof(Shoot), RpcTarget.All);
+                Shoot();
             }
         }
 
-        public void StopShooting()
+        public virtual void StopShooting()
         {
-            if (!photonView.IsMine) return;
-            
             StopAllCoroutines();
         }
+        
+        protected virtual void Shoot()
+        {
+            PlayShootSound();
+            
+            Instantiate(bullet, GetBulletSpawnPoint(), Quaternion.identity);    
+        }
 
+        protected virtual void PlayShootSound()
+        {
+            _audioSource.PlayOneShot(shootSound, 0.6f);
+        }
+        
         private Vector2 GetBulletSpawnPoint()
         {
             return transform.position + _distanceToShootPoint;
-        }
-
-        [PunRPC]
-        private void Shoot()
-        {
-            if (photonView.IsMine)
-                _audioSource.PlayOneShot(shootSound, 0.6f);
-            
-            Instantiate(bullet, GetBulletSpawnPoint(), Quaternion.identity);    
         }
     }
 }
