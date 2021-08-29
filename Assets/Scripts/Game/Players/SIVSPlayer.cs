@@ -112,6 +112,8 @@ namespace SIVS
             Name = name;
             Number = number;
         }
+        
+        public virtual void Cleanup() {}
 
         public virtual void InitializeStats()
         {

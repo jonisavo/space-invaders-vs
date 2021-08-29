@@ -32,6 +32,9 @@ namespace SIVS
 
         private static void SetProperty(this Player player, string key, object value)
         {
+            if (!player.IsLocal)
+                return;
+            
             player.SetCustomProperties(new Hashtable()
             {
                 { key, value }
@@ -90,8 +93,5 @@ namespace SIVS
 
         public static void SetBulletType(this Player player, PlayerBulletType type) =>
             player.SetProperty(PlayerPhotonPropertyKey.BulletType, type);
-
-        public static SIVSPhotonPlayer toSIVSPlayer(this Player player) =>
-            new SIVSPhotonPlayer(player);
     }
 }

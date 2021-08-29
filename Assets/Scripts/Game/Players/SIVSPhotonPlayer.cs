@@ -46,16 +46,16 @@ namespace SIVS
             PhotonNetwork.AddCallbackTarget(this);
         }
 
-        ~SIVSPhotonPlayer()
+        public override void Cleanup()
         {
             PhotonNetwork.RemoveCallbackTarget(this);
         }
-        
+
         #region PUN Callbacks
 
         public void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
         {
-            if (targetPlayer.ActorNumber != _photonPlayer.ActorNumber)
+            if (!targetPlayer.Equals(_photonPlayer))
                 return;
 
             if (changedProps.ContainsKey(PlayerPhotonPropertyKey.Lives))

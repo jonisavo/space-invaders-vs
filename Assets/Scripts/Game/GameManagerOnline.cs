@@ -24,14 +24,14 @@ namespace SIVS
         
         protected override void OnEnable()
         {
-            base.OnEnable();
             PhotonNetwork.AddCallbackTarget(this);
+            base.OnEnable();
         }
 
         protected override void OnDisable()
         {
-            base.OnDisable();
             PhotonNetwork.RemoveCallbackTarget(this);
+            base.OnDisable();
         }
 
         private void Start()
@@ -92,7 +92,12 @@ namespace SIVS
             Players[2].InitializeStats();
         }
         
-        public void LeaveGame() => PhotonNetwork.LeaveRoom();
+        public void LeaveGame()
+        {
+            PhotonNetwork.LeaveRoom();
+
+            CleanupPlayers();
+        }
 
         protected override void EndGame(SIVSPlayer winner, SIVSPlayer loser, VictoryReason victoryReason)
         {

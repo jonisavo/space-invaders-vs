@@ -16,14 +16,18 @@ namespace SIVS
 
         protected bool _gameOver;
 
-        protected InvaderManager _invaderManager;
+        private bool _bothReady;
 
-        protected VictoryUIManager _victoryUIManager;
+        private InvaderManager _invaderManager;
 
-        protected OptionsManager _optionsManager;
+        private VictoryUIManager _victoryUIManager;
+
+        private OptionsManager _optionsManager;
 
         protected virtual void Awake()
         {
+            CleanupPlayers();
+            
             _invaderManager = GetComponent<InvaderManager>();
             _victoryUIManager = GetComponent<VictoryUIManager>();
             _optionsManager = GetComponent<OptionsManager>();
@@ -47,11 +51,13 @@ namespace SIVS
 
         private void HandleReadyChange(SIVSPlayer player, bool isReady)
         {
-            if (Match.IsActive || !IsEveryoneReady() || _gameOver)
+            if (_bothReady || _gameOver || !IsEveryoneReady())
                 return;
 
             _invaderManager.InitializeAllInvaders();
-                
+            
+            _bothReady = true;
+            
             Match.IsActive = true;
         }
 
@@ -85,11 +91,19 @@ namespace SIVS
         {
             Players[1] = new SIVSPlayer("Player 1", 1);
             Players[2] = new SIVSPlayer("Player 2", 2);
-            
+
             Players[1].InitializeStats();
             Players[2].InitializeStats();
         }
-        
+
+        protected void CleanupPlayers()
+        {
+            foreach (var player in Players.Values)
+                player.Cleanup();
+            
+            Players.Clear();
+        }
+
         protected virtual void EndGame(SIVSPlayer winner, SIVSPlayer loser, VictoryReason victoryReason)
         {
             _gameOver = true;
@@ -148,7 +162,8 @@ namespace SIVS
         {
             foreach (var player in Players.Values)
             {
-                if (player == null) return false;
+                if (player == null)
+                    return false;
 
                 if (!player.Ready)
                     return false;

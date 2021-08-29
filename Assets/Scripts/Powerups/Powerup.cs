@@ -1,5 +1,4 @@
 ﻿using Photon.Pun;
-using Photon.Realtime;
 using UnityEngine;
 
 namespace SIVS
@@ -34,7 +33,7 @@ namespace SIVS
             if (PhotonNetwork.LocalPlayer.ActorNumber != player.ActorNumber)
                 return;
             
-            OnPowerupGet(other.gameObject, player.toSIVSPlayer());
+            OnPowerupGet(other.gameObject, GameManager.Players[player.ActorNumber]);
             
             photonView.RPC(nameof(ObtainPowerup), RpcTarget.All, player.ActorNumber);
         }
