@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using Photon.Pun;
-using Random = UnityEngine.Random;
 
 namespace SIVS
 {
@@ -19,13 +18,12 @@ namespace SIVS
         {
             var spawnXCoord = player.Number == 1 ? -3.0f : 3.0f;
             var position = _spawnManager.PlayAreaPosition(player.Number, spawnXCoord, 2.0f);
-
-            // TODO: Is this necessary? Should we switch to the Ownership component entirely?
+            
             object[] instantiationData = { player.Number == 1 };
 
             PhotonNetwork.Instantiate("UFO",
                 position, Quaternion.identity, 0, instantiationData);
-                
+
             _photonView.RPC(nameof(ShowUfoSpawnedPopupRPC), RpcTarget.All);
         }
 
@@ -46,13 +44,13 @@ namespace SIVS
         {
             if (PhotonNetwork.LocalPlayer.ActorNumber != player.Number)
                 return;
-            
+
             base.SpawnInvadersForPlayer(player);
         }
 
         protected override void SpawnOneInvaderForPlayer(SIVSPlayer player, int row, int column)
         {
-            object[] instantiationData = {player.Number, GenerateInvaderHealth(), Random.Range(3.0f, 4.75f)};
+            object[] instantiationData = { player.Number, GenerateInvaderHealth() };
 
             var position = _spawnManager.PlayAreaPosition(
                 player.Number, -1.75f + row * 0.4f, 2.1f - column * 0.3f
