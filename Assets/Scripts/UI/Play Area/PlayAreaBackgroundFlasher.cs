@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using UnityEngine;
-using Photon.Realtime;
 
 namespace SIVS
 {
@@ -43,9 +42,9 @@ namespace SIVS
             SIVSPlayer.OnRoundChange -= HandleRoundChange;
         }
 
-        private void HandlePlayAreaInitialize(Player player, int playerNumber)
+        private void HandlePlayAreaInitialize(SIVSPlayer player)
         {
-            _actorNumber = player.ActorNumber;
+            _actorNumber = player.Number;
         }
 
         private void HandleInvaderKill(int killerActorNumber)

@@ -1,5 +1,4 @@
-﻿using Photon.Realtime;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace SIVS
 {
@@ -31,8 +30,6 @@ namespace SIVS
         private bool OutOfBounds()
         {
             var position = transform.position;
-
-            // lol
 
             return position.y > _ownArea.y + _ownArea.height ||
                    position.y < _ownArea.y ||

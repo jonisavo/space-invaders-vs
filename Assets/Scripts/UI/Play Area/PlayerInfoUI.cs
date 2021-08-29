@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using ExitGames.Client.Photon;
 using Photon.Pun;
-using Photon.Pun.UtilityScripts;
 using Photon.Realtime;
 using RedBlueGames.Tools.TextTyper;
 using UnityEngine;
@@ -50,10 +49,10 @@ namespace SIVS
             _cachedScore = score;
         }
 
-        public void Initialize(Player player)
+        public void Initialize(SIVSPlayer player)
         {
-            _actorNumber = player.ActorNumber;
-            nameTextTyper.TypeText(player.NickName);
+            _actorNumber = player.Number;
+            nameTextTyper.TypeText(player.Name);
         }
 
         private void AddLife()
