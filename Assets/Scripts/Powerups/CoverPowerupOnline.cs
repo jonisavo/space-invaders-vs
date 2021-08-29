@@ -1,24 +1,27 @@
-﻿using UnityEngine;
+﻿using Photon.Pun;
+using UnityEngine;
 
 namespace SIVS
 {
-    public class CoverPowerup : Powerup
+    public class CoverPowerupOnline : PowerupOnline
     {
         protected override void OnPowerupGet(GameObject obj, SIVSPlayer player)
         {
-            AddCover(player.Number, Match.SumOfRounds);
-
+            _photonView.RPC(nameof(AddCover),
+                RpcTarget.AllBuffered, player.Number, Match.SumOfRounds);
+            
             base.OnPowerupGet(obj, player);
         }
-        
+
+        [PunRPC]
         private void AddCover(int playerNumber, int sumOfRounds)
         {
             foreach (var cover in GameObject.FindGameObjectsWithTag("Cover"))
             {
-                if (cover.GetComponent<Ownership>().Owner.Number != playerNumber)
+                if (cover.GetPhotonView().Owner.ActorNumber != playerNumber)
                     continue;
                 
-                cover.GetComponent<Cover>().AddPieces(10 + sumOfRounds * 2);
+                cover.GetComponent<CoverOnline>().AddPieces(10 + sumOfRounds * 2);
             }
         }
     }

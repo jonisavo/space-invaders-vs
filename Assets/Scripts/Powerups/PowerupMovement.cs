@@ -1,9 +1,8 @@
-﻿using Photon.Pun;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace SIVS
 {
-    public class PowerupMovement : MonoBehaviourPun
+    public class PowerupMovement : MonoBehaviour
     {
         private const float DespawnHeight = -2.2f;
 
@@ -18,12 +17,9 @@ namespace SIVS
                 DestroyPowerup();
         }
 
-        private void DestroyPowerup()
+        protected virtual void DestroyPowerup()
         {
-            if (photonView.IsMine)
-                PhotonNetwork.Destroy(gameObject);
-            else
-                if (gameObject) gameObject.SetActive(false);
+            Destroy(gameObject);
         }
     }
 }

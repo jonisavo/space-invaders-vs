@@ -1,11 +1,10 @@
-﻿using Photon.Pun;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace SIVS
 {
-    public class PowerupDrop : MonoBehaviourPun
+    public class PowerupDrop : MonoBehaviour
     {
-        public string[] powerupPrefabNames;
+        public GameObject[] localPowerupPrefabs;
 
         public float[] dropChances;
 
@@ -13,38 +12,43 @@ namespace SIVS
 
         public float spawnYOffset;
 
-        public void GeneratePowerupDrop()
+        public virtual void GeneratePowerupDrop()
         {
-            if (!PhotonNetwork.InRoom || !photonView.IsMine)
+            if (!ValidatePowerups())
                 return;
 
-            if (powerupPrefabNames.Length != dropChances.Length)
-            {
-                Debug.LogError("Powerup prefab names and drop chances don't match!");
-                return;
-            }
+            SpawnPowerup();
+        }
 
+        protected virtual bool ValidatePowerups()
+        {
+            if (localPowerupPrefabs.Length == dropChances.Length)
+                return true;
+            
+            Debug.LogError("Powerup prefab objects and drop chances don't match!");
+            
+            return false;
+        }
+
+        protected virtual void SpawnPowerup()
+        {
             var powerup = GetDrop();
 
-            if (powerup == null) return;
-
-            SpawnPowerup(powerup);
-        }
-
-        private string GetDrop()
-        {
-            for (var i = 0; i < powerupPrefabNames.Length; i++)
-                if (Random.Range(0.0f, 100.0f) < dropChances[i] + 0.5f * Match.SumOfRounds)
-                    return powerupPrefabNames[i];
-
-            return null;
-        }
-
-        private void SpawnPowerup(string powerupName)
-        {
+            if (powerup == null)
+                return;
+            
             var position = transform.position + new Vector3(spawnXOffset, spawnYOffset);
 
-            PhotonNetwork.Instantiate(powerupName, position, Quaternion.identity);
+            Instantiate(powerup, position, Quaternion.identity);
+        }
+        
+        private GameObject GetDrop()
+        {
+            for (var i = 0; i < localPowerupPrefabs.Length; i++)
+                if (Random.Range(0.0f, 100.0f) < dropChances[i] + 0.5f * Match.SumOfRounds)
+                    return localPowerupPrefabs[i];
+
+            return null;
         }
     }
 }
