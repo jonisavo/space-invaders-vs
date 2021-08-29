@@ -1,13 +1,10 @@
 ﻿using System.Collections.Generic;
-using ExitGames.Client.Photon;
-using Photon.Pun;
-using Photon.Realtime;
 using RedBlueGames.Tools.TextTyper;
 using UnityEngine;
 
 namespace SIVS
 {
-    public class PlayerInfoUI : MonoBehaviourPunCallbacks
+    public class PlayerInfoUI : MonoBehaviour
     {
         public Canvas uiCanvas;
         public TextTyper nameTextTyper;
@@ -19,39 +16,54 @@ namespace SIVS
         public GameObject nextRoundPopupObject;
         public RainbowGradientText roundRainbowTextComponent;
 
-        private int _actorNumber = -1;
+        private int _playerNumber = -1;
 
         private readonly List<GameObject> _lifeObjects = new List<GameObject>();
 
-        private int _cachedScore = -1;
-        
         private void Awake() => roundRainbowTextComponent.enabled = false;
 
-        public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
+        private void OnEnable()
         {
-            if (targetPlayer.ActorNumber != _actorNumber)
+            SIVSPlayer.OnLivesChange += HandleLivesChange;
+            SIVSPlayer.OnRoundChange += HandleRoundChange;
+            SIVSPlayer.OnScoreChange += HandleScoreChange;
+        }
+
+        private void OnDisable()
+        {
+            SIVSPlayer.OnLivesChange -= HandleLivesChange;
+            SIVSPlayer.OnRoundChange -= HandleRoundChange;
+            SIVSPlayer.OnScoreChange -= HandleScoreChange;
+        }
+
+        private void HandleLivesChange(SIVSPlayer player, int newLives)
+        {
+            if (player.Number != _playerNumber)
                 return;
             
-            if (changedProps.ContainsKey(PlayerPhotonPropertyKey.Lives))
-                UpdateLifeObjects((int) changedProps[PlayerPhotonPropertyKey.Lives]);
-            
-            if (changedProps.ContainsKey(PlayerPhotonPropertyKey.CurrentRound))
-            {
-                UpdateRound((int) changedProps[PlayerPhotonPropertyKey.CurrentRound]);
-                ShowRoundChangePopup((int) changedProps[PlayerPhotonPropertyKey.CurrentRound]);
-            }
+            UpdateLifeObjects(newLives);
+        }
 
-            var score = targetPlayer.GetScore();
+        private void HandleRoundChange(SIVSPlayer player, int newRound)
+        {
+            if (player.Number != _playerNumber)
+                return;
             
-            if (score != _cachedScore)
-                UpdateScore(targetPlayer.GetScore());
+            UpdateRound(newRound);
+            ShowRoundChangePopup(newRound);
+        }
 
-            _cachedScore = score;
+        private void HandleScoreChange(SIVSPlayer player, int newScore)
+        {
+            if (player.Number != _playerNumber)
+                return;
+            
+            UpdateScore(newScore);
         }
 
         public void Initialize(SIVSPlayer player)
         {
-            _actorNumber = player.Number;
+            _playerNumber = player.Number;
             nameTextTyper.TypeText(player.Name);
         }
 
