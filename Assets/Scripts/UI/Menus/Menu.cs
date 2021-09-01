@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace SIVS
@@ -14,7 +15,15 @@ namespace SIVS
         
         private CanvasGroup _canvasGroup;
 
-        private void Awake() => _canvasGroup = GetComponent<CanvasGroup>();
+        private Selectable _previouslySelectedSelectable;
+
+        private EventSystem _eventSystem;
+
+        private void Awake()
+        {
+            _canvasGroup = GetComponent<CanvasGroup>();
+            _eventSystem = EventSystem.current;
+        }
 
         public void Show()
         {
@@ -22,7 +31,9 @@ namespace SIVS
             _canvasGroup.alpha = 1.0f;
             _canvasGroup.blocksRaycasts = true;
             
-            if (autoSelect)
+            if (_previouslySelectedSelectable)
+                _previouslySelectedSelectable.Select();
+            else if (autoSelect)
                 autoSelect.Select();
         }
 
@@ -31,6 +42,9 @@ namespace SIVS
             _canvasGroup.interactable = false;
             _canvasGroup.alpha = 0.0f;
             _canvasGroup.blocksRaycasts = false;
+
+            _previouslySelectedSelectable =
+                _eventSystem.currentSelectedGameObject.GetComponent<Selectable>();
         }
     }
 }
