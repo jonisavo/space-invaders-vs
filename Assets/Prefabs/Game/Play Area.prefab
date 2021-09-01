@@ -435,7 +435,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animationSpeed: 18
-  active: 0
+  active: 1
   colorSaturation: 0.88
   colorBrightness: 0.67
 --- !u!1 &3530492717057178173
@@ -522,7 +522,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &8711626672263140625
 MonoBehaviour:
   m_ObjectHideFlags: 0

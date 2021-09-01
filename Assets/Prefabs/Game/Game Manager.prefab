@@ -48,6 +48,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5a6278c50f943e8874365b95f4878a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  setMatchOnlineFlag: 1
   victorySound: {fileID: 8300000, guid: f3da6abb986592f45845c00b8c6218af, type: 3}
 --- !u!114 &2407172818296431266
 MonoBehaviour:
@@ -61,6 +62,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cae7c6deca7251489062d30ec62963a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  localPlayerShipObject: {fileID: 0}
+  localCoverObject: {fileID: 0}
 --- !u!114 &2407172818296431269
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -89,6 +92,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56cce6cb170ce7c4ea9d20d9e8817fc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  invaderObject: {fileID: 0}
+  ufoObject: {fileID: 0}
   textPopupObject: {fileID: 3883194513542154728, guid: 3201deba66b0ef746a00127cf5cc3c2e,
     type: 3}
   debugMode: 0

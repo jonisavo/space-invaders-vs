@@ -191,11 +191,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0afabbb18145479c95d4cb7cad01ab95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  powerupPrefabNames:
-  - Life Powerup
-  - Cover Powerup
-  - Double Shot Powerup
-  - Scatter Shot Powerup
+  localPowerupPrefabs: []
   dropChances:
   - 1.75
   - 1.75
@@ -203,6 +199,11 @@ MonoBehaviour:
   - 2
   spawnXOffset: 0.06
   spawnYOffset: -0.04
+  powerupPrefabNames:
+  - Life Powerup
+  - Cover Powerup
+  - Double Shot Powerup
+  - Scatter Shot Powerup
 --- !u!61 &4113204282743565066
 BoxCollider2D:
   m_ObjectHideFlags: 0
