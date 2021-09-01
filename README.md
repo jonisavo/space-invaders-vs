@@ -23,6 +23,8 @@ Music by [YouFulca](https://wingless-seraph.net/en/)
 
 [UnityGradientBackground](https://github.com/miguel12345/UnityGradientBackground) package by Miguel Ferreira
 
+[SerializableDictionary](https://wiki.unity3d.com/index.php/SerializableDictionary) by Fredrik Ludvigsen
+
 ## Set up
 
 1. Clone the repository
