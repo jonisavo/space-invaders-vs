@@ -96,9 +96,6 @@ namespace SIVS
         {
             Players[1] = new SIVSPlayer("Player 1", 1);
             Players[2] = new SIVSPlayer("Player 2", 2);
-
-            Players[1].InitializeStats();
-            Players[2].InitializeStats();
         }
 
         protected void CleanupPlayers()
