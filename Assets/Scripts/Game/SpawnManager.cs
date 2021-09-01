@@ -68,20 +68,33 @@ namespace SIVS
 
         protected virtual void SpawnShips()
         {
-            Instantiate(localPlayerShipObject, PlayerSpawnPoint(1), Quaternion.identity);
+            var p1 = Instantiate(localPlayerShipObject, PlayerSpawnPoint(1), Quaternion.identity);
+            p1.GetComponent<Ownership>().Owner = GameManager.Players[1];
 
-            Instantiate(localPlayerShipObject, PlayerSpawnPoint(2), Quaternion.identity);
+            var p2 = Instantiate(localPlayerShipObject, PlayerSpawnPoint(2), Quaternion.identity);
+            p2.GetComponent<Ownership>().Owner = GameManager.Players[2];
+            
+            GameManager.Players[1].InitializeStats();
+            GameManager.Players[2].InitializeStats();
         }
 
         protected virtual void SpawnCover()
         {
-            Instantiate(localCoverObject, PlayAreaPosition(1, -1.7f, -1.12f), Quaternion.identity);
+            SpawnOneLocalCover(1, -1.7f, -1.12f);
 
-            Instantiate(localCoverObject, PlayAreaPosition(1, 0.5f, -1.12f), Quaternion.identity);
-            
-            Instantiate(localCoverObject, PlayAreaPosition(2, -1.7f, -1.12f), Quaternion.identity);
+            SpawnOneLocalCover(1, 0.5f, -1.12f);
 
-            Instantiate(localCoverObject, PlayAreaPosition(2, 0.5f, -1.12f), Quaternion.identity);
+            SpawnOneLocalCover(2, -1.7f, -1.12f);
+
+            SpawnOneLocalCover(2, 0.5f, -1.12f);
+        }
+
+        private void SpawnOneLocalCover(int playerNumber, float x, float y)
+        {
+            var cover =
+                Instantiate(localCoverObject, PlayAreaPosition(playerNumber, x, y), Quaternion.identity);
+
+            cover.GetComponent<Ownership>().Owner = GameManager.Players[playerNumber];
         }
     }
 }
