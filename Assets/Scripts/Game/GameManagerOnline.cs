@@ -92,7 +92,7 @@ namespace SIVS
             Players[2].InitializeStats();
         }
         
-        public void LeaveGame()
+        public override void LeaveGame()
         {
             PhotonNetwork.LeaveRoom();
 

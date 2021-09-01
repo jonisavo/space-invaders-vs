@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace SIVS
 {
@@ -104,6 +105,13 @@ namespace SIVS
                 player.Cleanup();
             
             Players.Clear();
+        }
+
+        public virtual void LeaveGame()
+        {
+            CleanupPlayers();
+
+            SceneManager.LoadScene("MainMenu");
         }
 
         protected virtual void EndGame(SIVSPlayer winner, SIVSPlayer loser, VictoryReason victoryReason)
