@@ -5,7 +5,7 @@ using UnityEngine.UI;
 namespace SIVS
 {
     [RequireComponent(typeof(Selectable))]
-    public class RainbowGradientSelectable : RainbowGradientMonoBehaviour
+    public class RainbowAnimationSelectable : RainbowAnimationMonoBehaviour
     {
         private Selectable _selectable;
 
@@ -27,6 +27,11 @@ namespace SIVS
             if (_eventSystem.currentSelectedGameObject != gameObject)
                 return;
 
+            UpdateColor();
+        }
+
+        public override void UpdateColor()
+        {
             AnimateSingleHue(ref _currentHue);
             
             _currentColorBlock.selectedColor = Color.HSVToRGB(_currentHue / 360f, 0.3f, 0.9f);
