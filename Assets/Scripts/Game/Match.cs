@@ -9,7 +9,7 @@ namespace SIVS
 
         public const int FinalRound = 5;
 
-        public static bool IsOnline = true;
+        public static bool IsOnline = false;
 
         public static bool IsActive
         {
@@ -56,7 +56,5 @@ namespace SIVS
                 return sum;
             }
         }
-
-        public static SIVSPlayer GetPlayer(int num) => GameManager.Players[num];
     }
 }

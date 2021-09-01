@@ -8,6 +8,9 @@ namespace SIVS
     [RequireComponent(typeof(OptionsManager))]
     public class GameManager : MonoBehaviour
     {
+        [Tooltip("Whether to set the Match IsOnline flag.")]
+        public bool setMatchOnlineFlag;
+        
         [Tooltip("Audio clip to play upon a victory.")]
         public AudioClip victorySound;
 
@@ -26,6 +29,8 @@ namespace SIVS
 
         protected virtual void Awake()
         {
+            Match.IsOnline = setMatchOnlineFlag;
+            
             CleanupPlayers();
             
             _invaderManager = GetComponent<InvaderManager>();
