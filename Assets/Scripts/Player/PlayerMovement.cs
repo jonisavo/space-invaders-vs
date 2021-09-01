@@ -16,8 +16,9 @@ namespace SIVS
         protected virtual void Awake()
         {
             _rb = GetComponent<Rigidbody2D>();
-            _inputAxisName = GetInputAxisName();
         }
+
+        private void Start() => _inputAxisName = GetInputAxisName();
 
         protected virtual string GetInputAxisName()
         {

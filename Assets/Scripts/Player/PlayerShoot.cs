@@ -24,8 +24,9 @@ namespace SIVS
         protected virtual void Awake()
         {
             _audioSource = GetComponent<AudioSource>();
-            _player = GetPlayerObject();
         }
+
+        private void Start() => _player = GetPlayerObject();
 
         protected virtual SIVSPlayer GetPlayerObject() => GetComponent<Ownership>().Owner;
 

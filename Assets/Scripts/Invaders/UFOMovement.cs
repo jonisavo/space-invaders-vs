@@ -13,10 +13,10 @@ namespace SIVS
 
         protected AudioSource _audioSource;
 
-        protected virtual void Awake()
-        {
-            _audioSource = GetComponent<AudioSource>();
+        protected virtual void Awake() => _audioSource = GetComponent<AudioSource>();
 
+        private void Start()
+        {
             _movementDirection = GetMovementDirection();
             
             PlayPannedEntrySound();

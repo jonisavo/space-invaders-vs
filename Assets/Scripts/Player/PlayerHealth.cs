@@ -32,11 +32,10 @@ namespace SIVS
 
         private SIVSPlayer _player;
 
-        protected virtual void Awake()
-        {
+        protected virtual void Awake() =>
             _audioSource = GetComponent<AudioSource>();
-            _player = GetThisPlayer();
-        }
+
+        private void Start() => _player = GetThisPlayer();
 
         private void OnCollisionEnter2D(Collision2D other)
         {
