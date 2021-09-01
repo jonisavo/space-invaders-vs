@@ -21,7 +21,7 @@ namespace SIVS
             }
         }
 
-        private bool _ready = true;
+        private bool _ready = false;
 
         public virtual int CurrentRound
         {
@@ -117,12 +117,12 @@ namespace SIVS
 
         public virtual void InitializeStats()
         {
-            Ready = true;
             CurrentRound = 1;
             Lives = InitialLives;
             Score = 0;
             InvaderKills = 0;
             BulletType = PlayerBulletType.Normal;
+            Ready = true;
         }
 
         public virtual void AddScore(int amount)
