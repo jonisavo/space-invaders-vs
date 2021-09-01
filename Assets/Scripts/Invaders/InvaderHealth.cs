@@ -148,9 +148,9 @@ namespace SIVS
 
         protected virtual void DestroyObject(SIVSPlayer killer)
         {
-            Destroy(gameObject);
-
             killer.InvaderKills += 1;
+            
+            Destroy(gameObject);
         }
 
         private void TintSprite()

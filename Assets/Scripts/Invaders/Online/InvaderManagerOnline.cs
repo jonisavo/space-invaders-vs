@@ -13,6 +13,9 @@ namespace SIVS
             _photonView = GetComponent<PhotonView>();
             base.Awake();
         }
+        
+        protected override bool AreAllInvadersDefeated(SIVSPlayer player) =>
+            GetInvaderCountOfPlayer(player) == 0;
 
         protected override void SpawnUFOForPlayer(SIVSPlayer player)
         {

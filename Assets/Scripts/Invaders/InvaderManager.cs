@@ -59,16 +59,17 @@ namespace SIVS
                 invaderKills += roomPlayer.InvaderKills;
 
             _totalInvaderKills = invaderKills;
-
-            if (GetInvaderCountOfPlayer(player) > 0) return;
-
-            var nextRound = player.CurrentRound + 1;
             
+            if (!AreAllInvadersDefeated(player)) return;
+
             player.GoToNextRound();
 
-            if (nextRound <= Match.FinalRound)
+            if (player.CurrentRound + 1 <= Match.FinalRound)
                 SpawnInvadersForPlayer(player);
         }
+
+        protected virtual bool AreAllInvadersDefeated(SIVSPlayer player) =>
+            GetInvaderCountOfPlayer(player) <= 1;
 
         #endregion
 
@@ -161,7 +162,7 @@ namespace SIVS
         protected virtual void SpawnInvadersForPlayer(SIVSPlayer player)
         {
             var round = player.CurrentRound;
-            
+
             var rows = debugMode && debugRows > 0 ? debugRows : 3 + round;
 
             var columns = debugMode && debugColumns > 0 ? debugColumns : 3 + round / 2;
@@ -173,8 +174,6 @@ namespace SIVS
 
         protected virtual void SpawnOneInvaderForPlayer(SIVSPlayer player, int row, int column)
         {
-            // object[] instantiationData = {side, GenerateInvaderHealth(), Random.Range(3.0f, 4.75f)};
-
             var position = _spawnManager.PlayAreaPosition(
                 player.Number, -1.75f + row * 0.4f, 2.1f - column * 0.3f
             );
@@ -248,7 +247,7 @@ namespace SIVS
             }
         }
 
-        private int GetInvaderCountOfPlayer(SIVSPlayer player)
+        protected int GetInvaderCountOfPlayer(SIVSPlayer player)
         {
             var count = 0;
 
