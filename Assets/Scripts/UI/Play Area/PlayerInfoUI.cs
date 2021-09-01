@@ -27,7 +27,7 @@ namespace SIVS
         public GameObject nextRoundPopupObject;
         
         [NotNull]
-        public RainbowGradientText roundRainbowTextComponent;
+        public RainbowAnimationText roundRainbowTextComponent;
 
         private int _playerNumber = -1;
 
@@ -124,7 +124,7 @@ namespace SIVS
             if (round == Match.FinalRound)
             {
                 textPopup.ChangeText("FINAL ROUND!");
-                var rainbowText = textPopup.gameObject.AddComponent<RainbowGradientText>();
+                var rainbowText = textPopup.gameObject.AddComponent<RainbowAnimationText>();
                 rainbowText.EnableAllAnimation();
                 rainbowText.animationSpeed = 25;
             }
