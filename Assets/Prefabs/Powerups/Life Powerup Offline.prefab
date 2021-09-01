@@ -1,0 +1,111 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &8689110234616924907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8524515659362366541}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 854385a0f5c843bca4d5e84df5cb2c6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fallSpeed: 0.7
+--- !u!114 &1946858961527224663
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8524515659362366541}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 817eff4ac8c2445bb29bf19727f69075, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundEffect: {fileID: 8300000, guid: e02efb5ed48520e4c84148201b41031d, type: 3}
+  popupObject: {fileID: 4740737177052898925, guid: be8dcd7e14df1d84f8bd6af2305f8223,
+    type: 3}
+  popupText: <animation=slowsine>EXTRA LIFE</animation>
+  pointsPopup: {fileID: 4604369377521931590, guid: 861c3cbef5070db46ab2fda2d6556fba,
+    type: 3}
+--- !u!1001 &3153728612211723230
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5429776774833657584, guid: d485d5755684af146a5f969123e3dd61,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5429776774833657584, guid: d485d5755684af146a5f969123e3dd61,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5429776774833657584, guid: d485d5755684af146a5f969123e3dd61,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5429776774833657584, guid: d485d5755684af146a5f969123e3dd61,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5429776774833657584, guid: d485d5755684af146a5f969123e3dd61,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5429776774833657584, guid: d485d5755684af146a5f969123e3dd61,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5429776774833657584, guid: d485d5755684af146a5f969123e3dd61,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5429776774833657584, guid: d485d5755684af146a5f969123e3dd61,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5429776774833657584, guid: d485d5755684af146a5f969123e3dd61,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5429776774833657584, guid: d485d5755684af146a5f969123e3dd61,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5429776774833657584, guid: d485d5755684af146a5f969123e3dd61,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6740026780265086867, guid: d485d5755684af146a5f969123e3dd61,
+        type: 3}
+      propertyPath: m_Name
+      value: Life Powerup Offline
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 7878881726320157998, guid: d485d5755684af146a5f969123e3dd61, type: 3}
+    - {fileID: 3195755219767348406, guid: d485d5755684af146a5f969123e3dd61, type: 3}
+    - {fileID: 6408946124942354156, guid: d485d5755684af146a5f969123e3dd61, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: d485d5755684af146a5f969123e3dd61, type: 3}
+--- !u!1 &8524515659362366541 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6740026780265086867, guid: d485d5755684af146a5f969123e3dd61,
+    type: 3}
+  m_PrefabInstance: {fileID: 3153728612211723230}
+  m_PrefabAsset: {fileID: 0}
