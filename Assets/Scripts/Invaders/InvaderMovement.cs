@@ -19,10 +19,11 @@ namespace SIVS
         protected virtual void Awake()
         {
             var bounds = GetComponent<BoxCollider2D>().bounds;
+            
             _distanceToCenter = new Vector3(bounds.size.x / 2, -bounds.size.y / 2, 0);
-
-            _playerNumber = GetPlayerNumber();
         }
+
+        private void Start() => _playerNumber = GetPlayerNumber();
 
         protected virtual int GetPlayerNumber() => GetComponent<Ownership>().Owner.Number;
 
@@ -41,7 +42,7 @@ namespace SIVS
         {
             foreach (var invader in GameObject.FindGameObjectsWithTag("Invader"))
             {
-                var movement = invader.GetComponent<InvaderMovementOnline>();
+                var movement = invader.GetComponent<InvaderMovement>();
 
                 if (movement._playerNumber != _playerNumber) continue;
 
