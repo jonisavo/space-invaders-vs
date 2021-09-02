@@ -43,8 +43,10 @@ namespace SIVS
             _canvasGroup.alpha = 0.0f;
             _canvasGroup.blocksRaycasts = false;
 
-            _previouslySelectedSelectable =
-                _eventSystem.currentSelectedGameObject.GetComponent<Selectable>();
+            var currentSelectedObj = _eventSystem.currentSelectedGameObject;
+            
+            if (currentSelectedObj)
+                _previouslySelectedSelectable = currentSelectedObj.GetComponent<Selectable>();
         }
     }
 }
