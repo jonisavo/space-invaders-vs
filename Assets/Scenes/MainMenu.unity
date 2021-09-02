@@ -277,7 +277,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &374302373
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1825,7 +1825,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1103484964
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4728,16 +4728,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 632513180594884302, guid: f945d4438dd927d4491c270307de4b5c,
-        type: 3}
+    - target: {fileID: 0}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
       propertyPath: _backgroundGradientMaterial
       value: 
       objectReference: {fileID: 1450530527}
-    - target: {fileID: 632513180594884302, guid: f945d4438dd927d4491c270307de4b5c,
-        type: 3}
+    - target: {fileID: 0}
       propertyPath: _backgroundRenderBakedTextureMaterial
       value: 
       objectReference: {fileID: 1624695253}
+    - target: {fileID: 0}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f945d4438dd927d4491c270307de4b5c, type: 3}
 --- !u!1001 &992995844350158856

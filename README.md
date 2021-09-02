@@ -21,8 +21,6 @@ Music by [YouFulca](https://wingless-seraph.net/en/)
 
 [unity-notnullattribute](https://github.com/redbluegames/unity-notnullattribute) package by Red Blue Games
 
-[UnityGradientBackground](https://github.com/miguel12345/UnityGradientBackground) package by Miguel Ferreira
-
 [SerializableDictionary](https://wiki.unity3d.com/index.php/SerializableDictionary) by Fredrik Ludvigsen
 
 ## Set up
