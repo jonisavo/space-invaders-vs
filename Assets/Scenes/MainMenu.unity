@@ -1825,7 +1825,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1103484964
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1854,37 +1854,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1103484963}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 552ce636458848ff873d4252feaee838, type: 3}
+  m_Script: {fileID: 11500000, guid: e4831a478f3841549e6b732553892e2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animationSpeed: 12
-  active: 1
-  colorSaturation: 0.88
-  colorBrightness: 0.67
-  bottomLeft:
-    animate: 0
-    useCurrentHueAsInitial: 0
-    initialHue: 0
-    saturation: 0.7
-    brightness: 0.67
-  bottomRight:
-    animate: 1
-    useCurrentHueAsInitial: 1
-    initialHue: 0
-    saturation: 0.7
-    brightness: 0.67
-  topLeft:
-    animate: 0
-    useCurrentHueAsInitial: 0
-    initialHue: 0
-    saturation: 0.88
-    brightness: 0.67
-  topRight:
-    animate: 1
-    useCurrentHueAsInitial: 1
-    initialHue: 0
-    saturation: 0.88
-    brightness: 0.67
+  shakeLibrary: {fileID: 11400000, guid: 2bcfeb1cb055f234e8fef159e0c5f016, type: 2}
+  curveLibrary: {fileID: 11400000, guid: 79ff8c4a966325448818778078328e60, type: 2}
+  useUnscaledTime: 0
+  startOnAwake: 1
+  text: <animation=logo>Space Invaders VS</animation>
 --- !u!114 &1103484966
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1908,8 +1885,7 @@ MonoBehaviour:
   m_text: Space Invaders VS
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9a636748e5c01ab469b03bcb63126d63, type: 2}
-  m_sharedMaterial: {fileID: -590891880867327345, guid: 9a636748e5c01ab469b03bcb63126d63,
-    type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 4ea75bc497c135e4c9f0d9667db6cec6, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1917,7 +1893,7 @@ MonoBehaviour:
     serializedVersion: 2
     rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
-  m_enableVertexGradient: 1
+  m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
     topLeft: {r: 1, g: 1, b: 1, a: 1}
@@ -2964,32 +2940,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1424635836}
   m_CullTransparentMesh: 0
---- !u!21 &1450530527
-Material:
-  serializedVersion: 6
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Hidden/GradientBackground
-  m_Shader: {fileID: 4800000, guid: c9a60f12d0b2d49a7b1b088312686f70, type: 3}
-  m_ShaderKeywords: HORIZONTAL_GRADIENT
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Floats: []
-    m_Colors: []
-  m_BuildTextureStacks: []
 --- !u!1 &1468274546
 GameObject:
   m_ObjectHideFlags: 0
@@ -3475,32 +3425,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1623651461}
   m_CullTransparentMesh: 0
---- !u!21 &1624695253
-Material:
-  serializedVersion: 6
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Hidden/GradientBackground
-  m_Shader: {fileID: 4800000, guid: c9a60f12d0b2d49a7b1b088312686f70, type: 3}
-  m_ShaderKeywords: 
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 1779947315}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Floats: []
-    m_Colors: []
-  m_BuildTextureStacks: []
 --- !u!1 &1665127341
 GameObject:
   m_ObjectHideFlags: 0
@@ -3905,42 +3829,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1725279069}
   m_CullTransparentMesh: 0
---- !u!84 &1779947315
-RenderTexture:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  m_ImageContentsHash:
-    serializedVersion: 2
-    Hash: 00000000000000000000000000000000
-  m_ForcedFallbackFormat: 4
-  m_DownscaleFallback: 0
-  m_IsAlphaChannelOptional: 0
-  serializedVersion: 3
-  m_Width: 1920
-  m_Height: 1080
-  m_AntiAliasing: 1
-  m_MipCount: -1
-  m_DepthFormat: 0
-  m_ColorFormat: 8
-  m_MipMap: 0
-  m_GenerateMips: 1
-  m_SRGB: 0
-  m_UseDynamicScale: 0
-  m_BindMS: 0
-  m_EnableCompatibleFormat: 1
-  m_TextureSettings:
-    serializedVersion: 2
-    m_FilterMode: 1
-    m_Aniso: 1
-    m_MipBias: 0
-    m_WrapU: 1
-    m_WrapV: 1
-    m_WrapW: 1
-  m_Dimension: 2
-  m_VolumeDepth: 1
 --- !u!1 &1825949196
 GameObject:
   m_ObjectHideFlags: 0
@@ -4726,22 +4614,6 @@ PrefabInstance:
     - target: {fileID: 632513180594884296, guid: f945d4438dd927d4491c270307de4b5c,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: _backgroundGradientMaterial
-      value: 
-      objectReference: {fileID: 1450530527}
-    - target: {fileID: 0}
-      propertyPath: _backgroundRenderBakedTextureMaterial
-      value: 
-      objectReference: {fileID: 1624695253}
-    - target: {fileID: 0}
-      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
