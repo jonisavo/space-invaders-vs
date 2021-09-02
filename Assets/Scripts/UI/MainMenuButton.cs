@@ -10,11 +10,16 @@ using UnityEngine.UI;
 namespace SIVS
 {
     [RequireComponent(typeof(Animator))]
-    public class MainMenuButton : RainbowAnimationImage
+    [RequireComponent(typeof(Selectable))]
+    public class MainMenuButton : RainbowAnimationImage, IPointerEnterHandler, IPointerExitHandler, ISelectHandler, IDeselectHandler
     {
         [Header("Pulsing")]
         [Tooltip("The sprite used for generated pulses.")]
         public Sprite pulseSprite;
+
+        [Min(0)]
+        [Tooltip("The amount of pulses generated each cycle.")]
+        public int pulseCount = 3;
         
         [Range(0.05f, 2f)]
         [Tooltip("The speed of the pulse effect.")]
@@ -48,21 +53,29 @@ namespace SIVS
 
         private bool _selected;
 
+        private Animator _animator;
+
+        private Selectable _selectable;
+
         private readonly List<GameObject> _pulseObjects = new List<GameObject>();
         
         private Coroutine _pulseCoroutine;
 
-        private const uint EffectObjectCount = 3;
-
         private EventSystem _eventSystem;
+        
+        private static readonly int SelectedParamId = Animator.StringToHash("Selected");
 
         protected override void Awake()
         {
             base.Awake();
+
+            _animator = GetComponent<Animator>();
+
+            _selectable = GetComponent<Selectable>();
             
             _eventSystem = EventSystem.current;
 
-            for (var i = 0; i < EffectObjectCount; i++)
+            for (var i = 0; i < pulseCount; i++)
                 InstantiatePulseObject("Pulse Object " + i);
         }
 
@@ -72,10 +85,9 @@ namespace SIVS
 
             var image = obj.GetComponent<Image>();
 
-            if (pulseSprite)
-                image.sprite = pulseSprite;
-            else
-                image.sprite = _image.sprite;
+            image.sprite = pulseSprite ? pulseSprite : _image.sprite;
+
+            image.color = _image.color;
 
             var rainbowAnimation = obj.GetComponent<RainbowAnimationImage>();
 
@@ -116,19 +128,25 @@ namespace SIVS
                 additionalElement.UpdateColor();
         }
 
-        public void HandlePointerEnter(BaseEventData evt)
+        public void OnPointerEnter(PointerEventData evt)
         {
             if (!_active && !_selected)
                 EnableAllAnimation();
+            
+            if (evt.selectedObject != gameObject)
+                _selectable.Select();
         }
 
-        public void HandlePointerExit(BaseEventData evt)
+        public void OnPointerExit(PointerEventData evt)
         {
             if (_active && !_selected)
                 DisableAllAnimation();
+            
+            if (evt.selectedObject == gameObject)
+                _eventSystem.SetSelectedGameObject(null);
         }
 
-        public void HandleSelect(BaseEventData evt)
+        public void OnSelect(BaseEventData evt)
         {
             _selected = true;
             
@@ -136,7 +154,7 @@ namespace SIVS
                 EnableAllAnimation();
         }
 
-        public void HandleDeselect(BaseEventData evt)
+        public void OnDeselect(BaseEventData evt)
         {
             _selected = false;
             
@@ -147,6 +165,8 @@ namespace SIVS
         public override void EnableAllAnimation()
         {
             base.EnableAllAnimation();
+            
+            _animator.SetBool(SelectedParamId, true);
 
             foreach (var rainbowAnimation in additionalRainbowAnimation)
                 rainbowAnimation.EnableAllAnimation();
@@ -163,6 +183,8 @@ namespace SIVS
         public override void DisableAllAnimation()
         {
             base.DisableAllAnimation();
+            
+            _animator.SetBool(SelectedParamId, false);
 
             foreach (var rainbowAnimation in additionalRainbowAnimation)
                 rainbowAnimation.DisableAllAnimation();
