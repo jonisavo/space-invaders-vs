@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace SIVS
 {
@@ -11,6 +12,8 @@ namespace SIVS
         public SerializableDictionary<string, Menu> menus;
 
         public string defaultMenu;
+
+        private EventSystem _eventSystem;
 
         private readonly Stack<Menu> _history = new Stack<Menu>();
 
@@ -27,6 +30,8 @@ namespace SIVS
         
         private void Awake()
         {
+            _eventSystem = EventSystem.current;
+            
             if (!string.IsNullOrEmpty(defaultMenu))
                 Push(defaultMenu);
         }
@@ -35,6 +40,19 @@ namespace SIVS
         {
             if (Input.GetButtonDown("Cancel"))
                 GoBack();
+            else if (!_eventSystem.currentSelectedGameObject)
+                AttemptRestoringSelection();
+        }
+
+        private void AttemptRestoringSelection()
+        {
+            if (Input.GetAxis("Horizontal") == 0 && Input.GetAxis("Vertical") == 0)
+                return;
+            
+            var currentMenu = _history.Peek();
+            
+            if (currentMenu.autoSelect)
+                currentMenu.autoSelect.Select();
         }
 
         public void Push(string menuName)
