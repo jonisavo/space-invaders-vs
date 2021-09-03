@@ -14,6 +14,8 @@ namespace SIVS
 
         private Color _defaultColor;
 
+        private Coroutine _flashCoroutine;
+
         private void Awake()
         {
             _propertyBlock = new MaterialPropertyBlock();
@@ -25,7 +27,23 @@ namespace SIVS
 
         public void Flash(Color color, int count, float duration)
         {
-            StartCoroutine(FlashCoroutine(color, count, duration));
+            if (_flashCoroutine != null)
+                StopCoroutine(_flashCoroutine);
+            
+            _flashCoroutine = StartCoroutine(FlashCoroutine(color, count, duration));
+        }
+
+        public void StopFlashing()
+        {
+            if (_flashCoroutine == null)
+                return;
+
+            StopCoroutine(_flashCoroutine);
+            
+            ChangeColor(_defaultColor);
+            UpdateRenderer();
+
+            _flashCoroutine = null;
         }
 
         private IEnumerator FlashCoroutine(Color color, int count, float duration)
@@ -44,6 +62,8 @@ namespace SIVS
 
                 yield return wait;
             }
+
+            _flashCoroutine = null;
         }
 
         private void ChangeColor(Color color) =>
