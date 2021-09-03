@@ -48,6 +48,7 @@ namespace SIVS
             SIVSPlayer.OnRoundChange += HandleRoundChange;
             SIVSPlayer.OnScoreChange += HandleScoreChange;
             PlayerHealth.OnHit += HandlePlayerHit;
+            GameManager.OnGameEnd += HandleGameEnd;
         }
 
         private void OnDisable()
@@ -56,6 +57,21 @@ namespace SIVS
             SIVSPlayer.OnRoundChange -= HandleRoundChange;
             SIVSPlayer.OnScoreChange -= HandleScoreChange;
             PlayerHealth.OnHit -= HandlePlayerHit;
+            GameManager.OnGameEnd -= HandleGameEnd;
+        }
+
+        private void HandleGameEnd(SIVSPlayer winner, SIVSPlayer loser, VictoryReason reason)
+        {
+            if (reason != VictoryReason.Leave || winner.Number == _playerNumber)
+                return;
+            
+            var roundPopupObject = Instantiate(nextRoundPopupObject, gameObject.transform, false);
+
+            var textPopup = roundPopupObject.GetComponent<TextPopup>();
+            
+            textPopup.ChangeText($"{loser.Name} left.");
+
+            textPopup.Show();
         }
 
         private void HandleLivesChange(SIVSPlayer player, int newLives)
