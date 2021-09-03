@@ -15,7 +15,7 @@ namespace SIVS
         }
 
         protected override SIVSPlayer GetPlayerObject() =>
-            GameManager.Players[PhotonNetwork.LocalPlayer.ActorNumber];
+            GameManager.Players[_photonView.Owner.ActorNumber];
 
         protected override bool PressingFireButton() =>
             Input.GetButtonDown("Fire1") || Input.GetButtonDown("Submit");
