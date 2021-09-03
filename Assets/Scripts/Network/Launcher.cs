@@ -25,6 +25,7 @@ namespace SIVS
             _isConnecting = PhotonNetwork.ConnectUsingSettings();
             PhotonNetwork.GameVersion = GameVersion;
             PhotonNetwork.AutomaticallySyncScene = true;
+            PhotonNetwork.MinimalTimeScaleToDispatchInFixedUpdate = 0;
         }
 
         public override void OnConnectedToMaster()
