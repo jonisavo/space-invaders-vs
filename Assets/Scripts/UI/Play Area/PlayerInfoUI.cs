@@ -16,8 +16,15 @@ namespace SIVS
         [NotNull]
         public TextTyper scoreTextTyper;
         
+        [Header("Lives")]
         [NotNull]
         public GameObject lifeObject;
+
+        [NotNull]
+        public GameObject playerHitPopupObject;
+
+        [NotNull]
+        public GameObject playerLostLivesPopupObject;
 
         [Header("Rounds")]
         [NotNull]
@@ -40,6 +47,7 @@ namespace SIVS
             SIVSPlayer.OnLivesChange += HandleLivesChange;
             SIVSPlayer.OnRoundChange += HandleRoundChange;
             SIVSPlayer.OnScoreChange += HandleScoreChange;
+            PlayerHealth.OnHit += HandlePlayerHit;
         }
 
         private void OnDisable()
@@ -47,6 +55,7 @@ namespace SIVS
             SIVSPlayer.OnLivesChange -= HandleLivesChange;
             SIVSPlayer.OnRoundChange -= HandleRoundChange;
             SIVSPlayer.OnScoreChange -= HandleScoreChange;
+            PlayerHealth.OnHit -= HandlePlayerHit;
         }
 
         private void HandleLivesChange(SIVSPlayer player, int newLives)
@@ -55,6 +64,9 @@ namespace SIVS
                 return;
             
             UpdateLifeObjects(newLives);
+            
+            if (newLives == 0)
+                ShowPlayerLostLivesPopup();
         }
 
         private void HandleRoundChange(SIVSPlayer player, int newRound)
@@ -72,6 +84,14 @@ namespace SIVS
                 return;
             
             UpdateScore(newScore);
+        }
+
+        private void HandlePlayerHit(SIVSPlayer player)
+        {
+            if (player.Number != _playerNumber)
+                return;
+            
+            ShowPlayerHitPopup(player);
         }
 
         public void Initialize(SIVSPlayer player)
@@ -130,6 +150,19 @@ namespace SIVS
             }
 
             textPopup.Show();
+        }
+
+        private void ShowPlayerHitPopup(SIVSPlayer player)
+        {
+            if (player.Lives <= 1)
+                return;
+
+            Instantiate(playerHitPopupObject, gameObject.transform, false);
+        }
+
+        private void ShowPlayerLostLivesPopup()
+        {
+            Instantiate(playerLostLivesPopupObject, gameObject.transform.position, Quaternion.identity);
         }
 
         private void UpdateRound(int round)
