@@ -39,14 +39,22 @@ namespace SIVS
         protected int _initialHealth;
 
         protected SpriteRenderer _spriteRenderer;
+        
+        private int _playerNumber;
 
         public delegate void OnKillDelegate(int killerActorNumber);
 
         public static event OnKillDelegate OnKill;
 
-        #region Unity Callbacks
-
         protected virtual void Awake() => _spriteRenderer = GetComponent<SpriteRenderer>();
+        
+        private void Start() => _playerNumber = GetPlayerNumber();
+
+        protected virtual int GetPlayerNumber() => GetComponent<Ownership>().Owner.Number;
+
+        private void OnEnable() => SIVSPlayer.OnLivesChange += HandlePlayerLivesChange;
+
+        private void OnDisable() => SIVSPlayer.OnLivesChange -= HandlePlayerLivesChange;
 
         private void OnTriggerEnter2D(Collider2D other)
         {
@@ -57,8 +65,6 @@ namespace SIVS
             
             OnBulletHit(other.gameObject.GetComponent<PlayerBullet>().Owner);
         }
-
-        #endregion
 
         public void InitializeHealth(int health)
         {
@@ -102,8 +108,6 @@ namespace SIVS
             if (gameObject.TryGetComponent(out PowerupDrop drop))
                 drop.GeneratePowerupDrop();
 
-            SpawnExplosion();
-            
             var pointsToGive = 50 * _initialHealth;
             
             OnKill?.Invoke(killer.Number);
@@ -112,13 +116,22 @@ namespace SIVS
             pointsObj.GetComponent<TextPopup>().Show(pointsToGive.ToString());
             
             PlayDeathSoundAndShake();
-
+            
             GivePointsToKiller(killer, pointsToGive);
+
+            ExplodeAndDestroy(killer);
+        }
+
+        public void ExplodeAndDestroy(SIVSPlayer killer)
+        {
+            SpawnExplosion();
             
             StartCoroutine(DestroyDelay(killer));
             
             Hide();
         }
+
+        public void ExplodeAndDestroy() => ExplodeAndDestroy(null);
 
         protected virtual void GivePointsToKiller(SIVSPlayer killer, int points) =>
             killer.AddScore(points);
@@ -148,7 +161,8 @@ namespace SIVS
 
         protected virtual void DestroyObject(SIVSPlayer killer)
         {
-            killer.InvaderKills += 1;
+            if (killer != null)
+                killer.InvaderKills += 1;
             
             Destroy(gameObject);
         }
@@ -178,5 +192,14 @@ namespace SIVS
         }
 
         protected bool IsDead() => _health <= 0;
+
+        private void HandlePlayerLivesChange(SIVSPlayer player, int newLives)
+        {
+            if (player.Number != _playerNumber)
+                return;
+            
+            if (newLives == 0)
+                ExplodeAndDestroy();
+        }
     }
 }

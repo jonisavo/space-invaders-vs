@@ -19,6 +19,14 @@ namespace SIVS
             else
                 InitializeHealth(1);
         }
+        
+        protected override int GetPlayerNumber()
+        {
+            if (_photonView.InstantiationData != null)
+                return (int) _photonView.InstantiationData[0];
+
+            return 1;
+        }
 
         protected override void OnBulletHit(SIVSPlayer player)
         {
@@ -62,7 +70,8 @@ namespace SIVS
             
             PhotonNetwork.Destroy(gameObject);
             
-            killer.InvaderKills += 1;
+            if (killer != null)
+                killer.InvaderKills += 1;
         }
     }
 }
