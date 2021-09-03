@@ -115,17 +115,5 @@ namespace SIVS
             if (score > highScore)
                 PlayerPrefs.SetInt("OnlineHighScore", score);
         }
-
-        protected override void DestroyPowerups()
-        {
-            foreach (var powerUp in GameObject.FindGameObjectsWithTag("Powerup"))
-            {
-                var powerUpPhotonView = powerUp.GetPhotonView();
-
-                if (!powerUpPhotonView.IsMine) continue;
-
-                powerUpPhotonView.RPC("DestroyPowerupRPC", RpcTarget.All);
-            }
-        }
     }
 }

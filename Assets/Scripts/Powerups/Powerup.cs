@@ -17,9 +17,9 @@ namespace SIVS
         [Tooltip("Text for the popup. Leave blank to use the component's own text field.")]
         public string popupText;
 
-        public delegate void OnGetDelegate(int playerNumber);
+        public delegate void GetDelegate(int playerNumber);
 
-        public static event OnGetDelegate OnGet;
+        public static event GetDelegate OnGet;
 
         private TextPopup _textPopup;
 
@@ -70,7 +70,7 @@ namespace SIVS
             _textPopup.Show();
         }
 
-        protected virtual void DestroyPowerup()
+        public virtual void DestroyPowerup()
         {
             Destroy(gameObject);
         }

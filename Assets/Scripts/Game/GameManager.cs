@@ -128,7 +128,7 @@ namespace SIVS
             OnGameEnd?.Invoke(winner, loser, victoryReason);
         }
 
-        protected void StopGameProcessing()
+        private void StopGameProcessing()
         {
             StopAllCoroutines();
             DestroyBullets();
@@ -139,7 +139,7 @@ namespace SIVS
                 invader.GetComponent<InvaderShoot>().StopShooting();
         }
 
-        protected void DestroyBullets()
+        private void DestroyBullets()
         {
             foreach (var playerBullet in GameObject.FindGameObjectsWithTag("PlayerBullet"))
                 Destroy(playerBullet);
@@ -148,10 +148,10 @@ namespace SIVS
                 Destroy(enemyBullet);
         }
 
-        protected virtual void DestroyPowerups()
+        private void DestroyPowerups()
         {
             foreach (var powerUp in GameObject.FindGameObjectsWithTag("Powerup"))
-                Destroy(powerUp);
+                powerUp.GetComponent<Powerup>().DestroyPowerup();
         }
         
         private bool IsEveryoneReady()

@@ -18,7 +18,7 @@ namespace SIVS
         {
             if (!_photonView.IsMine)
                 return;
-            
+
             base.OnPlayerEnter(playerGameObject);
         }
 
@@ -35,14 +35,8 @@ namespace SIVS
         {
             base.ObtainPowerup(playerNumber);
         }
-
-        protected override void DestroyPowerup()
-        {
-            _photonView.RPC(nameof(DestroyPowerupRPC), RpcTarget.All);
-        }
         
-        [PunRPC]
-        public void DestroyPowerupRPC()
+        public override void DestroyPowerup()
         {
             if (_photonView.IsMine)
                 PhotonNetwork.Destroy(gameObject);
