@@ -19,6 +19,10 @@ namespace SIVS
         [Tooltip("GameObject containing a TextPopup component to show when a UFO is spawned.")]
         [NotNull]
         public GameObject textPopupObject;
+
+        [Tooltip("Audio clip that plays when the very last invader is killed.")]
+        [NotNull]
+        public AudioClip lastInvaderKillSound;
         
         [Tooltip("Toggles debug options.")]
         public bool debugMode = false;
@@ -45,9 +49,31 @@ namespace SIVS
 
         protected virtual void Awake() => _spawnManager = GetComponent<SpawnManager>();
 
-        private void OnEnable() => SIVSPlayer.OnInvaderKillsChange += HandleInvaderKillsChange;
+        private void OnEnable()
+        {
+            SIVSPlayer.OnInvaderKillsChange += HandleInvaderKillsChange;
+            InvaderHealth.OnDeath += HandleInvaderDeath;
+        }
 
-        private void OnDisable() => SIVSPlayer.OnInvaderKillsChange -= HandleInvaderKillsChange;
+        private void OnDisable()
+        {
+            SIVSPlayer.OnInvaderKillsChange -= HandleInvaderKillsChange;
+            InvaderHealth.OnDeath -= HandleInvaderDeath;
+        }
+
+        private void HandleInvaderDeath(int killerPlayerNumber)
+        {
+            var player = GameManager.Players[killerPlayerNumber];
+
+            if (player.CurrentRound == Match.FinalRound && GetInvaderCountOfPlayer(player) <= 1)
+                PlayLastInvaderKillEffects();
+        }
+
+        private void PlayLastInvaderKillEffects()
+        {
+            FreezeFrame.Trigger(1f);
+            SoundPlayer.PlaySound(lastInvaderKillSound);
+        }
 
         private void HandleInvaderKillsChange(SIVSPlayer player, int newKills)
         {

@@ -48,7 +48,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   setMatchOnlineFlag: 1
-  victorySound: {fileID: 8300000, guid: f3da6abb986592f45845c00b8c6218af, type: 3}
 --- !u!114 &2407172818296431266
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -78,6 +77,8 @@ MonoBehaviour:
   invaderObject: {fileID: 0}
   ufoObject: {fileID: 0}
   textPopupObject: {fileID: 3883194513542154728, guid: 3201deba66b0ef746a00127cf5cc3c2e,
+    type: 3}
+  lastInvaderKillSound: {fileID: 8300000, guid: e098fea59e9590446801d65f831ff738,
     type: 3}
   debugMode: 0
   debugRows: 0

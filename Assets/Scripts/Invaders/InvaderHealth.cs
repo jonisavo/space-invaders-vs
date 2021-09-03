@@ -42,9 +42,9 @@ namespace SIVS
         
         private int _playerNumber;
 
-        public delegate void OnKillDelegate(int killerActorNumber);
+        public delegate void DeathDelegate(int killerPlayerNumber);
 
-        public static event OnKillDelegate OnKill;
+        public static event DeathDelegate OnDeath;
 
         protected virtual void Awake() => _spriteRenderer = GetComponent<SpriteRenderer>();
         
@@ -109,13 +109,13 @@ namespace SIVS
                 drop.GeneratePowerupDrop();
 
             var pointsToGive = 50 * _initialHealth;
-            
-            OnKill?.Invoke(killer.Number);
 
             var pointsObj = Instantiate(pointsPopup, GetCenterPoint(), Quaternion.identity);
             pointsObj.GetComponent<TextPopup>().Show(pointsToGive.ToString());
             
             PlayDeathSoundAndShake();
+            
+            OnDeath?.Invoke(killer.Number);
             
             GivePointsToKiller(killer, pointsToGive);
 
