@@ -128,25 +128,21 @@ namespace SIVS
         public virtual void AddScore(int amount)
         {
             Score += amount;
-            OnScoreChange?.Invoke(this, Score);
         }
 
         public virtual void GoToNextRound()
         {
             CurrentRound += 1;
-            OnRoundChange?.Invoke(this, CurrentRound);
         }
 
         public virtual void AddLife()
         {
             Lives = Mathf.Clamp(Lives + 1, 0, MaxLives);
-            OnLivesChange?.Invoke(this, Lives);
         }
 
         public virtual void RemoveLife()
         {
             Lives = Mathf.Clamp(Lives - 1, 0, MaxLives);
-            OnLivesChange?.Invoke(this, Lives);
         }
 
         protected void EmitLivesChangeEvent(int newLives) =>
@@ -166,5 +162,7 @@ namespace SIVS
         
         protected void EmitBulletTypeChangeEvent(PlayerBulletType newBulletType) =>
             OnBulletTypeChange?.Invoke(this, newBulletType);
+
+        public override string ToString() => $"{Name} ({Number})";
     }
 }
