@@ -5,12 +5,12 @@ namespace SIVS
 {
     public class SpawnManagerOnline : SpawnManager
     {
-        protected override void RespawnPlayer(SIVSPlayer player, GameObject playerObject)
+        protected override void MovePlayerToSpawn(SIVSPlayer player, GameObject playerObject)
         {
             if (PhotonNetwork.LocalPlayer.ActorNumber != player.Number)
                 return;
             
-            base.RespawnPlayer(player, playerObject);
+            base.MovePlayerToSpawn(player, playerObject);
         }
 
         protected override void SpawnShips()

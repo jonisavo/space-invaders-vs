@@ -44,13 +44,9 @@ namespace SIVS
             }
         }
 
-        protected void OnEnable() => PlayerHealth.OnHit += RespawnPlayer;
-
-        protected void OnDisable() => PlayerHealth.OnHit -= RespawnPlayer;
-
         #endregion
 
-        protected virtual void RespawnPlayer(SIVSPlayer player, GameObject playerObject) =>
+        protected virtual void MovePlayerToSpawn(SIVSPlayer player, GameObject playerObject) =>
             playerObject.transform.position = PlayerSpawnPoint(player.Number);
 
         public Vector3 PlayAreaPosition(int playerNumber, float x, float y) =>
