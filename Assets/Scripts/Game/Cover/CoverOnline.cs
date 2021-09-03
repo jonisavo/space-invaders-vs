@@ -19,9 +19,7 @@ namespace SIVS
         [PunRPC]
         public void DestroyPieceRPC(int id) => DestroyPiece(id);
 
-        protected override void InitializePiece(GameObject piece, int id)
-        {
-            piece.GetComponent<CoverPieceOnline>().InitializeCoverPiece(id, this);
-        }
+        protected override bool BelongsToPlayer(SIVSPlayer player) =>
+            PhotonView.Owner.ActorNumber == player.Number;
     }
 }

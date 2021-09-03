@@ -450,6 +450,7 @@ GameObject:
   - component: {fileID: 4771675084165739869}
   - component: {fileID: 6984432473991362955}
   - component: {fileID: 8711626672263140625}
+  - component: {fileID: 655795625569044216}
   m_Layer: 0
   m_Name: UI Canvas
   m_TagString: Untagged
@@ -540,6 +541,27 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!50 &655795625569044216
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3530492717057178173}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &3815116328039223374
 GameObject:
   m_ObjectHideFlags: 0
@@ -592,6 +614,10 @@ MonoBehaviour:
   scoreTextTyper: {fileID: 6501173137466248598}
   lifeObject: {fileID: 6368846757185479815, guid: 023e0e9a3c3449e429109f400c1094f0,
     type: 3}
+  playerHitPopupObject: {fileID: 7481742209962446612, guid: cd23cfffd82777640b45cfe914b0a5aa,
+    type: 3}
+  playerLostLivesPopupObject: {fileID: 5463892000267789037, guid: 98a9260751006a546856c3532ab3edd2,
+    type: 3}
   roundTextTyper: {fileID: 7475626533414517411}
   nextRoundPopupObject: {fileID: 6003438915261307852, guid: 68a16a34e6b54ba48b3ef690f46fcd0a,
     type: 3}
@@ -608,6 +634,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50f54b9482d044ebbdb607834578ccd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  throwForce: 3
+  throwTorque: 1.1
 --- !u!1 &5451214795840955482
 GameObject:
   m_ObjectHideFlags: 0
@@ -783,7 +811,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &3830480892753904637
 Transform:
@@ -913,7 +941,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &872487267658780397
 Transform:
@@ -1077,7 +1105,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &8534568143558355040
 Transform:
@@ -1207,7 +1235,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &8534568144751490373
 Transform:

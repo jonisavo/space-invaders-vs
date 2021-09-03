@@ -20,17 +20,10 @@ namespace SIVS
         protected override bool ShouldRegisterHit() =>
             _photonView.IsMine && base.ShouldRegisterHit();
         
-        protected override void MakeInvincible() =>
-            _photonView.RPC(nameof(MakeInvincibleRPC), RpcTarget.All);
+        protected override void GetHit() =>
+            _photonView.RPC(nameof(GetHitRPC), RpcTarget.All);
 
         [PunRPC]
-        private void MakeInvincibleRPC() => base.MakeInvincible();
-
-        protected override void SpawnExplosion() =>
-            _photonView.RPC(nameof(SpawnExplosionRPC), RpcTarget.All);
-
-        [PunRPC]
-        private void SpawnExplosionRPC() =>
-            base.SpawnExplosion();
+        private void GetHitRPC() => base.GetHit();
     }
 }

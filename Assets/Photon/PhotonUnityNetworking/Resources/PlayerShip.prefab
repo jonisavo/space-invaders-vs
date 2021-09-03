@@ -84,7 +84,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   explosion: {fileID: 4923263774660198280, guid: ae72d48e7684e9a49a3c77015e7c55b9,
     type: 3}
+  livesLostExplosionParticles: {fileID: 7344547758458668132, guid: 120137ca27ff00d44added53dc2d5e65,
+    type: 3}
   explosionSound: {fileID: 8300000, guid: 32833ae9163f108408094716de7a7e6b, type: 3}
+  bigExplosionSound: {fileID: 8300000, guid: e098fea59e9590446801d65f831ff738, type: 3}
   spriteRenderer: {fileID: 764472393113129935}
   invincibility: 0
 --- !u!82 &-2521804477649394761

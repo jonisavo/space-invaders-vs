@@ -15,11 +15,5 @@ namespace SIVS
             
             coverOnline.PhotonView.RPC("DestroyPieceRPC", RpcTarget.AllBuffered, _id);
         }
-
-        public void InitializeCoverPiece(int id, CoverOnline coverComponent)
-        {
-            _id = id;
-            _cover = coverComponent;
-        }
     }
 }

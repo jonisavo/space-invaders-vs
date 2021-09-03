@@ -4,16 +4,12 @@ using UnityEngine.SceneManagement;
 
 namespace SIVS
 {
-    [RequireComponent(typeof(VictoryUIManager))]
     [RequireComponent(typeof(InvaderManager))]
     [RequireComponent(typeof(OptionsManager))]
     public class GameManager : MonoBehaviour
     {
         [Tooltip("Whether to set the Match IsOnline flag.")]
         public bool setMatchOnlineFlag;
-        
-        [Tooltip("Audio clip to play upon a victory.")]
-        public AudioClip victorySound;
 
         public static readonly Dictionary<int, SIVSPlayer> Players =
             new Dictionary<int, SIVSPlayer>();
@@ -24,9 +20,11 @@ namespace SIVS
 
         private InvaderManager _invaderManager;
 
-        private VictoryUIManager _victoryUIManager;
-
         private OptionsManager _optionsManager;
+
+        public delegate void GameEndDelegate(SIVSPlayer winner, SIVSPlayer loser, VictoryReason victoryReason);
+
+        public static event GameEndDelegate OnGameEnd;
 
         protected virtual void Awake()
         {
@@ -35,7 +33,6 @@ namespace SIVS
             CleanupPlayers();
             
             _invaderManager = GetComponent<InvaderManager>();
-            _victoryUIManager = GetComponent<VictoryUIManager>();
             _optionsManager = GetComponent<OptionsManager>();
             
             InitializePlayers();
@@ -122,25 +119,13 @@ namespace SIVS
 
             _optionsManager.CloseCanvas();
 
-            ShowVictoryScreen(winner, loser, victoryReason);
-
             GameObject.Find("Music Player")
                 .GetComponent<AudioSource>()
                 .Stop();
-            
-            if (victorySound)
-                SoundPlayer.PlaySound(victorySound);
 
             StopGameProcessing();
-        }
-        
-        private void ShowVictoryScreen(SIVSPlayer winner, SIVSPlayer loser, VictoryReason victoryReason)
-        {
-            var winnerNickName = winner == null ? "No one" : winner.Name;
-
-            var loserNickName = loser == null ? "The opponent" : loser.Name;
-
-            _victoryUIManager.ShowVictoryScreen(winnerNickName, loserNickName, victoryReason);
+            
+            OnGameEnd?.Invoke(winner, loser, victoryReason);
         }
 
         protected void StopGameProcessing()

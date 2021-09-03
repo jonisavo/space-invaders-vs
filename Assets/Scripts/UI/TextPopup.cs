@@ -55,10 +55,7 @@ namespace SIVS
             _textTyper.TypeText(textToShow, typeDelay);
         }
 
-        public void ChangeText(string newText)
-        {
-            text = newText;
-        }
+        public void ChangeText(string newText) => text = newText;
 
         private IEnumerator Hide()
         {

@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 2407172818296431270}
   - component: {fileID: 2407172818296431265}
   - component: {fileID: 2407172818296431266}
-  - component: {fileID: 2407172818296431269}
   - component: {fileID: 2407172818296431271}
   - component: {fileID: 2407172818296431264}
   - component: {fileID: 8625839453618627176}
@@ -64,22 +63,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   localPlayerShipObject: {fileID: 0}
   localCoverObject: {fileID: 0}
---- !u!114 &2407172818296431269
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2407172818296431268}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1841486759ec5c549bc2910725e11e4c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  resultCanvas: {fileID: 0}
-  victoryHeaderText: {fileID: 0}
-  victoryReasonText: {fileID: 0}
-  leaveButton: {fileID: 0}
 --- !u!114 &2407172818296431271
 MonoBehaviour:
   m_ObjectHideFlags: 0

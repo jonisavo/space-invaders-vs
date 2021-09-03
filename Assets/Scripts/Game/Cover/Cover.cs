@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using RedBlueGames.NotNull;
 using UnityEngine;
 
@@ -16,23 +17,31 @@ namespace SIVS
         [Tooltip("The number of cover piece columns.")]
         public int columns = 4;
         
-        protected Dictionary<int, GameObject> _pieces;
-        
-        #region Unity Callbacks
+        private Dictionary<int, CoverPiece> _pieces;
 
-        protected virtual void Awake() => _pieces = new Dictionary<int, GameObject>();
+        protected virtual void Awake() => _pieces = new Dictionary<int, CoverPiece>();
 
         protected void Start() => InstantiateAllPieces();
 
-        #endregion
-        
+        private void OnEnable() => SIVSPlayer.OnLivesChange += HandleLivesChange;
+
+        private void OnDisable() => SIVSPlayer.OnLivesChange -= HandleLivesChange;
+
         public void DestroyPiece(int id)
         {
             if (!_pieces.ContainsKey(id)) return;
 
-            Destroy(_pieces[id]);
+            Destroy(_pieces[id].gameObject);
 
             _pieces.Remove(id);
+        }
+
+        public void DestroyAllPieces()
+        {
+            foreach (var piece in _pieces.Values)
+                Destroy(piece);
+
+            _pieces.Clear();
         }
 
         public void AddPieces(int count)
@@ -78,13 +87,36 @@ namespace SIVS
             piece.transform.SetParent(gameObject.transform, false);
 
             InitializePiece(piece, id);
-
-            _pieces[id] = piece;
         }
 
-        protected virtual void InitializePiece(GameObject piece, int id)
+        private void InitializePiece(GameObject piece, int id)
         {
-            piece.GetComponent<CoverPiece>().InitializeCoverPiece(id, this);
+            var coverPieceComponent = piece.GetComponent<CoverPiece>();
+            
+            coverPieceComponent.InitializeCoverPiece(id, this);
+
+            _pieces[id] = coverPieceComponent;
         }
+
+        private void HandleLivesChange(SIVSPlayer player, int newLives)
+        {
+            if (!BelongsToPlayer(player) || newLives > 0)
+                return;
+
+            StartCoroutine(DropCoroutine());
+        }
+
+        private IEnumerator DropCoroutine()
+        {
+            foreach (var piece in _pieces.Values)
+                piece.MakeRigidbodyDynamic();
+
+            yield return new WaitForSeconds(10f);
+            
+            DestroyAllPieces();
+        }
+
+        protected virtual bool BelongsToPlayer(SIVSPlayer player) =>
+            GetComponent<Ownership>().Owner.Number == player.Number;
     }
 }
