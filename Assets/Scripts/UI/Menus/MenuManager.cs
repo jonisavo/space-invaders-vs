@@ -70,7 +70,9 @@ namespace SIVS
                 currentMenu.autoSelect.Select();
         }
 
-        public void Push(string menuName, bool makeInteractable = true)
+        public void Push(string menuName) => Push(menuName, true);
+
+        public void Push(string menuName, bool makeInteractable)
         {
             if (!menus.ContainsKey(menuName))
             {
