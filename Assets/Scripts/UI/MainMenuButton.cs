@@ -62,6 +62,8 @@ namespace SIVS
         private Coroutine _pulseCoroutine;
 
         private EventSystem _eventSystem;
+
+        private CanvasGroup _parentCanvasGroup;
         
         private static readonly int SelectedParamId = Animator.StringToHash("Selected");
 
@@ -72,8 +74,10 @@ namespace SIVS
             _animator = GetComponent<Animator>();
 
             _selectable = GetComponent<Selectable>();
-            
+
             _eventSystem = EventSystem.current;
+
+            _parentCanvasGroup = GetComponentInParent<CanvasGroup>();
 
             for (var i = 0; i < pulseCount; i++)
                 InstantiatePulseObject("Pulse Object " + i);
@@ -130,6 +134,9 @@ namespace SIVS
 
         public void OnPointerEnter(PointerEventData evt)
         {
+            if (ShouldIgnorePointerEvents())
+                return;
+            
             if (!_active && !_selected)
                 EnableAllAnimation();
             
@@ -139,11 +146,27 @@ namespace SIVS
 
         public void OnPointerExit(PointerEventData evt)
         {
+            if (ShouldIgnorePointerEvents())
+                return;
+            
             if (_active && !_selected)
                 DisableAllAnimation();
             
             if (evt.selectedObject == gameObject)
                 _eventSystem.SetSelectedGameObject(null);
+        }
+        
+        private bool ShouldIgnorePointerEvents() =>
+            !_selectable.interactable || ShouldIgnorePointerEventsBasedOnParentCanvasGroup();
+        
+        // The Button's selectable flag is not set by parent CanvasGroups, so we
+        // have to do a check ourselves.
+        private bool ShouldIgnorePointerEventsBasedOnParentCanvasGroup()
+        {
+            if (!_parentCanvasGroup)
+                return false;
+
+            return !_parentCanvasGroup.interactable;
         }
 
         public void OnSelect(BaseEventData evt)
