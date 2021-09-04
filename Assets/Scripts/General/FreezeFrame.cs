@@ -48,13 +48,13 @@ namespace SIVS
             
             yield return EaseTimeScaleCoroutine(true);
 
-            Time.timeScale = 0f;
+            Time.timeScale = timeCurve.keys[0].value;
 
             yield return new WaitForSecondsRealtime(duration);
 
             yield return EaseTimeScaleCoroutine();
 
-            Time.timeScale = 1f;
+            Time.timeScale = timeCurve.keys[timeCurve.keys.Length - 1].value;
             
             _spriteRenderer.enabled = false;
 

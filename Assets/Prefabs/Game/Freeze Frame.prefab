@@ -96,13 +96,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa5f6d87fb4946ada4a467295582ab94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  easeDuration: 0.7
+  easeDuration: 0.6
   timeCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 0.1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
