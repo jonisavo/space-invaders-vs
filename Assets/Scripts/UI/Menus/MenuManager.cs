@@ -13,6 +13,10 @@ namespace SIVS
 
         public string defaultMenu;
 
+        [Header("Set default menu interactable if requirements are met:")]
+        [Tooltip("If set, sets the default menu as interactable after the bar canvas has opened.")]
+        public BarCanvas barCanvasInteractableRequirement;
+
         private EventSystem _eventSystem;
 
         private readonly Stack<Menu> _history = new Stack<Menu>();
@@ -24,16 +28,27 @@ namespace SIVS
         public static void PushMenu(string menuName, int managerId = 0) =>
             OnPushMenu?.Invoke(menuName, managerId);
 
-        private void OnEnable() => OnPushMenu += HandlePushMenu;
+        private void OnEnable()
+        {
+            OnPushMenu += HandlePushMenu;
 
-        private void OnDisable() => OnPushMenu -= HandlePushMenu;
-        
+            if (barCanvasInteractableRequirement)
+                barCanvasInteractableRequirement.OnFinishOpen += HandleBarCanvasOpen;
+        }
+
+        private void OnDisable()
+        {
+            OnPushMenu -= HandlePushMenu;
+
+            barCanvasInteractableRequirement.OnFinishOpen -= HandleBarCanvasOpen;
+        }
+
         private void Awake()
         {
             _eventSystem = EventSystem.current;
             
             if (!string.IsNullOrEmpty(defaultMenu))
-                Push(defaultMenu);
+                Push(defaultMenu, barCanvasInteractableRequirement == null);
         }
 
         private void Update()
@@ -55,7 +70,7 @@ namespace SIVS
                 currentMenu.autoSelect.Select();
         }
 
-        public void Push(string menuName)
+        public void Push(string menuName, bool makeInteractable = true)
         {
             if (!menus.ContainsKey(menuName))
             {
@@ -68,7 +83,7 @@ namespace SIVS
             
             _history.Push(menus[menuName]);
             
-            _history.Peek().Show();
+            _history.Peek().Show(makeInteractable);
         }
 
         public void Pop()
@@ -95,6 +110,14 @@ namespace SIVS
                 return;
             
             Push(menuName);
+        }
+
+        private void HandleBarCanvasOpen()
+        {
+            var currentMenu = _history.Peek();
+            
+            currentMenu.MakeInteractable();
+            currentMenu.SelectPrimaryElement();
         }
     }
 }

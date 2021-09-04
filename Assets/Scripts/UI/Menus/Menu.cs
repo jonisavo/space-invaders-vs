@@ -12,7 +12,7 @@ namespace SIVS
         
         [Tooltip("Disables going back to the previous menu via the cancel button.")]
         public bool disableGoingBack;
-        
+
         private CanvasGroup _canvasGroup;
 
         private Selectable _previouslySelectedSelectable;
@@ -25,12 +25,25 @@ namespace SIVS
             _eventSystem = EventSystem.current;
         }
 
-        public void Show()
+        public void Show(bool makeInteractable = true)
+        {
+            if (makeInteractable)
+                MakeInteractable();
+            
+            _canvasGroup.alpha = 1.0f;
+
+            if (_canvasGroup.interactable)
+                SelectPrimaryElement();
+        }
+
+        public void MakeInteractable()
         {
             _canvasGroup.interactable = true;
-            _canvasGroup.alpha = 1.0f;
             _canvasGroup.blocksRaycasts = true;
-            
+        }
+
+        public void SelectPrimaryElement()
+        {
             if (_previouslySelectedSelectable)
                 _previouslySelectedSelectable.Select();
             else if (autoSelect)
