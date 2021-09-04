@@ -6,47 +6,24 @@ using UnityEngine.UI;
 
 namespace SIVS
 {
-    [RequireComponent(typeof(RectTransform))]
-    public class GameEndCanvas : MonoBehaviour
+    public class GameEndCanvas : BarCanvas
     {
-        [Header("Game Manager")]
-        [NotNull (IgnorePrefab = true)]
-        public GameManager gameManager;
-        
-        [Header("Bars")]
-        [NotNull]
-        public RectTransform topBarTransform;
-
-        [NotNull]
-        public RectTransform bottomBarTransform;
-
         [NotNull]
         public RawImage topBarImage;
 
         [NotNull]
         public RawImage bottomBarImage;
         
-        public AnimationCurve barMovementCurve = AnimationCurve.Constant(0f, 1f, 1f);
+        [Header("Game Manager")]
+        [NotNull (IgnorePrefab = true)]
+        public GameManager gameManager;
 
-        [Range(0.5f, 4f)]
-        public float barMovementDuration = 2f;
-        
         [Header("Text Typers")]
         [NotNull]
         public TextTyper headerTextTyper;
 
         [NotNull]
         public TextTyper footerTextTyper;
-        
-        private RectTransform _rectTransform;
-
-        private float _maxHeight;
-
-        private void Awake()
-        {
-            _rectTransform = GetComponent<RectTransform>();
-            _maxHeight = _rectTransform.sizeDelta.y / 2;
-        }
 
         private void OnEnable() => GameManager.OnGameEnd += StartBringToFront;
 
@@ -78,25 +55,6 @@ namespace SIVS
                 yield return null;
 
             gameManager.LeaveGame();
-        }
-
-        private IEnumerator CloseBars()
-        {
-            var elapsedTime = 0f;
-
-            while (elapsedTime <= barMovementDuration)
-            {
-                var newHeight = barMovementCurve.Evaluate(elapsedTime / barMovementDuration) * _maxHeight;
-
-                var newSize = new Vector2(topBarTransform.sizeDelta.x, newHeight);
-
-                topBarTransform.sizeDelta = newSize;
-                bottomBarTransform.sizeDelta = newSize;
-
-                elapsedTime += Time.deltaTime;
-
-                yield return null;
-            }
         }
 
         private static string GetVictoryReasonText(VictoryReason reason, string loserNickName)

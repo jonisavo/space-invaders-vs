@@ -134,7 +134,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 10
   m_TargetDisplay: 0
 --- !u!114 &7547110996550825414
 MonoBehaviour:
@@ -190,8 +190,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   topBarTransform: {fileID: 7547110997400538476}
   bottomBarTransform: {fileID: 7547110996481987158}
-  topBarImage: {fileID: 7547110997400538477}
-  bottomBarImage: {fileID: 7547110996481987159}
   barMovementCurve:
     serializedVersion: 2
     m_Curve:
@@ -217,6 +215,9 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   barMovementDuration: 2.5
+  topBarImage: {fileID: 7547110997400538477}
+  bottomBarImage: {fileID: 7547110996481987159}
+  gameManager: {fileID: 0}
   headerTextTyper: {fileID: 7547110997437586895}
   footerTextTyper: {fileID: 7547110997864638235}
 --- !u!1 &7547110997400538475
