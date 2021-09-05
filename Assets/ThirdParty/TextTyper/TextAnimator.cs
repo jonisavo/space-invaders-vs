@@ -99,8 +99,10 @@ namespace RedBlueGames.Tools.TextTyper
 
         public void ClearAnimation()
         {
-            foreach (var anim in GetComponents<TextAnimation>())
+            foreach (var anim in this.animations)
                 Destroy(anim);
+            
+            this.animations.Clear();
         }
 
         private void UpdateMeshAndAnims()
