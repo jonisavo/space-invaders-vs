@@ -33,7 +33,7 @@ namespace SIVS
         {
             AnimateSingleHue(ref _currentHue);
 
-            _image.color = Color.HSVToRGB(_currentHue / 360f, 0.7f, 0.7f);
+            _image.color = AnimatedColor(_currentHue, 0.7f, 0.7f);
         }
         
         public override void EnableAllAnimation()
@@ -47,5 +47,7 @@ namespace SIVS
 
             _image.color = _initialColor;
         }
+
+        public void SetHue360(float newHue360) => _currentHue = newHue360;
     }
 }
