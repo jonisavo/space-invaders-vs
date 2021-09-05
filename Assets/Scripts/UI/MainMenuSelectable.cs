@@ -11,7 +11,7 @@ namespace SIVS
 {
     [RequireComponent(typeof(Animator))]
     [RequireComponent(typeof(Selectable))]
-    public class MainMenuButton : RainbowAnimationImage, IPointerEnterHandler, IPointerExitHandler, ISelectHandler, IDeselectHandler
+    public class MainMenuSelectable : RainbowAnimationImage, IPointerEnterHandler, IPointerExitHandler, ISelectHandler, IDeselectHandler
     {
         [Header("Pulsing")]
         [Tooltip("The sprite used for generated pulses.")]
@@ -47,11 +47,12 @@ namespace SIVS
         [NotNull]
         public RainbowAnimationMonoBehaviour[] additionalRainbowAnimation;
 
-        [Tooltip("Additional TextAnimators to animate.")]
+        [FormerlySerializedAs("additionalTextAnimators")]
+        [Tooltip("TextAnimators to animate.")]
         [NotNull]
-        public TextAnimator[] additionalTextAnimators;
+        public TextAnimator[] textAnimators;
 
-        private bool _selected;
+        protected bool _selected;
 
         private Animator _animator;
 
@@ -124,15 +125,7 @@ namespace SIVS
                 UpdateColor();
         }
 
-        public override void UpdateColor()
-        {
-            base.UpdateColor();
-
-            foreach (var additionalElement in additionalRainbowAnimation)
-                additionalElement.UpdateColor();
-        }
-
-        public void OnPointerEnter(PointerEventData evt)
+        public virtual void OnPointerEnter(PointerEventData evt)
         {
             if (ShouldIgnorePointerEvents())
                 return;
@@ -144,7 +137,7 @@ namespace SIVS
                 _selectable.Select();
         }
 
-        public void OnPointerExit(PointerEventData evt)
+        public virtual void OnPointerExit(PointerEventData evt)
         {
             if (ShouldIgnorePointerEvents())
                 return;
@@ -169,7 +162,7 @@ namespace SIVS
             return !_parentCanvasGroup.interactable;
         }
 
-        public void OnSelect(BaseEventData evt)
+        public virtual void OnSelect(BaseEventData evt)
         {
             _selected = true;
             
@@ -177,7 +170,7 @@ namespace SIVS
                 EnableAllAnimation();
         }
 
-        public void OnDeselect(BaseEventData evt)
+        public virtual void OnDeselect(BaseEventData evt)
         {
             _selected = false;
             
@@ -194,7 +187,7 @@ namespace SIVS
             foreach (var rainbowAnimation in additionalRainbowAnimation)
                 rainbowAnimation.EnableAllAnimation();
             
-            foreach (var textAnimator in additionalTextAnimators)
+            foreach (var textAnimator in textAnimators)
                 textAnimator.StartAnimation();
             
             if (_pulseCoroutine != null)
@@ -212,7 +205,7 @@ namespace SIVS
             foreach (var rainbowAnimation in additionalRainbowAnimation)
                 rainbowAnimation.DisableAllAnimation();
             
-            foreach (var textAnimator in additionalTextAnimators)
+            foreach (var textAnimator in textAnimators)
                 textAnimator.StopAnimation();
 
             if (_pulseCoroutine == null)
@@ -233,10 +226,6 @@ namespace SIVS
             {
                 yield return waitBetweenSpawns;
 
-                if (_eventSystem.currentSelectedGameObject != null &&
-                    _eventSystem.currentSelectedGameObject != gameObject)
-                    continue;
-                
                 foreach (var obj in _pulseObjects)
                 {
                     StartCoroutine(MovePulseObjectCoroutine(obj));
@@ -250,9 +239,11 @@ namespace SIVS
         {
             var objCanvasGroup = obj.GetComponent<CanvasGroup>();
             var objTransform = obj.transform;
+            var objRainbowImage = obj.GetComponent<RainbowAnimationImage>();
             
-            obj.GetComponent<RainbowAnimationImage>().animationSpeed = animationSpeed;
-
+            objRainbowImage.animationSpeed = animationSpeed;
+            objRainbowImage.SetHue360(_currentHue);
+            
             var startScale = Vector3.one * pulseStartMultiplier;
             var endScale = Vector3.one * pulseEndMultiplier;
             
