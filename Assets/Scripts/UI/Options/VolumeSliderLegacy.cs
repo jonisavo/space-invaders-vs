@@ -6,7 +6,7 @@ using UnityEngine.UI;
 namespace SIVS
 {
     [RequireComponent(typeof(Slider))]
-    public class VolumeSlider : MonoBehaviour
+    public class VolumeSliderLegacy : MonoBehaviour
     {
         [NotNull]
         public AudioMixer mixer;
