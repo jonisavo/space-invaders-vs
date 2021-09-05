@@ -308,11 +308,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animationSpeed: 20
-  selectedParameterName: Selected
   pulseSprite: {fileID: 21300000, guid: a78063d10bff81d43935877ad5117465, type: 3}
   pulseCount: 3
   pulseSpeed: 0.7
-  pulseStartMultiplier: 1.15
+  pulseStartMultiplier: 1.1
   pulseEndMultiplier: 1.4
   pulseSpawnInterval: 0.4
   timeBetweenPulses: 2.1
