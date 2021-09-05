@@ -85,6 +85,7 @@ GameObject:
   - component: {fileID: 7547110996550825414}
   - component: {fileID: 7547110996550825413}
   - component: {fileID: 7547110996550825433}
+  - component: {fileID: 1973569537997943494}
   m_Layer: 5
   m_Name: Game End Canvas
   m_TagString: Untagged
@@ -148,7 +149,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 1
+  m_UiScaleMode: 0
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1920, y: 1080}
@@ -220,6 +221,18 @@ MonoBehaviour:
   gameManager: {fileID: 0}
   headerTextTyper: {fileID: 7547110997437586895}
   footerTextTyper: {fileID: 7547110997864638235}
+--- !u!225 &1973569537997943494
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7547110996550825412}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &7547110997400538475
 GameObject:
   m_ObjectHideFlags: 0
