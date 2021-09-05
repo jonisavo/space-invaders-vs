@@ -25,6 +25,8 @@ namespace SIVS
 
         private static event PushMenuDelegate OnPushMenu;
 
+        public static bool BlockGoingBack;
+
         public static void PushMenu(string menuName, int managerId = 0) =>
             OnPushMenu?.Invoke(menuName, managerId);
 
@@ -100,7 +102,7 @@ namespace SIVS
 
         public void GoBack()
         {
-            if (_history.Count <= 1 || _history.Peek().disableGoingBack)
+            if (BlockGoingBack || _history.Count <= 1 || _history.Peek().disableGoingBack)
                 return;
 
             Pop();
