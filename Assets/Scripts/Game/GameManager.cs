@@ -30,6 +30,11 @@ namespace SIVS
         {
             Match.IsOnline = setMatchOnlineFlag;
             
+            // The active flag is set automatically in Photon, so we only have to do it manually
+            // in local multiplayer.
+            if (!Match.IsOnline)
+                Match.IsActive = false;
+            
             CleanupPlayers();
             
             _invaderManager = GetComponent<InvaderManager>();
