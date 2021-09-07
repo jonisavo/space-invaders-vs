@@ -7,6 +7,8 @@ namespace SIVS
     // Based on the work of Jordan Kisiel:
     // http://jordankisiel.com/writing/screen_shake.php
     // https://github.com/JordanKisiel/UnityCameraShake/
+    // This script assumes that the camera is stationary
+    // (the _originalPosition variable is not updated).
     public class CameraShaker : MonoBehaviour
     {
         [Min(-1)]
@@ -18,7 +20,16 @@ namespace SIVS
 
         private float _currentShakeAmplitude = -1f;
 
-        public void OnEnable() => OnStartShaking += HandleStartShaking;
+        private Vector3 _originalPosition;
+
+        private Coroutine _shakeCoroutine;
+
+        public void OnEnable()
+        {
+            _originalPosition = transform.position;
+            
+            OnStartShaking += HandleStartShaking;
+        }
 
         public void OnDisable() => OnStartShaking -= HandleStartShaking;
 
@@ -29,8 +40,10 @@ namespace SIVS
             
             var clampedDamping = Mathf.Clamp(damping, 0.0f, 1.0f);
             
-            StopCoroutine(nameof(ShakeCoroutine));
-            StartCoroutine(ShakeCoroutine(amplitude, duration, clampedDamping));
+            if (_shakeCoroutine != null) 
+                StopCoroutine(_shakeCoroutine);
+            
+            _shakeCoroutine = StartCoroutine(ShakeCoroutine(amplitude, duration, clampedDamping));
         }
 
         public static void ShakeById(int id, float amplitude, float duration, float damping = 0.8f) =>
@@ -42,8 +55,6 @@ namespace SIVS
         private IEnumerator ShakeCoroutine(float amplitude, float duration, float damping)
         {
             _currentShakeAmplitude = amplitude;
-
-            var originalPosition = transform.position;
 
             var elapsedTime = 0.0f;
             var currentDamping = 1.0f;
@@ -61,14 +72,16 @@ namespace SIVS
 
                 offsetValues *= amplitude * currentDamping;
 
-                transform.position = new Vector3(offsetValues.x, offsetValues.y, originalPosition.z);
+                transform.position = new Vector3(offsetValues.x, offsetValues.y, _originalPosition.z);
 
                 yield return null;
             }
 
-            transform.position = originalPosition;
+            transform.position = _originalPosition;
 
             _currentShakeAmplitude = -1f;
+
+            _shakeCoroutine = null;
         }
 
         private void HandleStartShaking(int idToShake, float amplitude, float duration, float damping)
