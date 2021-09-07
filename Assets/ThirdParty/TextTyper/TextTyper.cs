@@ -195,6 +195,7 @@
 
         public void UntypeText()
         {
+            CleanupCoroutine();
             StartCoroutine(UntypeTextCharByChar());
         }
 
