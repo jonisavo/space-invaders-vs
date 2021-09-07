@@ -28,6 +28,8 @@ namespace SIVS
             _slider.onValueChanged.AddListener(UpdateVolume);
         }
 
+        private void Start() => UpdateVolume(_slider.value);
+
         protected override float GetInitialValue() =>
             PlayerPrefs.GetFloat(GetParameterName(), 0.8f);
 
