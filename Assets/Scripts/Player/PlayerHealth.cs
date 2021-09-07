@@ -116,7 +116,7 @@ namespace SIVS
 
         private void ExplodeAndDisable()
         {
-            CameraShaker.ShakeAll(0.14f, 0.8f);
+            CameraShaker.ShakeAll(0.11f, 0.8f);
 
             var position = transform.position;
             
