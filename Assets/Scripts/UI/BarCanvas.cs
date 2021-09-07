@@ -53,10 +53,12 @@ namespace SIVS
 
                 SetBarHeights(newHeight);
 
-                elapsedTime += Time.deltaTime;
-
                 yield return null;
+                
+                elapsedTime += Time.deltaTime;
             }
+            
+            SetBarHeights(_maxHeight);
             
             OnFinishClose?.Invoke();
         }
@@ -76,6 +78,8 @@ namespace SIVS
 
                 yield return null;
             }
+            
+            SetBarHeights(0);
 
             _canvasGroup.blocksRaycasts = false;
 

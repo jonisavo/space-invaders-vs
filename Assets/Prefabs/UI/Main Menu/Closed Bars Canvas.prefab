@@ -226,7 +226,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  barMovementDuration: 2
+  barMovementDuration: 1.5
 --- !u!114 &5853086390634940390
 MonoBehaviour:
   m_ObjectHideFlags: 0
