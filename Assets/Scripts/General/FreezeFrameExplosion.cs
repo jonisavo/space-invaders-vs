@@ -4,7 +4,7 @@ using UnityEngine;
 namespace SIVS
 {
     [RequireComponent(typeof(SpriteRenderer))]
-    public class FreezeFrame : MonoBehaviour
+    public class FreezeFrameExplosion : MonoBehaviour
     {
         [Header("Easing")]
         [Range(0f, 2f)]

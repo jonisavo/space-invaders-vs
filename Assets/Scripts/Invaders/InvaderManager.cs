@@ -71,7 +71,7 @@ namespace SIVS
 
         private void PlayLastInvaderKillEffects(Vector3 position)
         {
-            FreezeFrame.Trigger(position, 1f);
+            FreezeFrameExplosion.Trigger(position, 1f);
             SoundPlayer.PlaySound(lastInvaderKillSound);
         }
 

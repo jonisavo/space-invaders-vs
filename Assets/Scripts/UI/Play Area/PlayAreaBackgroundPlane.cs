@@ -25,9 +25,9 @@ namespace SIVS
             _renderer.GetPropertyBlock(_propertyBlock);
         }
 
-        private void OnEnable() => FreezeFrame.OnTrigger += StopFlashing;
+        private void OnEnable() => FreezeFrameExplosion.OnTrigger += StopFlashing;
 
-        private void OnDisable() => FreezeFrame.OnTrigger -= StopFlashing;
+        private void OnDisable() => FreezeFrameExplosion.OnTrigger -= StopFlashing;
 
         public void Flash(Color color, int count, float duration)
         {
