@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -11,7 +12,7 @@ namespace SIVS
         protected override void Awake()
         {
             _supportedResolutions = GetSupportedResolutions();
-            
+
             base.Awake();
             
             _dropdown.onValueChanged.AddListener(HandleOptionChange);
@@ -59,6 +60,9 @@ namespace SIVS
 
         private static List<Resolution> GetSupportedResolutions()
         {
+#if UNITY_EDITOR
+            return Screen.resolutions.ToList();
+#else
             var resolutionList = new List<Resolution>();
 
             foreach (var resolution in Screen.resolutions)
@@ -66,6 +70,7 @@ namespace SIVS
                     resolutionList.Add(resolution);
 
             return resolutionList;
+#endif
         }
     }
 }
