@@ -51,7 +51,7 @@ namespace SIVS
             _playerNumber = player.Number;
         }
 
-        private void HandleInvaderKill(int killerActorNumber)
+        private void HandleInvaderKill(int killerActorNumber, GameObject _)
         {
             if (killerActorNumber != _playerNumber)
                 return;

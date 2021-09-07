@@ -42,7 +42,7 @@ namespace SIVS
         
         private int _playerNumber;
 
-        public delegate void DeathDelegate(int killerPlayerNumber);
+        public delegate void DeathDelegate(int killerPlayerNumber, GameObject invaderObject);
 
         public static event DeathDelegate OnDeath;
 
@@ -115,7 +115,7 @@ namespace SIVS
             
             PlayDeathSoundAndShake();
             
-            OnDeath?.Invoke(killer.Number);
+            OnDeath?.Invoke(killer.Number, gameObject);
             
             GivePointsToKiller(killer, pointsToGive);
 

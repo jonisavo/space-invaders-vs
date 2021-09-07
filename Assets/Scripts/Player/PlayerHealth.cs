@@ -128,7 +128,7 @@ namespace SIVS
 
             _boxCollider.enabled = false;
 
-            FreezeFrame.Trigger(3f);
+            FreezeFrame.Trigger(position, 3f);
             
             _audioSource.PlayOneShot(bigExplosionSound);
         }

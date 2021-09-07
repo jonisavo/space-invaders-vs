@@ -61,17 +61,17 @@ namespace SIVS
             InvaderHealth.OnDeath -= HandleInvaderDeath;
         }
 
-        private void HandleInvaderDeath(int killerPlayerNumber)
+        private void HandleInvaderDeath(int killerPlayerNumber, GameObject diedInvader)
         {
             var player = GameManager.Players[killerPlayerNumber];
 
             if (player.CurrentRound == Match.FinalRound && GetInvaderCountOfPlayer(player) <= 1)
-                PlayLastInvaderKillEffects();
+                PlayLastInvaderKillEffects(diedInvader.transform.position);
         }
 
-        private void PlayLastInvaderKillEffects()
+        private void PlayLastInvaderKillEffects(Vector3 position)
         {
-            FreezeFrame.Trigger(1f);
+            FreezeFrame.Trigger(position, 1f);
             SoundPlayer.PlaySound(lastInvaderKillSound);
         }
 
