@@ -2436,7 +2436,7 @@ MonoBehaviour:
   shakeLibrary: {fileID: 11400000, guid: 2bcfeb1cb055f234e8fef159e0c5f016, type: 2}
   curveLibrary: {fileID: 11400000, guid: 79ff8c4a966325448818778078328e60, type: 2}
   useUnscaledTime: 0
-  startOnAwake: 1
+  startOnEnable: 1
   text: <animation=logo>Space Invaders VS</animation>
 --- !u!114 &1103484966
 MonoBehaviour:
