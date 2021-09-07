@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -12,6 +13,8 @@ namespace SIVS
         
         [Tooltip("Disables going back to the previous menu via the cancel button.")]
         public bool disableGoingBack;
+
+        public UnityEvent onMenuHide;
 
         private CanvasGroup _canvasGroup;
 
@@ -52,6 +55,8 @@ namespace SIVS
 
         public void Hide()
         {
+            onMenuHide.Invoke();
+            
             _canvasGroup.interactable = false;
             _canvasGroup.alpha = 0.0f;
             _canvasGroup.blocksRaycasts = false;
