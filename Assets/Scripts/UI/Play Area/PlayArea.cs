@@ -47,7 +47,7 @@ namespace SIVS
         {
             rb.bodyType = RigidbodyType2D.Dynamic;
 
-            var currentPosition = gameObject.transform.position;
+            var currentPosition = gameObject.transform.position + Vector3.down * 1.5f;
 
             var force = (rb.transform.position - currentPosition).normalized * throwForce;
             
