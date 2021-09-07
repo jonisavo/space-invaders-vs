@@ -88,9 +88,11 @@ namespace SIVS
             
             if (!AreAllInvadersDefeated(player)) return;
 
+            var nextRound = player.CurrentRound + 1;
+
             player.GoToNextRound();
 
-            if (player.CurrentRound + 1 <= Match.FinalRound)
+            if (nextRound <= Match.FinalRound)
                 SpawnInvadersForPlayer(player);
         }
 
