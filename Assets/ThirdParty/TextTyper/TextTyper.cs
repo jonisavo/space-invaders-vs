@@ -195,7 +195,7 @@
 
         public void UntypeText()
         {
-            StartCoroutine(nameof(UntypeTextCharByChar));
+            StartCoroutine(UntypeTextCharByChar());
         }
 
         public IEnumerator UntypeTextCharByChar(float staticDelay = -1)
