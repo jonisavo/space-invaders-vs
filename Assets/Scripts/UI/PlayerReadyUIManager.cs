@@ -43,7 +43,7 @@ namespace SIVS
         public void SetAllNotReady()
         {
             foreach (var readyUI in _readyUIList)
-                readyUI.SetNotReady();
+                readyUI.SetReady(false);
         }
     }
 }

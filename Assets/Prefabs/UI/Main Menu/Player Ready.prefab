@@ -104,7 +104,7 @@ MonoBehaviour:
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
-  m_characterSpacing: 0
+  m_characterSpacing: 90
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -149,10 +149,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shakeLibrary: {fileID: 11400000, guid: 2bcfeb1cb055f234e8fef159e0c5f016, type: 2}
-  curveLibrary: {fileID: 11400000, guid: 0287491f8abce3b4da006977d00f94cb, type: 2}
+  curveLibrary: {fileID: 11400000, guid: 79ff8c4a966325448818778078328e60, type: 2}
   useUnscaledTime: 0
-  startOnAwake: 1
-  text: <animation=slowsine>READY!</animation>
+  startOnEnable: 1
+  text: <animation=bigsine>READY!</animation>
 --- !u!1 &6620462697480235173
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,4 +1,6 @@
-﻿using RedBlueGames.NotNull;
+﻿using System;
+using RedBlueGames.NotNull;
+using UnityEngine.Serialization;
 
 namespace RedBlueGames.Tools.TextTyper
 {
@@ -27,9 +29,10 @@ namespace RedBlueGames.Tools.TextTyper
         [Tooltip("If set, the animations will play even if the game is paused (Time.timeScale = 0).")]
         protected bool useUnscaledTime;
 
+        [FormerlySerializedAs("startOnAwake")]
         [SerializeField]
-        [Tooltip("If set, the animations will start on awake.")]
-        protected bool startOnAwake;
+        [Tooltip("If set, the animations will start in OnEnable.")]
+        protected bool startOnEnable;
 
         [TextArea]
         [Tooltip("When enabled, sets this as the component's text.")]
@@ -37,8 +40,8 @@ namespace RedBlueGames.Tools.TextTyper
 #pragma warning restore 0649
 
         protected TextMeshProUGUI textComponent;
-        protected List<TypableCharacter> charactersToType;
-        protected List<TextAnimation> animations;
+        protected List<TypableCharacter> charactersToType = new List<TypableCharacter>();
+        protected List<TextAnimation> animations = new List<TextAnimation>();
 
         private bool _enabled;
 
@@ -58,11 +61,19 @@ namespace RedBlueGames.Tools.TextTyper
         protected virtual void Awake()
         {
             textComponent = GetComponent<TextMeshProUGUI>();
-            
+        }
+
+        protected void OnEnable()
+        {
             textComponent.text = TextTagParser.RemoveCustomTags(text);
             
-            if (startOnAwake)
+            if (startOnEnable)
                 StartAnimation();
+        }
+        
+        protected void OnDisable() 
+        { 
+            StopAnimation();   
         }
 
         public void ChangeText(string newText)
@@ -130,8 +141,8 @@ namespace RedBlueGames.Tools.TextTyper
         /// <param name="text">Full text string with tags</param>
         protected virtual void ProcessTags(string text)
         {
-            this.charactersToType = new List<TypableCharacter>();
-            this.animations = new List<TextAnimation>();
+            this.charactersToType.Clear();
+            this.animations.Clear();
             var textAsSymbolList = TextTagParser.CreateSymbolListFromText(text);
             
             int printedCharCount = 0;

@@ -43,21 +43,14 @@ namespace SIVS
                 return;
             
             if (Input.GetButtonDown(_inputName))
-                SetReady();
+                SetReady(true);
         }
 
-        public void SetReady()
+        public void SetReady(bool value)
         {
-            readyPromptObject.SetActive(false);
-            readyConfirmationObject.SetActive(true);
-            Ready = true;
-        }
-
-        public void SetNotReady()
-        {
-            readyPromptObject.SetActive(true);
-            readyConfirmationObject.SetActive(true);
-            Ready = false;
+            readyPromptObject.SetActive(!value);
+            readyConfirmationObject.SetActive(value);
+            Ready = value;
         }
     }
 }
