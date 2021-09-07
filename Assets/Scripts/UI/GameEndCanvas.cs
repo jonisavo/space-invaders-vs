@@ -53,6 +53,11 @@ namespace SIVS
 
             while (!Input.anyKeyDown)
                 yield return null;
+            
+            headerTextTyper.UntypeText();
+            footerTextTyper.UntypeText();
+
+            yield return new WaitForSeconds(2f);
 
             gameManager.LeaveGame();
         }
