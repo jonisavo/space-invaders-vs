@@ -31,6 +31,7 @@ namespace SIVS
         {
             StopCoroutine(_fadeCoroutine);
             _fadeCoroutine = null;
+            _text.alpha = 0;
         }
 
         private IEnumerator FadeCoroutine()
