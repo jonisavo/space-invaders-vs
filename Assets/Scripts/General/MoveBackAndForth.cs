@@ -5,22 +5,25 @@ namespace SIVS
 {
     public class MoveBackAndForth : MonoBehaviour
     {
-        [Min(0f)]
-        public float distance;
+        public float targetX;
+
+        public float targetY;
 
         [Min(0.5f)]
         public float time;
 
-        private float _startX;
+        private Vector3 _startPosition;
 
-        private float _endX;
+        private Vector3 _endPosition;
 
         private Coroutine _moveCoroutine;
 
         private void Awake()
         {
-            _startX = transform.position.x;
-            _endX = _startX + distance;
+            var position = transform.position;
+            
+            _startPosition = position;
+            _endPosition = new Vector3(targetX, targetY, position.z);
         }
 
         private void OnEnable()
@@ -32,35 +35,35 @@ namespace SIVS
         {
             StopCoroutine(_moveCoroutine);
             _moveCoroutine = null;
+            
+            transform.position = _startPosition;
         }
 
         private IEnumerator MoveCoroutine()
         {
             while (true)
             {
-                yield return MoveToX(_endX);
-                yield return MoveToX(_startX);
+                yield return MoveTo(_endPosition);
+                yield return MoveTo(_startPosition);
             }
         }
 
-        private IEnumerator MoveToX(float targetX)
+        private IEnumerator MoveTo(Vector3 target)
         {
             var elapsedTime = 0f;
 
-            var position = transform.position;
+            var startPosition = transform.position;
 
-            var newPosition = new Vector3(targetX, position.y, position.z);
-            
             while (elapsedTime < time)
             {
-                transform.position = Vector3.Lerp(position, newPosition, elapsedTime / time);
+                transform.position = Vector3.Lerp(startPosition, target, elapsedTime / time);
 
                 yield return null;
 
                 elapsedTime += Time.deltaTime;
             }
 
-            transform.position = newPosition;
+            transform.position = target;
         }
     }
 }
