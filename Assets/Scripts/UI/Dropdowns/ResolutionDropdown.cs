@@ -53,8 +53,8 @@ namespace SIVS
 
             return new InitialDropdownValues
             {
-                options = optionsList,
-                index = index
+                Options = optionsList,
+                Index = index
             };
         }
 
