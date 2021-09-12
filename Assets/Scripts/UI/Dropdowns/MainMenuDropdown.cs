@@ -9,7 +9,7 @@ namespace SIVS
     [RequireComponent(typeof(TMP_Dropdown))]
     public class MainMenuDropdown : MainMenuSelectable, ISubmitHandler, ICancelHandler, IPointerDownHandler
     {
-        protected TMP_Dropdown _dropdown;
+        protected TMP_Dropdown Dropdown;
 
         private Coroutine _deselectCoroutine;
 
@@ -17,13 +17,13 @@ namespace SIVS
         {
             base.Awake();
 
-            _dropdown = GetComponent<TMP_Dropdown>();
+            Dropdown = GetComponent<TMP_Dropdown>();
 
             var initialValues = GetInitialValues();
             
-            _dropdown.AddOptions(initialValues.Options);
+            Dropdown.AddOptions(initialValues.Options);
             
-            _dropdown.SetValueWithoutNotify(initialValues.Index);
+            Dropdown.SetValueWithoutNotify(initialValues.Index);
         }
 
         protected struct InitialDropdownValues
@@ -35,18 +35,18 @@ namespace SIVS
         protected virtual InitialDropdownValues GetInitialValues() =>
             new InitialDropdownValues 
             { 
-                Options = _dropdown.options, 
+                Options = Dropdown.options, 
                 Index = 0 
             };
 
         public void OnPointerDown(PointerEventData eventData)
         {
-            MenuManager.BlockGoingBack = _dropdown.interactable;
+            MenuManager.BlockGoingBack = Dropdown.interactable;
         }
 
         public override void OnPointerEnter(PointerEventData evt)
         {
-            if (_dropdown.IsExpanded)
+            if (Dropdown.IsExpanded)
                 return;
 
             base.OnPointerEnter(evt);
@@ -54,7 +54,7 @@ namespace SIVS
 
         public override void OnPointerExit(PointerEventData evt)
         {
-            if (_dropdown.IsExpanded)
+            if (Dropdown.IsExpanded)
                 return;
             
             base.OnPointerExit(evt);
@@ -65,7 +65,7 @@ namespace SIVS
             if (_deselectCoroutine != null)
                 ClearDeselectQueue();
             
-            if (_dropdown.IsExpanded)
+            if (Dropdown.IsExpanded)
                 return;
 
             base.OnSelect(evt);
@@ -86,7 +86,7 @@ namespace SIVS
         
         private IEnumerator DeselectWhenDropdownInactive(BaseEventData evt)
         {
-            yield return new WaitWhile(() => _dropdown.IsExpanded);
+            yield return new WaitWhile(() => Dropdown.IsExpanded);
 
             base.OnDeselect(evt);
 
@@ -103,12 +103,12 @@ namespace SIVS
 
         public virtual void OnSubmit(BaseEventData evt)
         {
-            MenuManager.BlockGoingBack = _dropdown.IsExpanded;
+            MenuManager.BlockGoingBack = Dropdown.IsExpanded;
         }
 
         public virtual void OnCancel(BaseEventData evt)
         {
-            MenuManager.BlockGoingBack = _dropdown.IsExpanded;
+            MenuManager.BlockGoingBack = Dropdown.IsExpanded;
         }
     }
 }

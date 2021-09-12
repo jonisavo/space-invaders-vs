@@ -34,11 +34,11 @@ namespace SIVS
         [NotNull]
         public GameObject pointsPopup;
 
-        protected int _health;
+        private int _health;
 
-        protected int _initialHealth;
+        private int _initialHealth;
 
-        protected SpriteRenderer _spriteRenderer;
+        private SpriteRenderer _spriteRenderer;
         
         private int _playerNumber;
 

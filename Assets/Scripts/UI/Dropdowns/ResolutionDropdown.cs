@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+#if UNITY_EDITOR
 using System.Linq;
+#endif
 using TMPro;
 using UnityEngine;
 
@@ -15,10 +17,10 @@ namespace SIVS
 
             base.Awake();
             
-            _dropdown.onValueChanged.AddListener(HandleOptionChange);
+            Dropdown.onValueChanged.AddListener(HandleOptionChange);
         }
 
-        private void Start() => HandleOptionChange(_dropdown.value);
+        private void Start() => HandleOptionChange(Dropdown.value);
 
         private void HandleOptionChange(int i)
         {

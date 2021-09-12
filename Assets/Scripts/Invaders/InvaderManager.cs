@@ -39,7 +39,7 @@ namespace SIVS
         [Tooltip("If debug mode is on, logs all invader movement.")]
         public bool debugLog = false;
         
-        protected SpawnManager _spawnManager;
+        protected SpawnManager SpawnManager;
 
         private int _totalInvaderKills = 0;
 
@@ -47,7 +47,7 @@ namespace SIVS
 
         #region Callbacks
 
-        protected virtual void Awake() => _spawnManager = GetComponent<SpawnManager>();
+        protected virtual void Awake() => SpawnManager = GetComponent<SpawnManager>();
 
         private void OnEnable()
         {
@@ -158,7 +158,7 @@ namespace SIVS
         protected virtual void SpawnUFOForPlayer(SIVSPlayer player)
         {
             var spawnXCoord = player.Number == 1 ? -3.0f : 3.0f;
-            var position = _spawnManager.PlayAreaPosition(player.Number, spawnXCoord, 2.0f);
+            var position = SpawnManager.PlayAreaPosition(player.Number, spawnXCoord, 2.0f);
 
             var ufo = Instantiate(ufoObject, position, Quaternion.identity);
 
@@ -202,7 +202,7 @@ namespace SIVS
 
         protected virtual void SpawnOneInvaderForPlayer(SIVSPlayer player, int row, int column)
         {
-            var position = _spawnManager.PlayAreaPosition(
+            var position = SpawnManager.PlayAreaPosition(
                 player.Number, -1.75f + row * 0.4f, 2.1f - column * 0.3f
             );
 

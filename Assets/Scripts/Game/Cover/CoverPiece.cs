@@ -11,11 +11,11 @@ namespace SIVS
         [Tooltip("Sound effect to play with the explosion.")]
         public AudioClip explosionSound;
 
-        protected int _id;
+        protected int ID;
         
-        protected Cover _cover;
+        protected Cover Cover;
 
-        protected Rigidbody2D _rb;
+        private Rigidbody2D _rb;
 
         private void Awake() => _rb = GetComponent<Rigidbody2D>();
 
@@ -37,13 +37,13 @@ namespace SIVS
             if (explosionSound)
                 SoundPlayer.PlaySound(explosionSound, 0.65f);
             
-            _cover.DestroyPiece(_id);
+            Cover.DestroyPiece(ID);
         }
 
         public void InitializeCoverPiece(int id, Cover coverComponent)
         {
-            _id = id;
-            _cover = coverComponent;
+            ID = id;
+            Cover = coverComponent;
         }
 
         public void MakeRigidbodyDynamic()

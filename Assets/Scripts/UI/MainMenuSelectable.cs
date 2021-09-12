@@ -52,7 +52,7 @@ namespace SIVS
         [NotNull]
         public TextAnimator[] textAnimators;
 
-        protected bool _selected;
+        private bool _selected;
 
         private Animator _animator;
 
@@ -90,9 +90,9 @@ namespace SIVS
 
             var image = obj.GetComponent<Image>();
 
-            image.sprite = pulseSprite ? pulseSprite : _image.sprite;
+            image.sprite = pulseSprite ? pulseSprite : Image.sprite;
 
-            image.color = _image.color;
+            image.color = Image.color;
 
             var rainbowAnimation = obj.GetComponent<RainbowAnimationImage>();
 
@@ -121,7 +121,7 @@ namespace SIVS
 
         protected override void Update()
         {
-            if (_selected || _active)
+            if (_selected || Active)
                 UpdateColor();
         }
 
@@ -130,7 +130,7 @@ namespace SIVS
             if (ShouldIgnorePointerEvents())
                 return;
             
-            if (!_active && !_selected)
+            if (!Active && !_selected)
                 EnableAllAnimation();
             
             if (evt.selectedObject != gameObject)
@@ -142,7 +142,7 @@ namespace SIVS
             if (ShouldIgnorePointerEvents())
                 return;
             
-            if (_active && !_selected)
+            if (Active && !_selected)
                 DisableAllAnimation();
             
             if (evt.selectedObject == gameObject)
@@ -166,7 +166,7 @@ namespace SIVS
         {
             _selected = true;
             
-            if (!_active)
+            if (!Active)
                 EnableAllAnimation();
         }
 
@@ -174,7 +174,7 @@ namespace SIVS
         {
             _selected = false;
             
-            if (_active)
+            if (Active)
                 DisableAllAnimation();
         }
 
@@ -242,7 +242,7 @@ namespace SIVS
             var objRainbowImage = obj.GetComponent<RainbowAnimationImage>();
             
             objRainbowImage.animationSpeed = animationSpeed;
-            objRainbowImage.SetHue360(_currentHue);
+            objRainbowImage.SetHue360(CurrentHue);
             
             var startScale = Vector3.one * pulseStartMultiplier;
             var endScale = Vector3.one * pulseEndMultiplier;

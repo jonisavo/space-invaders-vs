@@ -25,9 +25,9 @@ namespace SIVS
         protected override void PlayPannedEntrySound()
         {
             if (_photonView.InstantiationData != null)
-                _audioSource.panStereo = (bool) _photonView.InstantiationData[0] ? -0.75f : 0.75f;
+                AudioSource.panStereo = (bool) _photonView.InstantiationData[0] ? -0.75f : 0.75f;
             
-            _audioSource.Play();
+            AudioSource.Play();
         }
 
         protected override void HandleMidwayCross()
@@ -35,7 +35,7 @@ namespace SIVS
             if (!_photonView.IsMine)
                 return;
             
-            var playerNumber = _movementDirection == Vector2.right ? 2 : 1;
+            var playerNumber = MovementDirection == Vector2.right ? 2 : 1;
             
             _photonView.TransferOwnership(playerNumber);
         }

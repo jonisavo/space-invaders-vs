@@ -14,7 +14,7 @@ namespace SIVS
         public static readonly Dictionary<int, SIVSPlayer> Players =
             new Dictionary<int, SIVSPlayer>();
 
-        protected bool _gameOver;
+        protected bool GameOver;
 
         private bool _bothReady;
 
@@ -59,7 +59,7 @@ namespace SIVS
 
         private void HandleReadyChange(SIVSPlayer player, bool isReady)
         {
-            if (_bothReady || _gameOver || !IsEveryoneReady())
+            if (_bothReady || GameOver || !IsEveryoneReady())
                 return;
 
             _invaderManager.InitializeAllInvaders();
@@ -71,7 +71,7 @@ namespace SIVS
 
         private void HandleLivesChange(SIVSPlayer player, int newLives)
         {
-            if (newLives > 0 || _gameOver)
+            if (newLives > 0 || GameOver)
                 return;
 
             var otherPlayerNumber = player.Number == 1 ? 2 : 1;
@@ -84,7 +84,7 @@ namespace SIVS
 
         private void HandleRoundChange(SIVSPlayer player, int newRound)
         {
-            if (newRound <= Match.FinalRound || _gameOver)
+            if (newRound <= Match.FinalRound || GameOver)
                 return;
             
             var otherPlayerNumber = player.Number == 1 ? 2 : 1;
@@ -118,7 +118,7 @@ namespace SIVS
 
         protected virtual void EndGame(SIVSPlayer winner, SIVSPlayer loser, VictoryReason victoryReason)
         {
-            _gameOver = true;
+            GameOver = true;
             
             Match.IsActive = false;
 

@@ -17,7 +17,7 @@ namespace SIVS
         [Tooltip("The brightness value (V in HSV) of the color.")]
         public float colorBrightness = 0.67f;
 
-        protected TMP_Text _text;
+        protected TMP_Text Text;
 
         private float _currentSingleColorHue;
 
@@ -25,15 +25,15 @@ namespace SIVS
 
         protected void Awake()
         {
-            _text = GetComponent<TMP_Text>();
+            Text = GetComponent<TMP_Text>();
             
             LoadInitialHues();
         }
         
         protected virtual void LoadInitialHues()
         {
-            Color.RGBToHSV(_text.color, out _currentSingleColorHue, out _, out _);
-            _initialSingleColor = _text.color;
+            Color.RGBToHSV(Text.color, out _currentSingleColorHue, out _, out _);
+            _initialSingleColor = Text.color;
         }
 
         protected void Update()
@@ -46,7 +46,7 @@ namespace SIVS
         {
             AnimateSingleHue(ref _currentSingleColorHue);
 
-            _text.color = Color.HSVToRGB(_currentSingleColorHue / 360f, colorSaturation, colorBrightness);
+            Text.color = Color.HSVToRGB(_currentSingleColorHue / 360f, colorSaturation, colorBrightness);
         }
 
         public override void EnableAllAnimation()
@@ -58,7 +58,7 @@ namespace SIVS
         {
             active = false;
 
-            _text.color = _initialSingleColor;
+            Text.color = _initialSingleColor;
         }
     }
 }

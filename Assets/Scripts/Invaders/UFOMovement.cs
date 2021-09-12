@@ -9,15 +9,15 @@ namespace SIVS
         [Tooltip("The movement speed of the UFO.")]
         public float moveSpeed;
 
-        protected Vector2 _movementDirection;
+        protected Vector2 MovementDirection;
 
-        protected AudioSource _audioSource;
+        protected AudioSource AudioSource;
 
-        protected virtual void Awake() => _audioSource = GetComponent<AudioSource>();
+        protected virtual void Awake() => AudioSource = GetComponent<AudioSource>();
 
         private void Start()
         {
-            _movementDirection = GetMovementDirection();
+            MovementDirection = GetMovementDirection();
             
             PlayPannedEntrySound();
         }
@@ -31,15 +31,15 @@ namespace SIVS
         protected virtual void PlayPannedEntrySound()
         {
             var playerNumber = GetComponent<Ownership>().Owner.Number;
-            _audioSource.panStereo = playerNumber == 1 ? -0.75f : 0.75f;
-            _audioSource.Play();
+            AudioSource.panStereo = playerNumber == 1 ? -0.75f : 0.75f;
+            AudioSource.Play();
         }
 
         private void Update()
         {
             var preTranslateXPosition = transform.position.x;
             
-            transform.Translate(_movementDirection * (moveSpeed * Time.deltaTime));
+            transform.Translate(MovementDirection * (moveSpeed * Time.deltaTime));
             
             if (CrossedMidwayPoint(preTranslateXPosition))
                 HandleMidwayCross();
@@ -50,7 +50,7 @@ namespace SIVS
 
         private bool CrossedMidwayPoint(float preTranslateXPosition)
         {
-            if (_movementDirection == Vector2.right)
+            if (MovementDirection == Vector2.right)
                 return preTranslateXPosition <= 0 && transform.position.x > 0;
 
             return preTranslateXPosition >= 0 && transform.position.x < 0;

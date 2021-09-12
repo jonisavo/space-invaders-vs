@@ -25,10 +25,10 @@ namespace SIVS
         {
             base.Awake();
             
-            _slider.onValueChanged.AddListener(UpdateVolume);
+            Slider.onValueChanged.AddListener(UpdateVolume);
         }
 
-        private void Start() => UpdateVolume(_slider.value);
+        private void Start() => UpdateVolume(Slider.value);
 
         protected override float GetInitialValue() =>
             PlayerPrefs.GetFloat(GetParameterName(), 0.8f);

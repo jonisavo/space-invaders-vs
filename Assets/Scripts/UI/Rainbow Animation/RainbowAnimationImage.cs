@@ -6,48 +6,48 @@ namespace SIVS
     [RequireComponent(typeof(Image))]
     public class RainbowAnimationImage : RainbowAnimationMonoBehaviour
     {
-        protected Color _initialColor;
+        protected bool Active;
+
+        protected float CurrentHue;
+
+        protected Image Image;
         
-        protected bool _active;
-
-        protected float _currentHue;
-
-        protected Image _image;
+        private Color _initialColor;
 
         protected virtual void Awake()
         {
-            _image = GetComponent<Image>();
+            Image = GetComponent<Image>();
             
-            Color.RGBToHSV(_image.color, out _currentHue, out _, out _);
+            Color.RGBToHSV(Image.color, out CurrentHue, out _, out _);
 
-            _initialColor = _image.color;
+            _initialColor = Image.color;
         }
         
         protected virtual void Update()
         {
-            if (_active)
+            if (Active)
                 UpdateColor();
         }
         
         public override void UpdateColor()
         {
-            AnimateSingleHue(ref _currentHue);
+            AnimateSingleHue(ref CurrentHue);
 
-            _image.color = AnimatedColor(_currentHue, 0.7f, 0.7f);
+            Image.color = AnimatedColor(CurrentHue, 0.7f, 0.7f);
         }
         
         public override void EnableAllAnimation()
         {
-            _active = true;
+            Active = true;
         }
 
         public override void DisableAllAnimation()
         {
-            _active = false;
+            Active = false;
 
-            _image.color = _initialColor;
+            Image.color = _initialColor;
         }
 
-        public void SetHue360(float newHue360) => _currentHue = newHue360;
+        public void SetHue360(float newHue360) => CurrentHue = newHue360;
     }
 }

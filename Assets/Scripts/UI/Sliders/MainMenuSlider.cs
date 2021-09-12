@@ -18,22 +18,22 @@ namespace SIVS
         [Tooltip("The format used for the value label, e.g. {0:#0%} or just {0}.")]
         public string valueFormatString = "{0}";
         
-        protected Slider _slider;
+        protected Slider Slider;
         
         protected override void Awake()
         {
             base.Awake();
 
-            _slider = GetComponent<Slider>();
+            Slider = GetComponent<Slider>();
             
-            _slider.onValueChanged.AddListener(SetValueLabel);
+            Slider.onValueChanged.AddListener(SetValueLabel);
 
-            _slider.value = GetInitialValue();
+            Slider.value = GetInitialValue();
             
-            SetValueLabel(_slider.value);
+            SetValueLabel(Slider.value);
         }
 
-        protected virtual float GetInitialValue() => _slider.value;
+        protected virtual float GetInitialValue() => Slider.value;
 
         private void SetValueLabel(float value)
         {

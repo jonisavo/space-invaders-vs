@@ -20,7 +20,7 @@ namespace SIVS
         protected override void SpawnUFOForPlayer(SIVSPlayer player)
         {
             var spawnXCoord = player.Number == 1 ? -3.0f : 3.0f;
-            var position = _spawnManager.PlayAreaPosition(player.Number, spawnXCoord, 2.0f);
+            var position = SpawnManager.PlayAreaPosition(player.Number, spawnXCoord, 2.0f);
             
             object[] instantiationData = { player.Number == 1 };
 
@@ -55,7 +55,7 @@ namespace SIVS
         {
             object[] instantiationData = { player.Number, GenerateInvaderHealth() };
 
-            var position = _spawnManager.PlayAreaPosition(
+            var position = SpawnManager.PlayAreaPosition(
                 player.Number, -1.75f + row * 0.4f, 2.1f - column * 0.3f
             );
 

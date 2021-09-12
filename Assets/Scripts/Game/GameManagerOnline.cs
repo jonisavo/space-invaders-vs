@@ -50,7 +50,7 @@ namespace SIVS
 
         public void OnPlayerLeftRoom(Player otherPlayer)
         {
-            if (_gameOver) return;
+            if (GameOver) return;
             
             var otherPlayerNumber = otherPlayer.ActorNumber == 1 ? 2 : 1;
 

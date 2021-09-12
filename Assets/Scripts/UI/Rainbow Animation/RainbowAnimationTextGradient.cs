@@ -57,7 +57,7 @@ namespace SIVS
 
         protected override void LoadInitialHues()
         {
-            _initialGradient = _text.colorGradient;
+            _initialGradient = Text.colorGradient;
             
             _currentTopRightHue = GetInitialHue(topRight, _initialGradient.topRight);
             _currentBottomRightHue = GetInitialHue(bottomRight, _initialGradient.bottomRight);
@@ -79,15 +79,15 @@ namespace SIVS
         {
             AnimateHues();
 
-            _text.colorGradient = new VertexGradient(
+            Text.colorGradient = new VertexGradient(
                 topLeft.animate ?
-                    AnimatedColor(_currentTopRightHue, topLeft.saturation, topLeft.brightness) : _text.colorGradient.topLeft,
+                    AnimatedColor(_currentTopRightHue, topLeft.saturation, topLeft.brightness) : Text.colorGradient.topLeft,
                 topRight.animate ? 
-                    AnimatedColor(_currentTopRightHue, topRight.saturation, topRight.brightness) : _text.colorGradient.topRight,
+                    AnimatedColor(_currentTopRightHue, topRight.saturation, topRight.brightness) : Text.colorGradient.topRight,
                 bottomLeft.animate ?
-                    AnimatedColor(_currentBottomLeftHue, bottomLeft.saturation, bottomLeft.brightness) : _text.colorGradient.bottomLeft,
+                    AnimatedColor(_currentBottomLeftHue, bottomLeft.saturation, bottomLeft.brightness) : Text.colorGradient.bottomLeft,
                 bottomRight.animate ? 
-                    AnimatedColor(_currentBottomRightHue, bottomRight.saturation, bottomRight.brightness) : _text.colorGradient.bottomRight
+                    AnimatedColor(_currentBottomRightHue, bottomRight.saturation, bottomRight.brightness) : Text.colorGradient.bottomRight
             );
         }
 
@@ -108,7 +108,7 @@ namespace SIVS
             bottomLeft.animate = false;
             bottomRight.animate = false;
 
-            _text.colorGradient = _initialGradient;
+            Text.colorGradient = _initialGradient;
         }
 
         private void AnimateHues()
