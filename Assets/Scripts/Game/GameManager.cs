@@ -124,10 +124,6 @@ namespace SIVS
 
             _optionsManager.CloseCanvas();
 
-            GameObject.Find("Music Player")
-                .GetComponent<AudioSource>()
-                .Stop();
-
             StopGameProcessing();
             
             OnGameEnd?.Invoke(winner, loser, victoryReason);

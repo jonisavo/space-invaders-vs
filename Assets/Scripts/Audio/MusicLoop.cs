@@ -23,6 +23,13 @@ namespace SIVS
                 PlayRandom();
         }
 
+        private void OnEnable() => GameManager.OnGameEnd += HandleGameEnd;
+
+        private void OnDisable() => GameManager.OnGameEnd -= HandleGameEnd;
+
+        private void HandleGameEnd(SIVSPlayer _, SIVSPlayer __, VictoryReason ___) =>
+            _audioSource.Stop();
+
         public void PlayRandom()
         {
             if (tracks.Length == 1)
