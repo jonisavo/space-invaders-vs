@@ -3,27 +3,27 @@ using UnityEngine;
 
 namespace SIVS
 {
-    public class MoveBackAndForth : MonoBehaviour
+    public class MoveToMonoBehaviour : MonoBehaviour
     {
+        [Min(0.5f)]
+        public float time;
+        
         public float targetX;
 
         public float targetY;
+        
+        protected Vector3 StartPosition;
 
-        [Min(0.5f)]
-        public float time;
-
-        private Vector3 _startPosition;
-
-        private Vector3 _endPosition;
-
+        protected Vector3 EndPosition;
+        
         private Coroutine _moveCoroutine;
-
+        
         private void Awake()
         {
             var position = transform.position;
             
-            _startPosition = position;
-            _endPosition = new Vector3(targetX, targetY, position.z);
+            StartPosition = position;
+            EndPosition = new Vector3(targetX, targetY, position.z);
         }
 
         private void OnEnable()
@@ -36,19 +36,15 @@ namespace SIVS
             StopCoroutine(_moveCoroutine);
             _moveCoroutine = null;
             
-            transform.position = _startPosition;
+            transform.position = StartPosition;
         }
-
-        private IEnumerator MoveCoroutine()
+        
+        protected virtual IEnumerator MoveCoroutine()
         {
-            while (true)
-            {
-                yield return MoveTo(_endPosition);
-                yield return MoveTo(_startPosition);
-            }
+            yield return MoveTo(EndPosition);
         }
-
-        private IEnumerator MoveTo(Vector3 target)
+        
+        protected IEnumerator MoveTo(Vector3 target)
         {
             var elapsedTime = 0f;
 
