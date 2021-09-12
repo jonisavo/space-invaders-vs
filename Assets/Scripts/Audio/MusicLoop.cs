@@ -5,12 +5,9 @@ namespace SIVS
     [RequireComponent(typeof(AudioSource))]
     public class MusicLoop : MonoBehaviour
     {
-        [Tooltip("Possible intros to play. Each intro should have a matching loop.")]
-        public AudioClip[] intros;
-
-        [Tooltip("Possible loops to play. Each loop should have a matching intro.")]
-        public AudioClip[] loops;
-
+        [Tooltip("Possible music tracks to play.")]
+        public MusicTrack[] tracks;
+        
         [Tooltip("Whether a random intro + loop should be played on awake.")]
         public bool playOnAwake;
 
@@ -22,28 +19,19 @@ namespace SIVS
             
             _audioSource.loop = true;
 
-            if (intros.Length != loops.Length)
-            {
-                Debug.LogError("Each intro must have a matching loop!");
-                return;
-            }
-
             if (playOnAwake)
                 PlayRandom();
         }
 
         public void PlayRandom()
         {
-            if (intros.Length == 1)
-            {
-                Play(intros[0], loops[0]);
-            }
+            if (tracks.Length == 1)
+                Play(tracks[0]);
             else
-            {
-                var index = Random.Range(0, intros.Length);
-                Play(intros[index], loops[index]);
-            }
+                Play(tracks[Random.Range(0, tracks.Length)]);
         }
+
+        public void Play(MusicTrack track) => Play(track.intro, track.loop);
 
         public void Play(AudioClip intro, AudioClip loop)
         {

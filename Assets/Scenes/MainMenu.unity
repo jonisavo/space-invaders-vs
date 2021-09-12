@@ -1890,10 +1890,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3396b00f7fd74823b2a59e4478b058d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  intros:
-  - {fileID: 8300000, guid: 08117dbe07bf7424093a9431b1a17783, type: 3}
-  loops:
-  - {fileID: 8300000, guid: bd49b8640d3c9034d97c78701881bda3, type: 3}
+  tracks:
+  - intro: {fileID: 8300000, guid: 08117dbe07bf7424093a9431b1a17783, type: 3}
+    loop: {fileID: 8300000, guid: bd49b8640d3c9034d97c78701881bda3, type: 3}
   playOnAwake: 1
 --- !u!82 &856816259
 AudioSource:

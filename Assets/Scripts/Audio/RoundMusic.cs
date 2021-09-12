@@ -8,11 +8,7 @@ namespace SIVS
     {
         public int round = 1;
 
-        [NotNull]
-        public AudioClip intro;
-
-        [NotNull]
-        public AudioClip loop;
+        public MusicTrack track;
 
         private bool _reachedRound;
 
@@ -32,7 +28,7 @@ namespace SIVS
 
         private void PlayMusic()
         {
-            _musicLoop.Play(intro, loop);
+            _musicLoop.Play(track);
             _reachedRound = true;
         }
     }
