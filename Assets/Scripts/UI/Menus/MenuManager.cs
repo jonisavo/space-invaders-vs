@@ -13,10 +13,6 @@ namespace SIVS
 
         public string defaultMenu;
 
-        [Header("Set default menu interactable if requirements are met:")]
-        [Tooltip("If set, sets the default menu as interactable after the bar canvas has opened.")]
-        public BarCanvas barCanvasInteractableRequirement;
-
         private EventSystem _eventSystem;
 
         private readonly Stack<Menu> _history = new Stack<Menu>();
@@ -33,16 +29,11 @@ namespace SIVS
         private void OnEnable()
         {
             OnPushMenu += HandlePushMenu;
-
-            if (barCanvasInteractableRequirement)
-                barCanvasInteractableRequirement.OnFinishOpen += HandleBarCanvasOpen;
         }
 
         private void OnDisable()
         {
             OnPushMenu -= HandlePushMenu;
-
-            barCanvasInteractableRequirement.OnFinishOpen -= HandleBarCanvasOpen;
         }
 
         private void Awake()
@@ -50,7 +41,7 @@ namespace SIVS
             _eventSystem = EventSystem.current;
             
             if (!string.IsNullOrEmpty(defaultMenu))
-                Push(defaultMenu, barCanvasInteractableRequirement == null);
+                Push(defaultMenu);
         }
 
         private void Update()
@@ -63,18 +54,16 @@ namespace SIVS
 
         private void AttemptRestoringSelection()
         {
-            if (Input.GetAxis("Horizontal") == 0 && Input.GetAxis("Vertical") == 0)
+            if (_history.Count == 0 || (Input.GetAxis("Horizontal") == 0 && Input.GetAxis("Vertical") == 0))
                 return;
+
+            var automaticSelection = _history.Peek().GetAutomaticSelection();
             
-            var currentMenu = _history.Peek();
-            
-            if (currentMenu.autoSelect)
-                currentMenu.autoSelect.Select();
+            if (automaticSelection)
+                automaticSelection.Select();
         }
 
-        public void Push(string menuName) => Push(menuName, true);
-
-        public void Push(string menuName, bool makeInteractable)
+        public void Push(string menuName)
         {
             if (!menus.ContainsKey(menuName))
             {
@@ -84,19 +73,19 @@ namespace SIVS
             
             if (_history.Count > 0)
                 _history.Peek().Hide();
-            
+
             _history.Push(menus[menuName]);
             
-            _history.Peek().Show(makeInteractable);
+            _history.Peek().Show();
         }
 
         public void Pop()
         {
             if (_history.Count == 0)
                 return;
-            
+
             _history.Pop().Hide();
-            
+
             _history.Peek().Show();
         }
 
@@ -107,7 +96,7 @@ namespace SIVS
 
             Pop();
         }
-
+        
         private void HandlePushMenu(string menuName, int managerId = 0)
         {
             if (managerId != id)
@@ -116,12 +105,15 @@ namespace SIVS
             Push(menuName);
         }
 
-        private void HandleBarCanvasOpen()
+        public void ToggleCurrentMenuInteractivity(bool value)
         {
-            var currentMenu = _history.Peek();
+            if (_history.Count == 0)
+                return;
             
-            currentMenu.MakeInteractable();
-            currentMenu.SelectPrimaryElement();
+            if (value)
+                _history.Peek().MakeInteractable();
+            else
+                _history.Peek().MakeNonInteractable();
         }
     }
 }

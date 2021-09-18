@@ -26,9 +26,17 @@ namespace SIVS
 
         private float _maxHeight;
 
+        public delegate void StartOpenDelegate();
+
+        public event StartOpenDelegate OnStartOpen;
+
         public delegate void FinishOpenDelegate();
 
         public event FinishOpenDelegate OnFinishOpen;
+
+        public delegate void StartCloseDelegate();
+
+        public event StartCloseDelegate OnStartClose;
 
         public delegate void FinishCloseDelegate();
 
@@ -44,6 +52,8 @@ namespace SIVS
         public IEnumerator CloseBars()
         {
             _canvasGroup.blocksRaycasts = true;
+            
+            OnStartClose?.Invoke();
             
             var elapsedTime = 0f;
 
@@ -66,6 +76,8 @@ namespace SIVS
         public IEnumerator OpenBars()
         {
             var elapsedTime = 0f;
+            
+            OnStartOpen?.Invoke();
 
             while (elapsedTime <= barMovementDuration)
             {

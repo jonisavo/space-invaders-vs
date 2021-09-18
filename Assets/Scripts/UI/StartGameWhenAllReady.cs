@@ -26,14 +26,9 @@ namespace SIVS
 
         private IEnumerator StartGameCoroutine()
         {
-            // TODO: block menu manager automatically when bars are opening/closing?
-            MenuManager.BlockGoingBack = true;
-            
             yield return barCanvasToClose.CloseBars();
 
             SceneManager.LoadScene("InGameOffline");
-
-            MenuManager.BlockGoingBack = false;
         }
     }
 }
