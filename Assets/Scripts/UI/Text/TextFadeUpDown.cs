@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using TMPro;
 using UnityEngine;
 
@@ -52,14 +51,16 @@ namespace SIVS
 
         private IEnumerator FadeTo(float target)
         {
-            var distance = target - _text.alpha;
+            var sign = Mathf.Sign(target - _text.alpha);
 
-            while (Math.Abs(_text.alpha - target) > 0.01f)
+            while (_text.alpha * sign < target)
             {
-                _text.alpha += speed * Time.deltaTime * Mathf.Sign(distance);
-                
+                _text.alpha += speed * Time.deltaTime * sign;
+
                 yield return null;
             }
+
+            _text.alpha = target;
         }
     }
 }
