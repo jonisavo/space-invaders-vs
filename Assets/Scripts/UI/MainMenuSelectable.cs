@@ -11,7 +11,8 @@ namespace SIVS
 {
     [RequireComponent(typeof(Animator))]
     [RequireComponent(typeof(Selectable))]
-    public class MainMenuSelectable : RainbowAnimationImage, IPointerEnterHandler, IPointerExitHandler, ISelectHandler, IDeselectHandler
+    public class MainMenuSelectable : RainbowAnimationImage,
+        IPointerEnterHandler, IPointerExitHandler, ISelectHandler, IDeselectHandler
     {
         [Header("Pulsing")]
         [Tooltip("The sprite used for generated pulses.")]
@@ -64,8 +65,6 @@ namespace SIVS
 
         private EventSystem _eventSystem;
 
-        private CanvasGroup _parentCanvasGroup;
-        
         private static readonly int SelectedParamId = Animator.StringToHash("Selected");
 
         protected override void Awake()
@@ -78,15 +77,14 @@ namespace SIVS
 
             _eventSystem = EventSystem.current;
 
-            _parentCanvasGroup = GetComponentInParent<CanvasGroup>();
-
             for (var i = 0; i < pulseCount; i++)
                 InstantiatePulseObject("Pulse Object " + i);
         }
 
         private void InstantiatePulseObject(string objName)
         {
-            var obj = new GameObject(objName, typeof(Image), typeof(RainbowAnimationImage), typeof(CanvasGroup));
+            var obj = new GameObject(objName,
+                typeof(Image), typeof(RainbowAnimationImage), typeof(CanvasGroup));
 
             var image = obj.GetComponent<Image>();
 
@@ -149,18 +147,7 @@ namespace SIVS
                 _eventSystem.SetSelectedGameObject(null);
         }
         
-        private bool ShouldIgnorePointerEvents() =>
-            !_selectable.interactable || ShouldIgnorePointerEventsBasedOnParentCanvasGroup();
-        
-        // The Button's selectable flag is not set by parent CanvasGroups, so we
-        // have to do a check ourselves.
-        private bool ShouldIgnorePointerEventsBasedOnParentCanvasGroup()
-        {
-            if (!_parentCanvasGroup)
-                return false;
-
-            return !_parentCanvasGroup.interactable;
-        }
+        private bool ShouldIgnorePointerEvents() => !_selectable.IsInteractable();
 
         public virtual void OnSelect(BaseEventData evt)
         {
