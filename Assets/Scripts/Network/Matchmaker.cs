@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
 using RedBlueGames.NotNull;
@@ -9,56 +8,21 @@ namespace SIVS
 {
     public class Matchmaker : MonoBehaviourPunCallbacks
     {
-        [Tooltip("The UI Panel to let the user enter name, connect and play")]
+        [Tooltip("The Menu Manager to interface with.")]
         [NotNull]
-        public GameObject controlPanel;
+        public MenuManager menuManager;
 
-        [Tooltip("The UI Label to inform the user that the connection is in progress")]
-        [NotNull]
-        public GameObject progressLabel;
-
-        [Tooltip("The Button to let the user start matchmaking quickly")]
-        [NotNull]
-        public Button quickPlayButton;
-
-        [Tooltip("The Button to let the user join a room")]
-        [NotNull]
-        public Button joinRoomButton;
-
-        [Tooltip("The Button to let the user cancel matchmaking")]
-        [NotNull]
-        public Button cancelButton;
+        [Tooltip("The name of the menu to open when matchmaking.")]
+        public string matchmakingMenuName;
 
         private bool _isMatchmaking;
 
         private bool _allowMatchmaking;
 
-        private bool AllowMatchmaking
-        {
-            get => _allowMatchmaking;
-            set
-            {
-                _allowMatchmaking = value;
-                
-                if (quickPlayButton)
-                {
-                    var shouldSelect = !quickPlayButton.interactable && value;
-
-                    quickPlayButton.interactable = value;
-                    
-                    if (shouldSelect)
-                        quickPlayButton.Select();
-                }
-
-                if (joinRoomButton)
-                    joinRoomButton.interactable = value;
-            }
-        }
-
         private void Awake()
         {
             _isMatchmaking = false;
-            AllowMatchmaking = PhotonNetwork.IsConnectedAndReady;
+            _allowMatchmaking = PhotonNetwork.IsConnectedAndReady;
         }
 
         private void Update()
@@ -69,12 +33,16 @@ namespace SIVS
 
         public void BeginMatchmaking()
         {
-            if (string.IsNullOrEmpty(PhotonNetwork.NickName.Trim())) return;
-            if (_isMatchmaking || !AllowMatchmaking) return;
+            if (string.IsNullOrEmpty(PhotonNetwork.NickName.Trim()))
+                return;
+            
+            if (_isMatchmaking || !_allowMatchmaking)
+                return;
 
             _isMatchmaking = true;
+
             PhotonNetwork.JoinRandomRoom();
-            ShowProgressLabel();
+            menuManager.Push(matchmakingMenuName);
         }
 
         public void JoinNamedRoom(string roomName)
@@ -87,12 +55,12 @@ namespace SIVS
                     IsVisible = false, 
                     CustomRoomProperties = new Hashtable()
                     {
-                        {"Active", false}
+                        { Match.ActivePropertyKey, false }
                     }
                 },
                 TypedLobby.Default
             );
-            ShowProgressLabel();
+            menuManager.Push(matchmakingMenuName);
         }
 
         public void CancelMatchmaking()
@@ -100,34 +68,22 @@ namespace SIVS
             if (PhotonNetwork.InRoom)
                 PhotonNetwork.LeaveRoom();
 
-            StopMatchmaking();
-            AllowMatchmaking = PhotonNetwork.IsConnectedAndReady;
-        }
-
-        private void StopMatchmaking()
-        {
             _isMatchmaking = false;
-
-            if (!controlPanel) return;
-            
-            HideCancelButton();
-            HideProgressLabel();
+            _allowMatchmaking = PhotonNetwork.IsConnectedAndReady;
         }
 
         #region PUN Callbacks
 
         public override void OnConnectedToMaster()
         {
-            AllowMatchmaking = true;
+            _allowMatchmaking = true;
         }
 
         public override void OnDisconnected(DisconnectCause cause)
         {
-            AllowMatchmaking = false;
+            _allowMatchmaking = false;
 
-            if (!_isMatchmaking) return;
-
-            StopMatchmaking();
+            _isMatchmaking = false;
         }
 
         public override void OnJoinRandomFailed(short returnCode, string message)
@@ -135,7 +91,7 @@ namespace SIVS
             PhotonNetwork.CreateRoom(null, new RoomOptions
             {
                 MaxPlayers = 2,
-                CustomRoomProperties = new Hashtable()
+                CustomRoomProperties = new Hashtable
                 {
                     { Match.ActivePropertyKey, false }
                 }
@@ -158,8 +114,6 @@ namespace SIVS
 
             if (IsFullRoom())
                 StartGame();
-            else
-                ShowCancelButton();
         }
 
         public override void OnPlayerEnteredRoom(Player newPlayer)
@@ -170,13 +124,14 @@ namespace SIVS
                 return;
             }
 
-            if (IsFullRoom()) StartGame();
+            if (IsFullRoom())
+                StartGame();
         }
 
         public override void OnCreateRoomFailed(short returnCode, string message)
         {
-            StopMatchmaking();
-            AllowMatchmaking = PhotonNetwork.IsConnectedAndReady;
+            _isMatchmaking = false;
+            _allowMatchmaking = PhotonNetwork.IsConnectedAndReady;
         }
 
         #endregion
@@ -188,9 +143,11 @@ namespace SIVS
         {
             foreach (var player in PhotonNetwork.CurrentRoom.Players.Values)
             {
-                if (PhotonNetwork.LocalPlayer.ActorNumber == player.ActorNumber) continue;
+                if (PhotonNetwork.LocalPlayer.ActorNumber == player.ActorNumber)
+                    continue;
                 
-                if (PhotonNetwork.LocalPlayer.NickName == player.NickName) return false;
+                if (PhotonNetwork.LocalPlayer.NickName == player.NickName)
+                    return false;
             }
 
             return true;
@@ -203,27 +160,6 @@ namespace SIVS
 
             PhotonNetwork.CurrentRoom.IsOpen = false;
             PhotonNetwork.LoadLevel("InGame");
-        }
-
-        private void ShowCancelButton()
-        {
-            cancelButton.gameObject.SetActive(true);
-            cancelButton.Select();
-        }
-
-        private void HideCancelButton() =>
-            cancelButton.gameObject.SetActive(false);
-        
-        private void ShowProgressLabel()
-        {
-            controlPanel.SetActive(false);
-            progressLabel.SetActive(true);
-        }
-
-        private void HideProgressLabel()
-        {
-            controlPanel.SetActive(true);
-            progressLabel.SetActive(false);
         }
     }
 }
