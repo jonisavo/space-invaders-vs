@@ -27,7 +27,7 @@ namespace SIVS
         {
             base.OnEnable();
             
-            NetworkManager.OnConnect += SwitchToMenuPage;
+            NetworkManager.OnConnect += HandleConnection;
             NetworkManager.OnDisconnect += SwitchToConnectingPage;
             Application.quitting += HandleApplicationQuitting;
         }
@@ -36,7 +36,7 @@ namespace SIVS
         {
             base.OnDisable();
             
-            NetworkManager.OnConnect -= SwitchToMenuPage;
+            NetworkManager.OnConnect -= HandleConnection;
             NetworkManager.OnDisconnect -= SwitchToConnectingPage;
             Application.quitting -= HandleApplicationQuitting;
         }
@@ -71,7 +71,24 @@ namespace SIVS
             MakeCanvasGroupInteractable(childCanvasGroup);
         }
 
+        public override void MakeNonInteractable()
+        {
+            base.MakeNonInteractable();
+            
+            var childCanvasGroup = NetworkManager.IsConnectedUsingCurrentManager()
+                ? menuCanvasGroup
+                : connectingCanvasGroup;
+            
+            MakeCanvasGroupNonInteractable(childCanvasGroup);
+        }
+
         private void HandleApplicationQuitting() => _applicationIsQuitting = true;
+
+        private void HandleConnection()
+        {
+            SwitchToMenuPage();
+            SelectPrimaryElement();
+        }
 
         private void SwitchToMenuPage()
         {

@@ -58,9 +58,9 @@ namespace SIVS
         {
             var automaticSelection = GetAutomaticSelection();
 
-            if (_previouslySelectedSelectable && _previouslySelectedSelectable.interactable)
+            if (_previouslySelectedSelectable && _previouslySelectedSelectable.IsInteractable())
                 _previouslySelectedSelectable.Select();
-            else if (automaticSelection)
+            else if (automaticSelection && automaticSelection.IsInteractable())
                 automaticSelection.Select();
         }
 
