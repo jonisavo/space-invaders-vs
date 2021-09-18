@@ -65,16 +65,19 @@ namespace SIVS
 
         public void Push(string menuName)
         {
-            if (!menus.ContainsKey(menuName))
+            if (!menus.TryGetValue(menuName, out var menuToPush) || menuToPush == null)
             {
                 Debug.LogError("No menu named " + menuName + " found in MenuManager", gameObject);
                 return;
             }
-            
-            if (_history.Count > 0)
-                _history.Peek().Hide();
 
-            _history.Push(menus[menuName]);
+            if (_history.Count > 0)
+                if (!menuToPush.showOnTop)
+                    _history.Peek().Hide();
+                else
+                    _history.Peek().MakeNonInteractable();
+
+            _history.Push(menuToPush);
             
             _history.Peek().Show();
         }

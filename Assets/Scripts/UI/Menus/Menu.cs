@@ -14,6 +14,9 @@ namespace SIVS
         [Tooltip("Disables going back to the previous menu via the cancel button.")]
         public bool disableGoingBack;
 
+        [Tooltip("If enabled, causes Menu Manager to display the menu on top of existing menus.")]
+        public bool showOnTop;
+
         public UnityEvent onMenuHide;
         
         [Header("Set interactable if requirements are met:")]
