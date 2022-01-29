@@ -8,10 +8,10 @@ namespace SIVS
 {
     public class OptionsManager : MonoBehaviourPunCallbacks
     {
-        [NotNull (IgnorePrefab = true)]
+        [NotNull]
         public GameObject optionsCanvas;
 
-        [NotNull (IgnorePrefab = true)]
+        [NotNull]
         public Button closeButton;
 
         public delegate void OptionsOpenDelegate();
@@ -24,6 +24,20 @@ namespace SIVS
 
         private bool _allowOpeningOptions = true;
 
+        public override void OnEnable()
+        {
+            base.OnEnable();
+
+            GameManager.OnGameEnd += OnGameEnd;
+        }
+
+        public override void OnDisable()
+        {
+            base.OnDisable();
+
+            GameManager.OnGameEnd -= OnGameEnd;
+        }
+
         private void Update()
         {
             if (!_allowOpeningOptions && !IsCanvasActive())
@@ -31,6 +45,11 @@ namespace SIVS
             
             if (Input.GetButtonDown("Cancel"))
                 ToggleCanvas();
+        }
+
+        private void OnGameEnd(SIVSPlayer winner, SIVSPlayer loser, VictoryReason victoryReason)
+        {
+            CloseCanvas();
         }
 
         public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)

@@ -33,8 +33,11 @@ namespace SIVS
         protected override float GetInitialValue() =>
             PlayerPrefs.GetFloat(GetParameterName(), 0.8f);
 
-        private void UpdateVolume(float value) =>
+        private void UpdateVolume(float value)
+        {
             audioMixer.SetFloat(GetParameterName(), Mathf.Log10(value) * 20);
+            PlayerPrefs.SetFloat(GetParameterName(), value);
+        }
 
         private string GetParameterName()
         {

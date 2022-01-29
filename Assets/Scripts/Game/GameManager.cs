@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 namespace SIVS
 {
     [RequireComponent(typeof(InvaderManager))]
-    [RequireComponent(typeof(OptionsManager))]
     public class GameManager : MonoBehaviour
     {
         [Tooltip("Whether to set the Match IsOnline flag.")]
@@ -19,8 +18,6 @@ namespace SIVS
         private bool _bothReady;
 
         private InvaderManager _invaderManager;
-
-        private OptionsManager _optionsManager;
 
         public delegate void GameEndDelegate(SIVSPlayer winner, SIVSPlayer loser, VictoryReason victoryReason);
 
@@ -38,8 +35,7 @@ namespace SIVS
             CleanupPlayers();
             
             _invaderManager = GetComponent<InvaderManager>();
-            _optionsManager = GetComponent<OptionsManager>();
-            
+
             InitializePlayers();
         }
 
@@ -122,8 +118,6 @@ namespace SIVS
             
             Match.IsActive = false;
 
-            _optionsManager.CloseCanvas();
-
             StopGameProcessing();
             
             OnGameEnd?.Invoke(winner, loser, victoryReason);
@@ -140,7 +134,7 @@ namespace SIVS
                 invader.GetComponent<InvaderShoot>().StopShooting();
         }
 
-        private void DestroyBullets()
+        private static void DestroyBullets()
         {
             foreach (var playerBullet in GameObject.FindGameObjectsWithTag("PlayerBullet"))
                 Destroy(playerBullet);
@@ -149,13 +143,13 @@ namespace SIVS
                 Destroy(enemyBullet);
         }
 
-        private void DestroyPowerups()
+        private static void DestroyPowerups()
         {
             foreach (var powerUp in GameObject.FindGameObjectsWithTag("Powerup"))
                 powerUp.GetComponent<Powerup>().DestroyPowerup();
         }
         
-        private bool IsEveryoneReady()
+        private static bool IsEveryoneReady()
         {
             foreach (var player in Players.Values)
             {
