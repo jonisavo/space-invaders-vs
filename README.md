@@ -28,7 +28,7 @@ See [licenses.txt](./licenses.txt) for third-party licenses.
 ## Set up
 
 1. Clone the repository
-2. Open the project in Unity 2020.3.17+
+2. Open the project in Unity 2020.3.33+
 3. Import PUN 2 (version 2.34.1 is recommended)
 4. Run the PUN wizard
 5. Run TextMeshPro's "Import TMP Essential Resources" wizard
