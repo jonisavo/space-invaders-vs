@@ -1,6 +1,6 @@
 # Space Invaders VS
 
-![screenshot](./screenshot.png)
+![Video](./video.gif)
 
 This project started out as a university assignment: a working multiplayer game made with Unity.
 It is a multiplayer Space Invaders clone, where two players race to beat the last round.
